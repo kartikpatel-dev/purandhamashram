@@ -17,6 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 })->name('front.home');
 
+Route::get('/about-us', function () {
+    return view('about-us');
+})->name('about-us');
+
+Route::get('/gallery', function () {
+    return view('gallery');
+})->name('gallery');
+
+Route::get('/contact-us', function () {
+    return view('contact-us');
+})->name('contact-us');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

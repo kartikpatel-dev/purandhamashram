@@ -116,13 +116,13 @@
                     <div class="home-box-main">
                         <div class="box-icon"><i class="bi bi-cpu"></i></div>
                         <div class="box-title">
-                            <a class="box-title-link" href="#">About Us</a>
+                            <a class="box-title-link" href="{{ route('about-us') }}">About Us</a>
                         </div>
                         <div class="box-content">
                             <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
                         </div>
                         <div class="box-btn">
-                            <a class="box-btn-link" href="#">Read More</a>
+                            <a class="box-btn-link" href="{{ route('about-us') }}">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -131,13 +131,13 @@
                     <div class="home-box-main">
                         <div class="box-icon"><i class="bi bi-camera"></i></div>
                         <div class="box-title">
-                            <a class="box-title-link" href="#">Gallery</a>
+                            <a class="box-title-link" href="{{ route('gallery') }}">Gallery</a>
                         </div>
                         <div class="box-content">
                             <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
                         </div>
                         <div class="box-btn">
-                            <a class="box-btn-link" href="#">Read More</a>
+                            <a class="box-btn-link" href="{{ route('gallery') }}">Read More</a>
                         </div>
                     </div>
                 </div>
@@ -146,13 +146,13 @@
                     <div class="home-box-main">
                         <div class="box-icon"><i class="bi bi-chat-dots"></i></div>
                         <div class="box-title">
-                            <a class="box-title-link" href="#">Contact Us</a>
+                            <a class="box-title-link" href="{{ route('contact-us') }}">Contact Us</a>
                         </div>
                         <div class="box-content">
                             <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
                         </div>
                         <div class="box-btn">
-                            <a class="box-btn-link" href="#">Read More</a>
+                            <a class="box-btn-link" href="{{ route('contact-us') }}">Read More</a>
                         </div>
                     </div>
                 </div>

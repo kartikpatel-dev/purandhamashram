@@ -18,9 +18,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'mobile_number',
+        'country_code',
+        'gender',
+        'age',
+        'address',
+        'city',
+        'country',
+        'occupation',
+        'avatar',
+        'status',
     ];
 
     /**
@@ -41,4 +52,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * This fuction is used to role relationship with user.
+     *
+     */
+    public function role()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
 }

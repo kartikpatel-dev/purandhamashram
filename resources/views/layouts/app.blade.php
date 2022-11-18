@@ -18,6 +18,7 @@
 
     <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -39,6 +40,7 @@
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
 
     <!-- Template Main JS File -->
     <script src="{{ asset('js/main.js') }}"></script>
