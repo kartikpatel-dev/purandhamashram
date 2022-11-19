@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\Auth\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,4 @@ Route::get('/contact-us', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

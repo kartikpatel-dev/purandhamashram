@@ -47,7 +47,7 @@
                                 <div class="col-md-6">
                                     <input id="last_name" type="text"
                                         class="form-control @error('last_name') is-invalid @enderror" name="last_name"
-                                        value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                        value="{{ old('last_name') }}" required autocomplete="last_name">
 
                                     @error('last_name')
                                         <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                 <div class="col-md-6">
                                     <input id="mobile_number" type="text"
                                         class="form-control @error('mobile_number') is-invalid @enderror" name="mobile_number"
-                                        value="{{ old('mobile_number') }}" required autocomplete="mobile_number" autofocus>
+                                        value="{{ old('mobile_number') }}" required autocomplete="mobile_number">
 
                                     @error('mobile_number')
                                         <span class="invalid-feedback" role="alert">
@@ -120,7 +120,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-secondary">
+                                    <button type="submit" class="btn btn-dark">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
