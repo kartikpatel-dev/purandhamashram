@@ -21,77 +21,20 @@
                         <h3>Gallery</h3>
                     </div>
                     <div class="photo-gallery">
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-8.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-8.jpg') }}" class="" alt="Gallery 8">
-                            </a>
-                        </div>
+                        @forelse($galleries as $gallery)
+                            <div class="pg-item">
+                                <a href="{{ asset('images/' . $gallery->file_path) }}" class="glightbox">
+                                    <img src="{{ asset('images/' . $gallery->file_path) }}" class=""
+                                        alt="{{ $gallery->file_name }}">
+                                </a>
+                            </div>
+                        @empty
+                            <p>No data found.</p>
+                        @endforelse
+                    </div>
 
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-2.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-2.jpg') }}" class="" alt="Gallery 2">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-3.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-3.jpg') }}" class="" alt="Gallery 3">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-4.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-4.jpg') }}" class="" alt="Gallery 4">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-3.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-3.jpg') }}" class="" alt="Gallery 5">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-6.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-6.jpg') }}" class="" alt="Gallery 6">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-1.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-1.jpg') }}" class="" alt="Gallery 7">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-8.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-8.jpg') }}" class="" alt="Gallery 8">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-9.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-9.jpg') }}" class="" alt="Gallery 9">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-10.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-10.jpg') }}" class="" alt="Gallery 10">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-4.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-4.jpg') }}" class="" alt="Gallery 11">
-                            </a>
-                        </div>
-
-                        <div class="pg-item">
-                            <a href="{{ asset('images/gallery-1.jpg') }}" class="glightbox">
-                                <img src="{{ asset('images/gallery-1.jpg') }}" class="" alt="Gallery 1">
-                            </a>
-                        </div>
+                    <div class="pg-pagination">
+                        {!! $galleries->links('pagination::bootstrap-4') !!}
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,10 @@ Route::get('/about-us', function () {
     return view('about-us');
 })->name('about-us');
 
-Route::get('/gallery', function () {
+/* Route::get('/gallery', function () {
     return view('gallery');
-})->name('gallery');
+})->name('gallery'); */
+Route::get('gallery', [GalleryController::class, 'index'])->name('gallery');
 
 Route::get('/contact-us', function () {
     return view('contact-us');

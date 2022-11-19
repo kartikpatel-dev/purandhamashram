@@ -1030,6 +1030,25 @@ section {
   -ms-transform: rotateY(180deg) scale(1);
   -webkit-transform: rotateY(180deg) scale(1);
 }
+.gallery .pg-pagination {
+  margin-top: 30px;
+}
+.gallery .pg-pagination .pagination {
+  justify-content: center;
+  grid-column-gap: 10px;
+}
+.gallery .pg-pagination .page-link {
+  color: var(--color-secondary);
+  box-shadow: unset;
+}
+.gallery .pg-pagination .disabled > .page-link {
+  color: var(--color-default);
+}
+.gallery .pg-pagination .active > .page-link {
+  background-color: var(--color-darkgray);
+  border-color: var(--color-default);
+  color: var(--bs-white);
+}
 
 /*--------------------------------------------------------------
 # Contact Us
