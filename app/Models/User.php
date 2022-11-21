@@ -23,15 +23,18 @@ class User extends Authenticatable
         'email',
         'password',
         'mobile_number',
-        'country_code',
+        'dial_code',
         'gender',
-        'age',
+        'birth_date',
         'address',
         'city',
         'country',
         'occupation',
+        'guru',
+        'reference_person',
         'avatar',
         'status',
+        'profile_update',
     ];
 
     /**

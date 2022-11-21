@@ -201,6 +201,11 @@ h3 {
   color: var(--color-primary);
   font-size: 18px;
 }
+.dropdown-topbar .avatar-person-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
 
 .header.sticked {
   position: fixed !important;
@@ -1183,6 +1188,10 @@ section {
 }
 .auth-section .btn-link {
   color: var(--color-default);
+}
+.auth-section .select-dial-code {
+  width: 80px;
+  margin-right: 10px;
 }
 
 .dropdown-topbar .dropdown-item {

@@ -16,6 +16,8 @@
     <div class="container py-5 auth-section">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @include('layouts.messages')
+                
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>
 

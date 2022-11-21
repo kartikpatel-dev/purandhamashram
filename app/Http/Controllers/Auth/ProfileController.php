@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\DialCodeTrait;
+use Illuminate\Http\Request;
+use Session, Redirect, File;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -30,25 +32,8 @@ class ProfileController extends Controller
     public function index()
     {
         $dialCodes = $this->dialCodes();
-        
-        return view('auth.profile', compact('dialCodes'));
-    }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile_number' => ['required', 'numeric', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return view('auth.profile', compact('dialCodes'));
     }
 
     /**
@@ -57,16 +42,65 @@ class ProfileController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function profileUpdate(Request $request)
     {
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'mobile_number' => $data['mobile_number'],
-            'password' => Hash::make($data['password']),
+        $validated = $request->validate([
+            // 'first_name' => ['required', 'string', 'max:255'],
+            // 'last_name' => ['required', 'string', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255'],
+            // 'mobile_number' => ['required', 'numeric'],
+            // 'country_code' => ['required', 'string', 'max:5'],
+            'gender' => ['required', 'string', 'max:10'],
+            'age' => ['required', 'string', 'max:5'],
+            'address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:25'],
+            'country' => ['required', 'string', 'max:25'],
+            'occupation' => ['required', 'string', 'max:100'],
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:100000',
         ]);
 
-        return $user;
+        $user = User::findOrFail(Auth::user()->id);
+
+        $user->gender = $request->gender;
+        $user->age = $request->age;
+        $user->address = $request->address;
+        $user->city = $request->city;
+        $user->country = $request->country;
+        $user->occupation = $request->occupation;
+        $user->profile_update = '1';
+
+        // Check if a profile image has been uploaded
+        if ($request->has('avatar')) {
+
+            $destinationPath = storage_path('app/public/');
+
+            if (!empty($user->avatar) && File::exists($destinationPath . $user->avatar)) {
+                File::delete($destinationPath . $user->avatar);
+            }
+
+            $image = $request->file('avatar');
+            $fileName = Str::slug(Auth::user()->first_name . '-' . Auth::user()->last_name) . '-' . time();
+
+            $filePath = $fileName . '.' . $image->getClientOriginalExtension();
+
+            $image->storeAs('public', $filePath);
+
+            // Set user profile image path in database to filePath
+            $user->avatar = $filePath;
+        }
+
+        $user->save();
+
+        if ($user->id > 0) :
+            Session::flash('messageType', 'success');
+            Session::flash('message', 'Pofile updated successfully.');
+
+            return redirect::route('profile');
+        else :
+            Session::flash('messageType', 'error');
+            Session::flash('message', 'Can\'t update user.');
+
+            return redirect::back()->withInput();
+        endif;
     }
 }

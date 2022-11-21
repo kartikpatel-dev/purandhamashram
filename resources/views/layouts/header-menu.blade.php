@@ -21,20 +21,32 @@
             </div>
 
             @guest
-                <a href="#" class="person-circle" title="Login">
+                <a href="{{ route('login') }}" class="person-circle" title="Login">
                     <i class="bi bi-person-circle"></i>
                 </a>
             @else
                 <div class="dropdown-topbar">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle1 person-circle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->first_name }}
+                        @if (!empty(Auth::user()->avatar))
+                            <img src="{{ env('APP_URL').Storage::url('app/public/'.Auth::user()->avatar) }}" alt="{{ Auth::user()->first_name }}" class="avatar-person-circle" />
+                        @else
+                            <i class="bi bi-person-circle"></i>
+                        @endif
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li>
+                            <a class="dropdown-item bg-light">{{ Auth::user()->first_name }}</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('home') }}">
                                 {{ __('Dashboard') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile') }}">
+                                {{ __('Profile') }}
                             </a>
                         </li>
                         <li>
