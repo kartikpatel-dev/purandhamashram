@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Session, Redirect, Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -39,17 +41,61 @@ class LoginController extends Controller
     }
 
     /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        $login = request()->input('email');
+
+        if (is_numeric($login)) {
+            $field = 'mobile_number';
+        } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        } else {
+            $field = 'email';
+        }
+
+        request()->merge([$field => $login]);
+
+        return $field;
+    }
+
+    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function credentials(Request $request)
+    /* public function credentials(Request $request)
     {
         return [
             'email' => $request->email,
             'password' => $request->password,
             'status' => 'Active',
         ];
+    } */
+    protected function credentials(Request $request)
+    {
+        if (is_numeric($request->get('email'))) {
+            return ['mobile_number' => $request->get('email'), 'password' => $request->get('password')];
+        } elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            return ['email' => $request->get('email'), 'password' => $request->get('password')];
+        }
+
+        return ['email' => $request->get('email'), 'password' => $request->get('password')];
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if ($user->status == 'Deactivate') {
+            Auth::logout();
+
+            Session::flash('messageType', 'error');
+            Session::flash('message', 'You account is not approved yet, please contact admin.');
+
+            return redirect::route('login');
+        }
     }
 }

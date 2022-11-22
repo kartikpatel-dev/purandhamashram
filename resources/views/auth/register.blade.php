@@ -81,7 +81,8 @@
                                 <div class="col-md-6">
                                     <div class="d-flex align-items-start">
                                         <select id="dial_code" name="dial_code"
-                                            class="form-select select-dial-code @error('dial_code') is-invalid @enderror">
+                                            class="form-select select-dial-code @error('dial_code') is-invalid @enderror"
+                                            required>
                                             @forelse($dialCodes as $dialCode)
                                                 <option value="{{ $dialCode }}">
                                                     {{ '+' . $dialCode }}</option>
@@ -114,12 +115,12 @@
                                     <div class=" @error('gender') is-invalid @enderror">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="gender" id="gender_male"
-                                                value="Male" {{ old('gender') == 'Male' ? 'checked' : '' }}>
+                                                value="Male" {{ old('gender') == 'Male' ? 'checked' : '' }} required>
                                             <label class="form-check-label" for="gender_male">Male</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="gender" id="Female"
-                                                value="Female" {{ old('gender') == 'Female' ? 'checked' : '' }}>
+                                                value="Female" {{ old('gender') == 'Female' ? 'checked' : '' }} required>
                                             <label class="form-check-label" for="Female">Female</label>
                                         </div>
                                     </div>
@@ -133,13 +134,13 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="age"
+                                <label for="birth_date"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Birth Date') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="birth_date" type="date"
                                         class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
-                                        value="{{ old('birth_date') }}" autocomplete="birth_date">
+                                        value="{{ old('birth_date') }}" autocomplete="birth_date" required>
 
                                     @error('birth_date')
                                         <span class="invalid-feedback" role="alert">
@@ -154,9 +155,8 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text"
-                                        class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address') }}" autocomplete="address">
+                                    <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" cols="30"
+                                        rows="2" autocomplete="address" required>{{ old('address') }}</textarea>
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
@@ -173,7 +173,7 @@
                                 <div class="col-md-6">
                                     <input id="city" type="text"
                                         class="form-control @error('city') is-invalid @enderror" name="city"
-                                        value="{{ old('city') }}" autocomplete="city">
+                                        value="{{ old('city') }}" autocomplete="city" required>
 
                                     @error('city')
                                         <span class="invalid-feedback" role="alert">
@@ -190,7 +190,7 @@
                                 <div class="col-md-6">
                                     <input id="country" type="text"
                                         class="form-control @error('country') is-invalid @enderror" name="country"
-                                        value="{{ old('country') }}" autocomplete="country">
+                                        value="{{ old('country') }}" autocomplete="country" required>
 
                                     @error('country')
                                         <span class="invalid-feedback" role="alert">
@@ -207,7 +207,7 @@
                                 <div class="col-md-6">
                                     <input id="occupation" type="text"
                                         class="form-control @error('occupation') is-invalid @enderror" name="occupation"
-                                        value="{{ old('occupation') }}" autocomplete="occupation">
+                                        value="{{ old('occupation') }}" autocomplete="occupation" required>
 
                                     @error('occupation')
                                         <span class="invalid-feedback" role="alert">
@@ -223,7 +223,7 @@
 
                                 <div class="col-md-6">
                                     <select id="guru" name="guru"
-                                        class="form-select @error('guru') is-invalid @enderror">
+                                        class="form-select @error('guru') is-invalid @enderror" required>
                                         <option value="">{{ __('-- Guru --') }}</option>
                                         @forelse($guruLists as $guru)
                                             <option value="{{ $guru }}"
@@ -245,16 +245,20 @@
                                 <label for="reference_person"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Reference Person') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="reference_person" type="text"
-                                        class="form-control @error('reference_person') is-invalid @enderror" name="reference_person"
-                                        value="{{ old('reference_person') }}" autocomplete="reference_person">
+                                <div class="col-md-6 reference_person_main">
+                                    <div>
+                                        <input id="reference_person" type="text"
+                                            class="form-control @error('reference_person') is-invalid @enderror"
+                                            name="reference_person" value="{{ old('reference_person') }}"
+                                            autocomplete="off" required>
 
-                                    @error('reference_person')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        @error('reference_person')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="reference_person_list"></div>
                                 </div>
                             </div>
 
@@ -264,7 +268,7 @@
 
                                 <div class="col-md-6">
                                     <input type="file" class="form-control @error('avatar') is-invalid @enderror"
-                                        id="avatar" name="avatar" />
+                                        id="avatar" name="avatar" required accept="image/*" />
 
                                     @error('avatar')
                                         <span class="invalid-feedback" role="alert">
@@ -320,4 +324,53 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        jQuery(document).ready(function() {
+            // search start
+            jQuery(document).on('keyup', '#reference_person', function(e) {
+                e.preventDefault();
+
+                search_data();
+            });
+
+            function search_data() {
+                let searchKeryword = jQuery('#reference_person').val();
+
+                jQuery('.reference_person_list').html('');
+                if (searchKeryword.length >= 3) {
+                    let data = {
+                        'searchKeryword': searchKeryword
+                    };
+
+                    jQuery.ajax({
+                        url: "<?php echo route('user.autocomplete.search'); ?>?",
+                        data: data,
+                        cache: false,
+                        beforeSend: function() {
+                            // Show image container
+                            // jQuery("#loader").show();
+                        },
+                        success: function(response) {
+                            // console.log(response);
+                            jQuery('.reference_person_list').html(response.users);
+                        },
+                        complete: function(data) {
+                            // Hide image container
+                            // jQuery("#loader").hide();
+                        }
+                    });
+                }
+            }
+            // search end
+
+            jQuery(document).on('click', '.rp_list li', function(e) {
+                var ref_per = jQuery(this).text();
+                jQuery('#reference_person').val(ref_per);
+                jQuery('.reference_person_list').html('');
+            });
+        });
+    </script>
 @endsection

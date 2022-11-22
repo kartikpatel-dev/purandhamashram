@@ -69,40 +69,42 @@
                         <h2>Announcement</h2>
                     </div>
                     <div class="announcement-list">
-                        <div class="announcement-scroll">
-                            <a class="announcement-item">
-                                <span class="announcement-title">Ipsum is simply dummy</span>
-                                <span class="announcement-date">17 November 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">Aldus PageMaker including</span>
-                                <span class="announcement-date">20 November 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">Lorem Isimply dummy</span>
-                                <span class="announcement-date">01 December 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">Lorem Aldus PageMaker includingply dummy</span>
-                                <span class="announcement-date">08 December 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">Lorem Ipsum is simply dummy</span>
-                                <span class="announcement-date">14 December 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">printer took a gal</span>
-                                <span class="announcement-date">18 December 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">Lorem Ipsum is dummy</span>
-                                <span class="announcement-date">25 December 2022</span>
-                            </a>
-                            <a class="announcement-item">
-                                <span class="announcement-title">printer took a gal is simply</span>
-                                <span class="announcement-date">27 December 2022</span>
-                            </a>
-                        </div>
+                        <a @auth href="{{ route('announcement') }}" @endauth>
+                            <div class="announcement-scroll">
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Ipsum is simply dummy</span>
+                                    <span class="announcement-date">17 November 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Aldus PageMaker including</span>
+                                    <span class="announcement-date">20 November 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Lorem Isimply dummy</span>
+                                    <span class="announcement-date">01 December 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Lorem Aldus PageMaker includingply dummy</span>
+                                    <span class="announcement-date">08 December 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Lorem Ipsum is simply dummy</span>
+                                    <span class="announcement-date">14 December 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">printer took a gal</span>
+                                    <span class="announcement-date">18 December 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">Lorem Ipsum is dummy</span>
+                                    <span class="announcement-date">25 December 2022</span>
+                                </div>
+                                <div class="announcement-item">
+                                    <span class="announcement-title">printer took a gal is simply</span>
+                                    <span class="announcement-date">27 December 2022</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

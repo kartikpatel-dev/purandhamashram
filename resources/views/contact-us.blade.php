@@ -108,7 +108,7 @@
 
     <section id="map" class="map py-0">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d8361.153420436123!2d69.94410046183516!3d22.06201013057865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1ssathariram%2C%20Ghunda%2C%20JamJodhpur%2C%20Jamnagar!5e0!3m2!1sen!2sin!4v1668775847060!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d118340.3890664601!2d69.9416534!3d22.0443482!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3957a128eec7eb13%3A0xb22ca0c2123ae273!2sPuran%20Dham%2C%20Ghuneshwar%2C%20Gujarat%20360515!5e0!3m2!1sen!2sin!4v1669116326368!5m2!1sen!2sin"
             allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 @endsection

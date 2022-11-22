@@ -98,8 +98,10 @@ class RegisterController extends Controller
             'occupation' => ['required', 'string', 'max:100'],
             'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:100000',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'avatar.max' => 'The :attribute must not be greater than 5MB'
         ]);
     }
 

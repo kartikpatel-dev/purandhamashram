@@ -3,11 +3,11 @@
         <div class="contact-info d-flex align-items-center">
             <a href="mailto:info@purandhamashram.com" class="text-white d-flex group-link-underline">
                 <i class="bi bi-envelope d-flex align-items-center"></i>
-                <span class="link-underline ms-2">info@purandhamashram.com</span>
+                <span class="link-underline ms-2">{{ __('info@purandhamashram.com') }}</span>
             </a>
             <a href="tel:9876543210" class="text-white d-flex group-link-underline">
                 <i class="bi bi-phone d-flex align-items-center ms-4"></i>
-                <span class="link-underline ms-2">+91 98765 43210</span>
+                <span class="link-underline ms-2">{{ __('+91 98765 43210') }}</span>
             </a>
         </div>
         <div class="d-none d-md-flex align-items-center">
@@ -29,7 +29,8 @@
                     <a id="navbarDropdown" class="nav-link dropdown-toggle1 person-circle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         @if (!empty(Auth::user()->avatar))
-                            <img src="{{ env('APP_URL').Storage::url('app/public/'.Auth::user()->avatar) }}" alt="{{ Auth::user()->first_name }}" class="avatar-person-circle" />
+                            <img src="{{ env('APP_URL') . Storage::url('app/public/' . Auth::user()->avatar) }}"
+                                alt="{{ Auth::user()->first_name }}" class="avatar-person-circle" />
                         @else
                             <i class="bi bi-person-circle"></i>
                         @endif
@@ -77,21 +78,33 @@
             <ul>
                 <li>
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'front.home' ? 'active' : '' }}"
-                        href="{{ route('front.home') }}">Home</a>
+                        href="{{ route('front.home') }}">{{ __('Home') }}</a>
                 </li>
+                @auth
+                    <li>
+                        <a class="nav-link scrollto {{ Route::currentRouteName() == 'announcement' ? 'active' : '' }}"
+                            href="{{ route('announcement') }}">{{ __('Announcement') }}</a>
+                    </li>
+                @endauth
                 <li>
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'about-us' ? 'active' : '' }}"
-                        href="{{ route('about-us') }}">About Us</a>
+                        href="{{ route('about-us') }}">{{ __('About Us') }}</a>
                 </li>
                 <li>
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'gallery' ? 'active' : '' }}"
-                        href="{{ route('gallery') }}">Gallery</a>
+                        href="{{ route('gallery') }}">{{ __('Gallery') }}</a>
                 </li>
-                <li><a class="nav-link scrollto" href="https://www.youtube.com/" target="_blank">Video</a></li>
+                <li><a class="nav-link scrollto" href="https://www.youtube.com/" target="_blank">{{ __('Video') }}</a></li>
                 <li>
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'contact-us' ? 'active' : '' }}"
-                        href="{{ route('contact-us') }}">Contact Us</a>
+                        href="{{ route('contact-us') }}">{{ __('Contact Us') }}</a>
                 </li>
+                @auth
+                    <li class="ashram-visitor">
+                        <a class="nav-link scrollto {{ Route::currentRouteName() == 'Ashram.Visitor' ? 'active' : '' }}"
+                            href="#">{{ !empty(Auth::user()->visitor_status) ? __('Check Out') : __('Check In') }}</a>
+                    </li>
+                @endauth
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

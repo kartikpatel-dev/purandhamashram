@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AshramVisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +35,14 @@ Route::get('/contact-us', function () {
     return view('contact-us');
 })->name('contact-us');
 
+Route::get('/user-autocomplete-search', [UserController::class, 'autocompleteSearch'])->name('user.autocomplete.search');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-// Route::put('/profile', [ProfileController::class, 'profileUpdate']);
+Route::get('/announcement', [AnnouncementController::class, 'index'])->name('announcement');
+Route::get('/ashram-visitor', [AshramVisitorController::class, 'index'])->name('Ashram.Visitor');
+Route::post('/ashram-visitor', [AshramVisitorController::class, 'create']);
+Route::put('/ashram-visitor', [AshramVisitorController::class, 'update']);

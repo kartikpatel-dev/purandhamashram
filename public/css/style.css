@@ -1197,3 +1197,88 @@ section {
 .dropdown-topbar .dropdown-item {
   margin-left: 0;
 }
+
+.reference_person_main {
+  position: relative;
+}
+.reference_person_list {
+  background-color: var(--bs-gray-300);
+  position: absolute;
+  width: 100%;
+  display: inline-block;
+  max-height: 170px;
+  overflow-y: auto;
+}
+.reference_person_list ul {
+  list-style-type: none;
+  padding-left: 0;
+  border: 1px solid var(--bs-gray-500);
+  margin-bottom: 0;
+}
+.reference_person_list ul li {
+  padding: 5px;
+  border-bottom: 1px solid var(--color-default);
+  cursor: pointer;
+}
+.reference_person_list ul li:last-child {
+  border-bottom: 0;
+}
+.reference_person_list ul li:hover {
+  background-color: var(--bs-gray-500);
+}
+
+.announcement .accordion-item {
+  border: 1px solid var(--color-darkgray);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.announcement .accordion-flush .accordion-item:first-child {
+  border-top: 1px solid var(--color-darkgray);
+}
+.announcement .accordion-flush .accordion-item:last-child {
+  border-bottom: 1px solid var(--color-darkgray);
+} 
+.announcement .accordion-flush .accordion-item .accordion-button.collapsed {
+  border-radius: 6px;
+  background-color: var(--color-default);
+  color: var(--bs-white);
+}
+.announcement .accordion-flush .accordion-item .accordion-button {
+  border-radius: 6px 6px 0 0;
+}
+.announcement .accordion-button {
+  box-shadow: unset;
+  border-radius: 6px;
+}
+.announcement .accordion-button .announcement-title {
+  font-size: 18px;
+}
+.announcement .accordion-button::after {
+  background-color: var(--bs-white);
+  margin-left: 10px;
+}
+.announcement .accordion-button:not(.collapsed) {
+  color: var(--bs-white);
+  background-color: var(--color-darkgray);
+}
+.announcement .announcement-date {
+  margin-left: auto;
+  width: 150px;
+  text-align: right;
+}
+
+.header .ashram-visitor a {
+  color: var(--bs-white);
+  background-color: var(--color-default);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+.header .ashram-visitor a::before {
+  content: unset;
+}
+.header .ashram-visitor a.active, 
+.header .ashram-visitor a:hover {
+  background-color: var(--color-secondary);
+  color: var(--bs-white);
+}
