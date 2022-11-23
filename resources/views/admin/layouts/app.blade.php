@@ -78,6 +78,60 @@
 
                             <div class="post"></div>
 
+                            <!-- User menu start -->
+                        @php
+                        $userMenuOpen = '';
+                        $userMenuActive = '';
+
+                        $userLinkActive = '';
+                        $approvUserActive = '';
+                      @endphp
+
+                      @if( request()->routeIs('admin.users.index') || request()->is('users/*') || request()->routeIs('admin.users.waiting.approval') )
+                        @php
+                          $userMenuOpen = 'menu-open';
+                          $userMenuActive = 'active';
+                        @endphp
+                      @endif
+
+                      @if( request()->routeIs('admin.users.index') || request()->is('users/*') )
+                        @php
+                          $userLinkActive = 'active';
+                        @endphp
+                      @endif
+
+                      @if( request()->routeIs('admin.users.waiting.approval') || request()->is('users.waiting.approval/*') )
+                        @php
+                          $approvUserActive = 'active';
+                        @endphp
+                      @endif
+                      <li class="nav-item {{ $userMenuOpen }}">
+                        <a href="javarscript:;" class="nav-link {{ $userMenuActive }}">
+                          <i class="nav-icon fas fa-edit"></i>
+                          <p>
+                            {{ __('Users') }}
+                            <i class="right fas fa-angle-left"></i>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link {{ $userLinkActive }}">
+                              <i class="far fa-copy nav-icon"></i>
+                              <p>{{ __('Users') }}</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="{{ route('admin.users.waiting.approval') }}" class="nav-link {{ $approvUserActive }}">
+                              <i class="fas fa-th nav-icon"></i>
+                              <p>{{ __('Waiting Approval') }}</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <!-- User menu end -->
+                      
+                      <div class="post"></div>
+
                             <li class="nav-item">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
@@ -191,6 +245,7 @@
             bsCustomFileInput.init();
         });
     </script>
+    @yield('js')
 </body>
 
 </html>

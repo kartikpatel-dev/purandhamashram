@@ -1,0 +1,12 @@
+.note-editor.note-frame .note-editing-area .note-editable { min-height: 200px; }
+.max-height-150 { max-height: 150px; }
+.post-list-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.post-list-item .btn {
+    position: absolute;
+    right: 0;
+}

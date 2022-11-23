@@ -3,27 +3,39 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\Role;
 
-use App\Repositories\Interfaces\UserRepositoryInterface;
-
-class UserRepository implements UserRepositoryInterface
+class UserRepository
 {
-    public function getAll($perPage=20) 
+    public function getAll($perPage = 20, $roleSlug = '', $status = '')
     {
-        return User::paginate($perPage);
+        $users = User::latest();
+
+        if ($roleSlug) {
+            $RS_Results_Role = Role::with('users')->where('slug', $roleSlug)
+                ->firstOrFail();
+
+            $users = $RS_Results_Role->users()->latest();
+        }
+
+        if (!empty($status)) {
+            $users->where('status', $status);
+        }
+
+        return $users->paginate($perPage);
     }
 
-    public function getById($orderId) 
+    public function getById($orderId)
     {
-        return User::findOrFail($orderId);
+        return User::with('role')->findOrFail($orderId);
     }
 
-    public function StoreUpdate($orderDetails, $id=0) 
+    public function StoreUpdate($orderDetails, $id = 0)
     {
         return User::create($orderDetails);
     }
 
-    public function delete($orderId) 
+    public function delete($orderId)
     {
         User::destroy($orderId);
     }
