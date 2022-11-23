@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\AshramVisitor;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class AshramVisitorRepository
 {
@@ -23,12 +24,14 @@ class AshramVisitorRepository
 
         $RS_Row->user_id = auth()->user()->id;
         $RS_Row->checkin_date = $data->check_in_date;
-        // $RS_Row->checkin_time = $data->check_in_time;
+        $RS_Row->checkin_time = Carbon::parse($data->check_in_time)->format('H:i:s');
+        $RS_Row->checkout_date = $data->check_out_date;
+        $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
         $RS_Row->number_of_person = $data->number_of_person;
 
         $RS_Row->save();
-        
-        if( !empty($RS_Row) ):
+
+        if (!empty($RS_Row)) :
             // user visitor status change
             $user = User::findOrFail(auth()->user()->id);
             $user->visitor_status = '1';
@@ -36,13 +39,13 @@ class AshramVisitorRepository
 
             return array(
                 'messageType' => 'success',
-                'message' => 'Check In successfully.', 
+                'message' => 'Check In successfully.',
                 'id' => $RS_Row->id
             );
-        else:
+        else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t check in, try after sometime.', 
+                'message' => 'Can\'t check in, try after sometime.',
                 'id' => 0
             );
         endif;
@@ -50,14 +53,14 @@ class AshramVisitorRepository
 
     public function update($data, $id = 0)
     {
-        $RS_Row = $this->getById(2);
+        $RS_Row = $this->getById($data->ashram_visitor_id);
 
         $RS_Row->checkout_date = $data->check_out_date;
-        // $RS_Row->checkin_time = $data->check_in_time;
+        $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
 
         $RS_Row->save();
-        
-        if( !empty($RS_Row) ):
+
+        if (!empty($RS_Row)) :
             // user visitor status change
             $user = User::findOrFail(auth()->user()->id);
             $user->visitor_status = '0';
@@ -65,15 +68,25 @@ class AshramVisitorRepository
 
             return array(
                 'messageType' => 'success',
-                'message' => 'Check Out successfully.', 
+                'message' => 'Check Out successfully.',
                 'id' => $RS_Row->id
             );
-        else:
+        else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t check out, try after sometime.', 
+                'message' => 'Can\'t check out, try after sometime.',
                 'id' => 0
             );
         endif;
+    }
+
+    public function checkIn()
+    {
+        $RS_Row = array();
+        if (!empty(auth()->user()->visitor_status)) {
+            $RS_Row = auth()->user()->load(['visitorCheckIn']);
+        }
+
+        return $RS_Row;
     }
 }

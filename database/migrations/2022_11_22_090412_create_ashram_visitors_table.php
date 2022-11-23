@@ -18,8 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-            $table->dateTime('checkin_date');
-            $table->dateTime('checkout_date')->nullable();
+            $table->dateime('checkin_date');
+            $table->time('checkin_time');
+            $table->date('checkout_date')->nullable();
+            $table->time('checkout_time')->nullable();
             $table->string('number_of_person', 50)->nullable();
             $table->timestamps();
         });

@@ -102,7 +102,7 @@
                 @auth
                     <li class="ashram-visitor">
                         <a class="nav-link scrollto {{ Route::currentRouteName() == 'Ashram.Visitor' ? 'active' : '' }}"
-                            href="#">{{ !empty(Auth::user()->visitor_status) ? __('Check Out') : __('Check In') }}</a>
+                            href="{{ route('Ashram.Visitor') }}">{{ !empty(Auth::user()->visitor_status) ? __('Check Out') : __('Check In') }}</a>
                     </li>
                 @endauth
             </ul>

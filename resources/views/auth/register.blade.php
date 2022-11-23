@@ -138,9 +138,10 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Birth Date') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="birth_date" type="date"
+                                    <input id="birth_date" type="text"
                                         class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
-                                        value="{{ old('birth_date') }}" autocomplete="birth_date" required>
+                                        value="{{ old('birth_date') }}" autocomplete="birth_date" required
+                                        placeholder="yyyy-mm-dd" readonly>
 
                                     @error('birth_date')
                                         <span class="invalid-feedback" role="alert">
@@ -250,7 +251,7 @@
                                         <input id="reference_person" type="text"
                                             class="form-control @error('reference_person') is-invalid @enderror"
                                             name="reference_person" value="{{ old('reference_person') }}"
-                                            autocomplete="off" required>
+                                            autocomplete="off" required placeholder="Type name...">
 
                                         @error('reference_person')
                                             <span class="invalid-feedback" role="alert">
@@ -370,6 +371,15 @@
                 var ref_per = jQuery(this).text();
                 jQuery('#reference_person').val(ref_per);
                 jQuery('.reference_person_list').html('');
+            });
+
+            $("#birth_date").datepicker({
+                dateFormat: "yy-mm-dd",
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                changeMonth: true,
+                changeYear: true,
+                maxDate: "-1D"
             });
         });
     </script>

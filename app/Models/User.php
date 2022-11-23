@@ -64,4 +64,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
+
+    /**
+     * Get the last vistior status (Check In) associated with the user.
+     */
+    public function visitorCheckIn()
+    {
+        return $this->hasOne(AshramVisitor::class)->latest();
+    }
 }

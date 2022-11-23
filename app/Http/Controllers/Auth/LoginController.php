@@ -97,5 +97,9 @@ class LoginController extends Controller
 
             return redirect::route('login');
         }
+
+        if (Auth::user()->role[0]->name == 'Admin') {
+            return redirect()->route('admin.dashboard');
+        }
     }
 }

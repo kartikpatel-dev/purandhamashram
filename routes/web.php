@@ -46,3 +46,5 @@ Route::get('/announcement', [AnnouncementController::class, 'index'])->name('ann
 Route::get('/ashram-visitor', [AshramVisitorController::class, 'index'])->name('Ashram.Visitor');
 Route::post('/ashram-visitor', [AshramVisitorController::class, 'create']);
 Route::put('/ashram-visitor', [AshramVisitorController::class, 'update']);
+
+require __DIR__.'/admin.php';

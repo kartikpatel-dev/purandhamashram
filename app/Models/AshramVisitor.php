@@ -17,7 +17,9 @@ class AshramVisitor extends Model
     protected $fillable = [
         'user_id',
         'checkin_date',
+        'checkin_time',
         'checkout_date',
+        'checkin_time',
         'number_of_person',
     ];
 }

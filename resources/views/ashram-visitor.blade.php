@@ -24,6 +24,7 @@
                             @csrf
                             @if (!empty(Auth::user()->visitor_status))
                                 {{ method_field('PUT') }}
+                                <input type="hidden" name="ashram_visitor_id" value="{{ $RS_Result->visitorCheckIn->id }}">
                             @endif
 
                             @include('layouts.messages')
@@ -37,9 +38,11 @@
                                     <label for="check_in_date" class="form-label">{{ __('Date') }}</label>
 
                                     <input id="check_in_date" type="text"
-                                        class="form-control @error('check_in_date') is-invalid @enderror"
-                                        name="check_in_date" value="{{ old('check_in_date') }}"
-                                        autocomplete="check_in_date">
+                                        class="form-control check_in_out_date @error('check_in_date') is-invalid @enderror"
+                                        name="check_in_date"
+                                        value="{{ old('check_in_date', !empty($RS_Result->visitorCheckIn->checkin_date) ? $RS_Result->visitorCheckIn->checkin_date : date('Y-m-d')) }}"
+                                        autocomplete="check_in_date"
+                                        {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}>
 
                                     @error('check_in_date')
                                         <span class="invalid-feedback" role="alert">
@@ -52,9 +55,11 @@
                                     <label for="check_in_time" class="form-label">{{ __('Time') }}</label>
 
                                     <input id="check_in_time" type="text"
-                                        class="form-control @error('check_in_time') is-invalid @enderror"
-                                        name="check_in_time" value="{{ old('check_in_time') }}"
-                                        autocomplete="check_in_time">
+                                        class="form-control check_in_out_time @error('check_in_time') is-invalid @enderror"
+                                        name="check_in_time"
+                                        value="{{ old('check_in_time', !empty($RS_Result->visitorCheckIn->checkin_time) ? $RS_Result->visitorCheckIn->checkin_time : '') }}"
+                                        autocomplete="check_in_time"
+                                        {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}>
 
                                     @error('check_in_time')
                                         <span class="invalid-feedback" role="alert">
@@ -69,7 +74,9 @@
 
                                     <input id="number_of_person" type="text"
                                         class="form-control @error('number_of_person') is-invalid @enderror"
-                                        name="number_of_person" value="{{ old('number_of_person') }}">
+                                        name="number_of_person"
+                                        value="{{ old('number_of_person', !empty($RS_Result->visitorCheckIn->number_of_person) ? $RS_Result->visitorCheckIn->number_of_person : '') }}"
+                                        {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}>
 
                                     @error('number_of_person')
                                         <span class="invalid-feedback" role="alert">
@@ -79,45 +86,43 @@
                                 </div>
                             </div>
 
-                            @if (!empty(Auth::user()->visitor_status))
-                                <hr>
+                            <hr>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4 class="mb-3">Check Out</h4>
-                                    </div>
-
-                                    <div class="col-md-5 mb-3">
-                                        <label for="check_out_date" class="form-label">{{ __('Date') }}</label>
-
-                                        <input id="check_out_date" type="date"
-                                            class="form-control @error('check_out_date') is-invalid @enderror"
-                                            name="check_out_date" value="{{ old('check_out_date') }}"
-                                            autocomplete="check_out_date">
-
-                                        @error('check_out_date')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-3 mb-3">
-                                        <label for="check_out_time" class="form-label">{{ __('Time') }}</label>
-
-                                        <input id="check_out_time" type="time"
-                                            class="form-control @error('check_out_time') is-invalid @enderror"
-                                            name="check_out_time" value="{{ old('check_out_time') }}"
-                                            autocomplete="check_out_time">
-
-                                        @error('check_out_time')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 class="mb-3">Check Out</h4>
                                 </div>
-                            @endif
+
+                                <div class="col-md-5 mb-3">
+                                    <label for="check_out_date" class="form-label">{{ __('Date') }}</label>
+
+                                    <input id="check_out_date" type="text"
+                                        class="form-control check_in_out_date @error('check_out_date') is-invalid @enderror"
+                                        name="check_out_date" value="{{ old('check_out_date', !empty($RS_Result->visitorCheckIn->checkout_date) ? $RS_Result->visitorCheckIn->checkout_date : date('Y-m-d')) }}"
+                                        autocomplete="check_out_date">
+
+                                    @error('check_out_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="check_out_time" class="form-label">{{ __('Time') }}</label>
+
+                                    <input id="check_out_time" type="text"
+                                        class="form-control check_in_out_time @error('check_out_time') is-invalid @enderror"
+                                        name="check_out_time" value="{{ old('check_out_time', !empty($RS_Result->visitorCheckIn->checkout_time) ? $RS_Result->visitorCheckIn->checkout_time : '') }}"
+                                        autocomplete="check_out_time">
+
+                                    @error('check_out_time')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="row mb-0">
                                 <div class="col-md-12">
@@ -138,15 +143,24 @@
     <script>
         jQuery(document).ready(function() {
             jQuery('#check_in_date').datepicker({
-                format: "yyyy-mm-dd",
-                weekStart: 0,
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true,
-                orientation: "auto"
+                dateFormat: "yy-mm-dd",
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                changeMonth: true,
+                changeYear: true,
+                maxDate: "today"
             });
 
-            jQuery('#check_in_time').timepicker({
+            jQuery('#check_out_date').datepicker({
+                dateFormat: "yy-mm-dd",
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                changeMonth: true,
+                changeYear: true,
+                // minDate: "today"
+            });
+
+            jQuery('.check_in_out_time').timepicker({
                 minuteStep: 1,
                 // secondStep: 5,
                 // showInputs: false,

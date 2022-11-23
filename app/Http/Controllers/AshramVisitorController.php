@@ -31,7 +31,9 @@ class AshramVisitorController extends Controller
      */
     public function index()
     {
-        return view('ashram-visitor');
+        $RS_Result = $this->ashramVisitorRepository->checkIn();
+        
+        return view('ashram-visitor', compact('RS_Result'));
     }
 
     /**
