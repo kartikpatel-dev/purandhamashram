@@ -39,7 +39,7 @@
                             class="btn btn-xs btn-primary mx-2"><i class="fas fa-edit"></i></a>
 
                         @if (Auth::user()->id != $user->id)
-                            <a href="javascript:;" title="Delete" data-id="{{ $user->id }}"
+                            <a href="javascript:;" title="Delete" data-title="User" data-id="{{ $user->id }}"
                                 data-url="{{ route('admin.users.destroy', $user->id) }}"
                                 class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
                         @endif

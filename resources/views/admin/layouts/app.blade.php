@@ -87,20 +87,20 @@
                         $approvUserActive = '';
                       @endphp
 
-                      @if( request()->routeIs('admin.users.index') || request()->is('users/*') || request()->routeIs('admin.users.waiting.approval') )
+                      @if( request()->routeIs('admin.users.index') || request()->is('admin.users/*') || request()->routeIs('admin.users.waiting.approval') )
                         @php
                           $userMenuOpen = 'menu-open';
                           $userMenuActive = 'active';
                         @endphp
                       @endif
 
-                      @if( request()->routeIs('admin.users.index') || request()->is('users/*') )
+                      @if( request()->routeIs('admin.users.index') || request()->is('admin.users/*') )
                         @php
                           $userLinkActive = 'active';
                         @endphp
                       @endif
 
-                      @if( request()->routeIs('admin.users.waiting.approval') || request()->is('users.waiting.approval/*') )
+                      @if( request()->routeIs('admin.users.waiting.approval') || request()->is('admin.users.waiting.approval/*') )
                         @php
                           $approvUserActive = 'active';
                         @endphp

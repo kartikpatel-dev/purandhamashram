@@ -41,11 +41,6 @@
                             <a class="dropdown-item bg-light">{{ Auth::user()->first_name }}</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('home') }}">
-                                {{ __('Dashboard') }}
-                            </a>
-                        </li>
-                        <li>
                             <a class="dropdown-item" href="{{ route('profile') }}">
                                 {{ __('Profile') }}
                             </a>

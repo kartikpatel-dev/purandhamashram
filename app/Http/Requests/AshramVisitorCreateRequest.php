@@ -28,7 +28,7 @@ class AshramVisitorCreateRequest extends FormRequest
             'check_in_time' => ['required', 'string'],
             'check_out_date' => ['required', 'date'],
             'check_out_time' => ['required', 'string'],
-            'number_of_person' => ['required', 'string', 'max:50'],
+            'number_of_person' => ['required', 'integer', 'min:1', 'max:50'],
         ];
     }
 }

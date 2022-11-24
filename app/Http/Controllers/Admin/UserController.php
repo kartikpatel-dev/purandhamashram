@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Traits\DialCodeTrait;
+use App\Traits\GuruListTrait;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     private $userRepository;
+    use DialCodeTrait, GuruListTrait;
 
     /**
      * Create a new controller instance.
@@ -34,7 +40,7 @@ class UserController extends Controller
 
         if ($request->ajax()) {
 
-            $users = $this->userRepository->getAll(5, 'user', 'Active');
+            $users = $this->userRepository->getAll(20, 'user', 'Active');
 
             return response()
                 ->json([
@@ -52,7 +58,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $dialCodes = $this->dialCodes();
+        $guruLists = $this->guruList();
+
+        return view('admin.users.create-edit', compact('dialCodes', 'guruLists'));
     }
 
     /**
@@ -61,9 +70,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        // Retrieve the validated input data...
+        $request->validated();
+
+        $response = $this->userRepository->store($request);
+
+        Session::flash('messageType', $response['messageType']);
+        Session::flash('message', $response['message']);
+
+        return !empty($response['id']) ?
+            Redirect::route('admin.users.show', $response['id']) :
+            Redirect::back();
     }
 
     /**
@@ -75,7 +94,7 @@ class UserController extends Controller
     public function show($id)
     {
         $RS_Row = $this->userRepository->getByID($id);
-        
+
         return view('admin.users.show', compact('RS_Row'));
     }
 
@@ -87,7 +106,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $dialCodes = $this->dialCodes();
+        $guruLists = $this->guruList();
+
+        $RS_Row = $this->userRepository->getByID($id);
+
+        return view('admin.users.create-edit', compact('dialCodes', 'guruLists', 'RS_Row'));
     }
 
     /**
@@ -97,9 +121,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        // Retrieve the validated input data...
+        $request->validated();
+
+        $response = $this->userRepository->update($request, $id);
+
+        Session::flash('messageType', $response['messageType']);
+        Session::flash('message', $response['message']);
+
+        return !empty($response['id']) ?
+            Redirect::route('admin.users.show', $response['id']) :
+            Redirect::back();
     }
 
     /**
@@ -110,7 +144,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->userRepository->delete($id);
+
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 
 
@@ -123,7 +162,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-            $users = $this->userRepository->getAll(5, 'user', 'Deactivate');
+            $users = $this->userRepository->getAll(20, 'user', 'Deactivate');
 
             return response()
                 ->json([

@@ -95,7 +95,7 @@
                                             <input id="mobile_number" type="text"
                                                 class="form-control @error('mobile_number') is-invalid @enderror"
                                                 name="mobile_number" value="{{ old('mobile_number') }}" required
-                                                autocomplete="mobile_number">
+                                                autocomplete="mobile_number" onkeypress="return isNumber(event)">
 
                                             @error('mobile_number')
                                                 <span class="invalid-feedback" role="alert">
@@ -119,9 +119,9 @@
                                             <label class="form-check-label" for="gender_male">Male</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="Female"
+                                            <input class="form-check-input" type="radio" name="gender" id="gender_female"
                                                 value="Female" {{ old('gender') == 'Female' ? 'checked' : '' }} required>
-                                            <label class="form-check-label" for="Female">Female</label>
+                                            <label class="form-check-label" for="gender_female">Female</label>
                                         </div>
                                     </div>
 

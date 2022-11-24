@@ -76,7 +76,8 @@
                                         class="form-control @error('number_of_person') is-invalid @enderror"
                                         name="number_of_person"
                                         value="{{ old('number_of_person', !empty($RS_Result->visitorCheckIn->number_of_person) ? $RS_Result->visitorCheckIn->number_of_person : '') }}"
-                                        {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}>
+                                        {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}
+                                        onkeypress="return isNumber(event)">
 
                                     @error('number_of_person')
                                         <span class="invalid-feedback" role="alert">
@@ -98,7 +99,8 @@
 
                                     <input id="check_out_date" type="text"
                                         class="form-control check_in_out_date @error('check_out_date') is-invalid @enderror"
-                                        name="check_out_date" value="{{ old('check_out_date', !empty($RS_Result->visitorCheckIn->checkout_date) ? $RS_Result->visitorCheckIn->checkout_date : date('Y-m-d')) }}"
+                                        name="check_out_date"
+                                        value="{{ old('check_out_date', !empty($RS_Result->visitorCheckIn->checkout_date) ? $RS_Result->visitorCheckIn->checkout_date : date('Y-m-d')) }}"
                                         autocomplete="check_out_date">
 
                                     @error('check_out_date')
@@ -113,7 +115,8 @@
 
                                     <input id="check_out_time" type="text"
                                         class="form-control check_in_out_time @error('check_out_time') is-invalid @enderror"
-                                        name="check_out_time" value="{{ old('check_out_time', !empty($RS_Result->visitorCheckIn->checkout_time) ? $RS_Result->visitorCheckIn->checkout_time : '') }}"
+                                        name="check_out_time"
+                                        value="{{ old('check_out_time', !empty($RS_Result->visitorCheckIn->checkout_time) ? $RS_Result->visitorCheckIn->checkout_time : '') }}"
                                         autocomplete="check_out_time">
 
                                     @error('check_out_time')
@@ -148,7 +151,7 @@
                 selectOtherMonths: true,
                 changeMonth: true,
                 changeYear: true,
-                maxDate: "today"
+                // maxDate: "today"
             });
 
             jQuery('#check_out_date').datepicker({

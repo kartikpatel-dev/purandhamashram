@@ -100,6 +100,8 @@ class LoginController extends Controller
 
         if (Auth::user()->role[0]->name == 'Admin') {
             return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('front.home');
         }
     }
 }

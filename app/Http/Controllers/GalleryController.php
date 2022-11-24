@@ -22,9 +22,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = $this->galleryRepository->getAll(12);
+        $RS_Results = $this->galleryRepository->getAll(12);
 
-        return view('gallery', compact('galleries'));
+        return view('gallery', compact('RS_Results'));
     }
 
     /**

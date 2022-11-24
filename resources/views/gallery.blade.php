@@ -21,11 +21,11 @@
                         <h3>Gallery</h3>
                     </div>
                     <div class="photo-gallery">
-                        @forelse($galleries as $gallery)
+                        @forelse($RS_Results as $RS_Row)
                             <div class="pg-item">
-                                <a href="{{ asset('images/' . $gallery->file_path) }}" class="glightbox">
-                                    <img src="{{ asset('images/' . $gallery->file_path) }}" class=""
-                                        alt="{{ $gallery->file_name }}">
+                                <a href="{{ asset('images/' . $RS_Row->file_path) }}" class="glightbox">
+                                    <img src="{{ asset('images/' . $RS_Row->file_path) }}" class=""
+                                        alt="{{ $RS_Row->file_name }}">
                                 </a>
                             </div>
                         @empty
@@ -33,9 +33,11 @@
                         @endforelse
                     </div>
 
-                    <div class="pg-pagination">
-                        {!! $galleries->links('pagination::bootstrap-4') !!}
-                    </div>
+                    @if (count($RS_Results) > 0)
+                        <div class="main-pagination">
+                            {!! $RS_Results->links('pagination::bootstrap-4') !!}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

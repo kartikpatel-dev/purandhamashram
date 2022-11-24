@@ -49,9 +49,9 @@ class ProfileController extends Controller
             // 'last_name' => ['required', 'string', 'max:255'],
             // 'email' => ['required', 'string', 'email', 'max:255'],
             // 'mobile_number' => ['required', 'numeric'],
-            // 'country_code' => ['required', 'string', 'max:5'],
+            // 'dial_code' => ['required', 'string', 'max:5'],
             'gender' => ['required', 'string', 'max:10'],
-            'age' => ['required', 'string', 'max:5'],
+            'birth_date' => ['required', 'string', 'max:5'],
             'address' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:25'],
             'country' => ['required', 'string', 'max:25'],
@@ -62,7 +62,7 @@ class ProfileController extends Controller
         $user = User::findOrFail(Auth::user()->id);
 
         $user->gender = $request->gender;
-        $user->age = $request->age;
+        $user->birth_date = $request->birth_date;
         $user->address = $request->address;
         $user->city = $request->city;
         $user->country = $request->country;

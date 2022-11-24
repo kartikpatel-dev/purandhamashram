@@ -27,6 +27,21 @@
                             {{ method_field('PUT') }}
 
                             <div class="row mb-3">
+                                {{-- <label for="avatar" class="col-md-4 col-form-label text-md-end"></label> --}}
+
+                                <div class="col-md-12 text-center">
+                                    @if (!empty(Auth::user()->avatar))
+                                        <img src="{{ env('APP_URL') . Storage::url('app/public/' . Auth::user()->avatar) }}"
+                                            alt="{{ Auth::user()->first_name }}" class="profile_img" />
+                                    @else
+                                        <div class="profile_person">
+                                            <i class="bi bi-person-circle"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label for="first_name"
                                     class="col-md-4 col-form-label text-md-end">{{ __('First Name') }}</label>
 
@@ -145,7 +160,7 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Birth Date') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="birth_date" type="date"
+                                    <input id="birth_date" type="text"
                                         class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
                                         value="{{ old('birth_date', Auth::user()->birth_date) }}"
                                         autocomplete="birth_date" disabled>
@@ -163,10 +178,8 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="address" type="text"
-                                        class="form-control @error('address') is-invalid @enderror" name="address"
-                                        value="{{ old('address', Auth::user()->address) }}" autocomplete="address"
-                                        disabled>
+                                    <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" cols="30"
+                                        rows="2" autocomplete="address" required disabled>{{ old('address', Auth::user()->address) }}</textarea>
 
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
@@ -262,18 +275,6 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="avatar"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Photo') }}</label>
-
-                                <div class="col-md-6">
-                                    @if (!empty(Auth::user()->avatar))
-                                        <img src="{{ env('APP_URL') . Storage::url('app/public/' . Auth::user()->avatar) }}"
-                                            alt="{{ Auth::user()->first_name }}" class="mw-100" />
-                                    @endif
                                 </div>
                             </div>
                         </form>

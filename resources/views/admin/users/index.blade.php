@@ -15,7 +15,7 @@
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-info float-right">Add Post</a>
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-info float-right">Add User</a>
                         </div>
                     </div>
                 </div>

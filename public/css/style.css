@@ -1035,25 +1035,30 @@ section {
   -ms-transform: rotateY(180deg) scale(1);
   -webkit-transform: rotateY(180deg) scale(1);
 }
-.gallery .pg-pagination {
+
+/*--------------------------------------------------------------
+# pagination
+--------------------------------------------------------------*/
+.main-pagination {
   margin-top: 30px;
 }
-.gallery .pg-pagination .pagination {
+.main-pagination .pagination {
   justify-content: center;
   grid-column-gap: 10px;
 }
-.gallery .pg-pagination .page-link {
+.main-pagination .page-link {
   color: var(--color-secondary);
   box-shadow: unset;
 }
-.gallery .pg-pagination .disabled > .page-link {
+.main-pagination .disabled > .page-link {
   color: var(--color-default);
 }
-.gallery .pg-pagination .active > .page-link {
+.main-pagination .active > .page-link {
   background-color: var(--color-darkgray);
   border-color: var(--color-default);
   color: var(--bs-white);
 }
+
 
 /*--------------------------------------------------------------
 # Contact Us
@@ -1190,8 +1195,17 @@ section {
   color: var(--color-default);
 }
 .auth-section .select-dial-code {
-  width: 80px;
+  width: 100px;
   margin-right: 10px;
+}
+.auth-section .profile_img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+.auth-section .profile_person {
+  font-size: 60px;
+  color: var(--color-secondary);
 }
 
 .dropdown-topbar .dropdown-item {
@@ -1228,16 +1242,9 @@ section {
 }
 
 .announcement .accordion-item {
-  border: 1px solid var(--color-darkgray);
   border-radius: 6px;
   margin-bottom: 20px;
 }
-.announcement .accordion-flush .accordion-item:first-child {
-  border-top: 1px solid var(--color-darkgray);
-}
-.announcement .accordion-flush .accordion-item:last-child {
-  border-bottom: 1px solid var(--color-darkgray);
-} 
 .announcement .accordion-flush .accordion-item .accordion-button.collapsed {
   border-radius: 6px;
   background-color: var(--color-default);
@@ -1266,6 +1273,10 @@ section {
   width: 150px;
   text-align: right;
 }
+.announcement .accordion-body {
+  border: 1px solid var(--color-darkgray);
+  border-radius: 0 0 6px 6px;
+}
 
 .header .ashram-visitor a {
   color: var(--bs-white);
@@ -1281,4 +1292,10 @@ section {
 .header .ashram-visitor a:hover {
   background-color: var(--color-secondary);
   color: var(--bs-white);
+}
+
+.bootstrap-timepicker-widget table td input {
+  width: 35px;
+  border-color: var(--color-darkgray);
+  border-width: 1px;
 }
