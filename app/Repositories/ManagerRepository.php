@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository
+class ManagerRepository
 {
     protected function destinationPath()
     {
@@ -74,13 +74,13 @@ class UserRepository
 
             return array(
                 'messageType' => 'success',
-                'message' => 'User created successfully.',
+                'message' => 'Manager created successfully.',
                 'id' => $RS_Row->id
             );
         else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t create user, try after sometime.',
+                'message' => 'Can\'t create manager, try after sometime.',
                 'id' => 0
             );
         endif;
@@ -121,13 +121,13 @@ class UserRepository
 
             return array(
                 'messageType' => 'success',
-                'message' => 'User updated successfully.',
+                'message' => 'Manager updated successfully.',
                 'id' => $RS_Row->id
             );
         else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t udpate user, try after sometime.',
+                'message' => 'Can\'t udpate manager, try after sometime.',
                 'id' => 0
             );
         endif;

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -35,6 +36,7 @@ class User extends Authenticatable
         'avatar',
         'status',
         'profile_update',
+        'visitor_status'
     ];
 
     /**
@@ -71,5 +73,23 @@ class User extends Authenticatable
     public function visitorCheckIn()
     {
         return $this->hasOne(AshramVisitor::class)->latest();
+    }
+
+    /**
+     * Get the ashram visit latest record associated with the user.
+     */
+    public function ashramVisit()
+    {
+        return $this->hasOne(AshramVisitor::class)
+            ->where('checkout_date', '<', Carbon::now()->format('Y-m-d'))
+            ->latest();
+    }
+
+    /**
+     * Get the ashram visit all records associated with the user.
+     */
+    public function ashramVisits()
+    {
+        return $this->hasMany(AshramVisitor::class);
     }
 }

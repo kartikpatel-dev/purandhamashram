@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('Title', 'User Profile')
+@section('Title', 'Manager Profile')
 
 @section('content')
 
@@ -48,7 +48,7 @@
                         <div class="col-md-9">
                             <div class="card">
                                 <div class="card-header p-2">
-                                    <a href="{{ route('admin.users.edit', $RS_Row->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit User</a>
+                                    <a href="{{ route('admin.managers.edit', $RS_Row->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit Manager</a>
                                 </div>
 
                                 <div class="card-body">

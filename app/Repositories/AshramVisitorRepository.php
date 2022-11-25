@@ -89,4 +89,29 @@ class AshramVisitorRepository
 
         return $RS_Row;
     }
+
+    public function dailyCheckOut()
+    {
+        /* $RS_Row = new AshramVisitor();
+
+        $RS_Row->user_id = 2;
+        $RS_Row->checkin_date = Carbon::now()->format('Y-m-d');
+        $RS_Row->checkin_time = Carbon::now()->format('H:i:s');
+        $RS_Row->checkout_date = Carbon::now()->addDays(rand(1, 55));
+        $RS_Row->checkout_time = Carbon::now()->format('H:i:s');
+
+        $RS_Row->save(); */
+
+        $RS_Results = User::with(['ashramVisit'])
+            ->where('visitor_status', '1')
+            ->get();
+
+        if (!empty($RS_Results)) {
+            foreach ($RS_Results as $RS_Row) {
+                if (!empty($RS_Row->ashramVisit)) {
+                    $RS_Row->update(['visitor_status' => '0']);
+                }
+            }
+        }
+    }
 }

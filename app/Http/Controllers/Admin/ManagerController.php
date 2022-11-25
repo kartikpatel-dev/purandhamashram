@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\UserRepository;
+use App\Repositories\ManagerRepository;
 use App\Traits\DialCodeTrait;
 use App\Traits\GuruListTrait;
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\ManagerStoreRequest;
+use App\Http\Requests\ManagerUpdateRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Mail\UserApproveMail;
 use Illuminate\Support\Facades\Mail;
 
-class UserController extends Controller
+class ManagerController extends Controller
 {
-    private $userRepository;
+    private $managerRepository;
     use DialCodeTrait, GuruListTrait;
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('admin.auth');
-        $this->userRepository = new UserRepository;
+        $this->managerRepository = new ManagerRepository;
     }
 
     /**
@@ -37,19 +37,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        /* $users = $this->userRepository->getAll(20, 'user');
-        dd($users); */
-
         if ($request->ajax()) {
-
-            $users = $this->userRepository->getAll(20, 'user', 'Active');
+            $RS_Results = $this->managerRepository->getAll(20, 'manager');
 
             return response()
                 ->json([
-                    'users' => view('admin.users.list', compact('users'))->render()
+                    'RS_Results' => view('admin.managers.list', compact('RS_Results'))->render()
                 ]);
         } else {
-            return view('admin.users.index');
+            return view('admin.managers.index');
         }
     }
 
@@ -63,7 +59,7 @@ class UserController extends Controller
         $dialCodes = $this->dialCodes();
         $guruLists = $this->guruList();
 
-        return view('admin.users.create-edit', compact('dialCodes', 'guruLists'));
+        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists'));
     }
 
     /**
@@ -72,18 +68,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserStoreRequest $request)
+    public function store(ManagerStoreRequest $request)
     {
         // Retrieve the validated input data...
         $request->validated();
 
-        $response = $this->userRepository->store($request);
+        $response = $this->managerRepository->store($request);
 
         Session::flash('messageType', $response['messageType']);
         Session::flash('message', $response['message']);
 
         return !empty($response['id']) ?
-            Redirect::route('admin.users.show', $response['id']) :
+            Redirect::route('admin.managers.show', $response['id']) :
             Redirect::back();
     }
 
@@ -95,10 +91,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $RS_Row = $this->userRepository->getByID($id);
+        $RS_Row = $this->managerRepository->getByID($id);
         $roles = array_column($RS_Row->role->toArray(), 'name');
 
-        return view('admin.users.show', compact('RS_Row', 'roles'));
+        return view('admin.managers.show', compact('RS_Row', 'roles'));
     }
 
     /**
@@ -112,10 +108,10 @@ class UserController extends Controller
         $dialCodes = $this->dialCodes();
         $guruLists = $this->guruList();
 
-        $RS_Row = $this->userRepository->getByID($id);
+        $RS_Row = $this->managerRepository->getByID($id);
         $roles = array_column($RS_Row->role->toArray(), 'slug');
 
-        return view('admin.users.create-edit', compact('dialCodes', 'guruLists', 'RS_Row', 'roles'));
+        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists', 'RS_Row', 'roles'));
     }
 
     /**
@@ -125,18 +121,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(ManagerUpdateRequest $request, $id)
     {
         // Retrieve the validated input data...
         $request->validated();
 
-        $response = $this->userRepository->update($request, $id);
+        $response = $this->managerRepository->update($request, $id);
 
         Session::flash('messageType', $response['messageType']);
         Session::flash('message', $response['message']);
 
         return !empty($response['id']) ?
-            Redirect::route('admin.users.show', $response['id']) :
+            Redirect::route('admin.managers.show', $response['id']) :
             Redirect::back();
     }
 
@@ -148,33 +144,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->userRepository->delete($id);
+        $response = $this->managerRepository->delete($id);
 
         return response()->json([
             'messageType' => $response['messageType'],
             'message' => $response['message']
         ]);
-    }
-
-
-    /**
-     * Display a listing of the resource not arrpoval user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function waitingApproval(Request $request)
-    {
-        if ($request->ajax()) {
-
-            $users = $this->userRepository->getAll(20, 'user', 'Deactivate');
-
-            return response()
-                ->json([
-                    'users' => view('admin.users.list', compact('users'))->render()
-                ]);
-        } else {
-            return view('admin.users.waiting-approval');
-        }
     }
 
     /**
@@ -183,11 +158,11 @@ class UserController extends Controller
     public function changeStatus(Request $request)
     {
         $status = $request->status == 1 ? 'Active' : 'Deactivate';
-        $RS_Row = $this->userRepository->getById($request->id)
+        $RS_Row = $this->managerRepository->getById($request->id)
             ->update(['status' => $status]);
 
         if (!empty($RS_Row)) {
-            $user = $this->userRepository->getById($request->id);
+            $user = $this->managerRepository->getById($request->id);
 
             if ($user->status == 'Active') {
                 Mail::to($user->email)->send(new UserApproveMail($user));

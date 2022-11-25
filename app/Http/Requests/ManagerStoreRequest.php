@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UserUpdateRequest extends FormRequest
+class ManagerStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +26,8 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->segment(3), 'id')],
-            'mobile_number' => ['required', 'numeric', Rule::unique('users')->ignore($this->segment(3), 'id')],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobile_number' => ['required', 'numeric', 'unique:users'],
             'gender' => ['required', 'string', 'max:10'],
             'birth_date' => ['required', 'date'],
             'address' => ['required', 'string', 'max:255'],
@@ -37,9 +36,10 @@ class UserUpdateRequest extends FormRequest
             'occupation' => ['required', 'string', 'max:100'],
             'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
-            'avatar' => ['nullable', 'sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
             'role' => ['required'],
             'status' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
 

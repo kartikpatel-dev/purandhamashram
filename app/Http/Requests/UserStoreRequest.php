@@ -37,7 +37,7 @@ class UserStoreRequest extends FormRequest
             'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
-            'role' => ['required', 'string'],
+            'role' => ['required'],
             'status' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
         ];

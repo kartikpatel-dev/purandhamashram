@@ -15,6 +15,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Session, Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegisterMail;
+use App\Mail\UserRegisterAdminMail;
 
 class RegisterController extends Controller
 {
@@ -147,6 +150,9 @@ class RegisterController extends Controller
             ->attach(
                 Role::where('slug', 'user')->first()
             );
+
+        Mail::to($data['email'])->send(new UserRegisterMail($user));
+        Mail::to(env('ADMIN_MAIL_ADDRESS'))->send(new UserRegisterAdminMail($user));
 
         return $user;
     }

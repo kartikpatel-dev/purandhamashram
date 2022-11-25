@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('Title', (!empty($RS_Row) ? 'Edit' : 'Add') . ' User')
+@section('Title', (!empty($RS_Row) ? 'Edit' : 'Add') . ' Manager')
 
 @section('content')
 
@@ -15,9 +15,9 @@
 
                 <div class="card-body">
                     @if (!empty($RS_Row))
-                        @php $action = route('admin.users.update', $RS_Row->id); @endphp
+                        @php $action = route('admin.managers.update', $RS_Row->id); @endphp
                     @else
-                        @php $action = route('admin.users.store'); @endphp
+                        @php $action = route('admin.managers.store'); @endphp
                     @endif
                     <form method="POST" action="{{ $action }}" enctype="multipart/form-data">
                         @csrf
@@ -305,18 +305,19 @@
                                 <div class="form-group clearfix">
                                     <label>{{ __('Role') }}</label>
                                     <div class="form-group-radio clearfix{{ $errors->has('role') ? ' is-invalid' : '' }}">
+                                        <div class="icheck-primary d-inline mr-3">
+                                            <input type="checkbox" id="role_manager" name="role[]" value="manager"
+                                                {{ old('role', !empty($roles) && in_array('manager', $roles) ?? 'manager') == 'manager' ? 'checked' : '' }}>
+                                            <label for="role_manager">Manager</label>
+                                        </div>
+
                                         @if (!empty($RS_Row))
-                                            <div class="icheck-primary d-inline mr-3">
-                                                <input type="checkbox" id="role_manager" name="role[]" value="manager"
-                                                    {{ old('role', !empty($roles) && in_array('manager', $roles) ?? '') == 'manager' ? 'checked' : '' }}>
-                                                <label for="role_manager">Manager</label>
+                                            <div class="icheck-primary d-inline">
+                                                <input type="checkbox" id="role_user" name="role[]" value="user"
+                                                    {{ old('role', !empty($roles) && in_array('user', $roles) ?? '') == 'user' ? 'checked' : '' }}>
+                                                <label for="role_user">User</label>
                                             </div>
                                         @endif
-                                        <div class="icheck-primary d-inline">
-                                            <input type="checkbox" id="role_user" name="role[]" value="user"
-                                                {{ old('role', !empty($roles) && in_array('user', $roles) ?? 'user') == 'user' ? 'checked' : '' }}>
-                                            <label for="role_user">User</label>
-                                        </div>
                                     </div>
 
                                     @if ($errors->has('role'))

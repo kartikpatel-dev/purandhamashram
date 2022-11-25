@@ -22,4 +22,12 @@ class AshramVisitor extends Model
         'checkin_time',
         'number_of_person',
     ];
+
+    /**
+     * Get the user ashram visited.
+     */
+    public function visitedUser()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

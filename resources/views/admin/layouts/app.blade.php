@@ -32,8 +32,7 @@
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
     <!-- Theme style -->
@@ -78,65 +77,91 @@
 
                             <div class="post"></div>
 
+                            <!-- Manager menu start -->
+                            @php
+                                $managerLinkActive = '';
+                            @endphp
+
+                            @if (request()->routeIs('admin.managers.index') || request()->is('admin.managers/*'))
+                                @php
+                                    $managerLinkActive = 'active';
+                                @endphp
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{ route('admin.managers.index') }}"
+                                    class="nav-link {{ $managerLinkActive }}">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>{{ __('Managers') }}</p>
+                                </a>
+                            </li>
+                            <!-- Manager menu end -->
+
+                            <div class="post"></div>
+
                             <!-- User menu start -->
-                        @php
-                        $userMenuOpen = '';
-                        $userMenuActive = '';
+                            @php
+                                $userMenuOpen = '';
+                                $userMenuActive = '';
+                                
+                                $userLinkActive = '';
+                                $approvUserActive = '';
+                            @endphp
 
-                        $userLinkActive = '';
-                        $approvUserActive = '';
-                      @endphp
+                            @if (request()->routeIs('admin.users.index') ||
+                                request()->is('admin.users/*') ||
+                                request()->routeIs('admin.users.waiting.approval'))
+                                @php
+                                    $userMenuOpen = 'menu-open';
+                                    $userMenuActive = 'active';
+                                @endphp
+                            @endif
 
-                      @if( request()->routeIs('admin.users.index') || request()->is('admin.users/*') || request()->routeIs('admin.users.waiting.approval') )
-                        @php
-                          $userMenuOpen = 'menu-open';
-                          $userMenuActive = 'active';
-                        @endphp
-                      @endif
+                            @if (request()->routeIs('admin.users.index') || request()->is('admin.users/*'))
+                                @php
+                                    $userLinkActive = 'active';
+                                @endphp
+                            @endif
 
-                      @if( request()->routeIs('admin.users.index') || request()->is('admin.users/*') )
-                        @php
-                          $userLinkActive = 'active';
-                        @endphp
-                      @endif
+                            @if (request()->routeIs('admin.users.waiting.approval') || request()->is('admin.users.waiting.approval/*'))
+                                @php
+                                    $approvUserActive = 'active';
+                                @endphp
+                            @endif
+                            <li class="nav-item {{ $userMenuOpen }}">
+                                <a href="javarscript:;" class="nav-link {{ $userMenuActive }}">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        {{ __('Users') }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.users.index') }}"
+                                            class="nav-link {{ $userLinkActive }}">
+                                            <i class="far fa-copy nav-icon"></i>
+                                            <p>{{ __('Users') }}</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.users.waiting.approval') }}"
+                                            class="nav-link {{ $approvUserActive }}">
+                                            <i class="fas fa-th nav-icon"></i>
+                                            <p>{{ __('Waiting Approval') }}</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- User menu end -->
 
-                      @if( request()->routeIs('admin.users.waiting.approval') || request()->is('admin.users.waiting.approval/*') )
-                        @php
-                          $approvUserActive = 'active';
-                        @endphp
-                      @endif
-                      <li class="nav-item {{ $userMenuOpen }}">
-                        <a href="javarscript:;" class="nav-link {{ $userMenuActive }}">
-                          <i class="nav-icon fas fa-edit"></i>
-                          <p>
-                            {{ __('Users') }}
-                            <i class="right fas fa-angle-left"></i>
-                          </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}" class="nav-link {{ $userLinkActive }}">
-                              <i class="far fa-copy nav-icon"></i>
-                              <p>{{ __('Users') }}</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{{ route('admin.users.waiting.approval') }}" class="nav-link {{ $approvUserActive }}">
-                              <i class="fas fa-th nav-icon"></i>
-                              <p>{{ __('Waiting Approval') }}</p>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <!-- User menu end -->
-                      
-                      <div class="post"></div>
+                            <div class="post"></div>
 
                             <li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="nav-link" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    <i class="nav-icon far fa-circle text-danger"></i>
+                                    <p>{{ __('Logout') }}</p>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -188,8 +213,8 @@
 
             <!-- /.content-wrapper -->
             <footer class="main-footer text-center">
-                <strong>Copyright &copy; @php echo date('Y'); @endphp <a
-                        href="{{ route('front.home') }}" target="_blank">{{ config('app.name', 'Laravel') }}</a>.</strong> All rights
+                <strong>Copyright &copy; @php echo date('Y'); @endphp <a href="{{ route('front.home') }}"
+                        target="_blank">{{ config('app.name', 'Laravel') }}</a>.</strong> All rights
                 reserved.
             </footer>
         </main>
