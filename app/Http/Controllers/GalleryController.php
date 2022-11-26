@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\GalleryRepositoryInterface;
+use Illuminate\Support\Facades\Redirect;
 
 class GalleryController extends Controller
 {
@@ -22,7 +23,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $RS_Results = $this->galleryRepository->getAll(12);
+        $RS_Results = $this->galleryRepository->getAll(12, '1');
 
         return view('gallery', compact('RS_Results'));
     }
@@ -34,7 +35,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return Redirect::route('gallery');
     }
 
     /**
@@ -45,7 +46,7 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Redirect::route('gallery');
     }
 
     /**
@@ -56,7 +57,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
-        //
+        return Redirect::route('gallery');
     }
 
     /**
@@ -67,7 +68,7 @@ class GalleryController extends Controller
      */
     public function edit(Gallery $gallery)
     {
-        //
+        return Redirect::route('gallery');
     }
 
     /**
@@ -79,7 +80,7 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
-        //
+        return Redirect::route('gallery');
     }
 
     /**
@@ -90,6 +91,6 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
-        //
+        return Redirect::route('gallery');
     }
 }

@@ -1,5 +1,5 @@
 <section id="topbar" class="topbar d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
+    <div class="container d-flex justify-content-center justify-content-sm-between">
         <div class="contact-info d-flex align-items-center">
             <a href="mailto:info@purandhamashram.com" class="text-white d-flex group-link-underline">
                 <i class="bi bi-envelope d-flex align-items-center"></i>
@@ -10,7 +10,7 @@
                 <span class="link-underline ms-2">{{ __('+91 98765 43210') }}</span>
             </a>
         </div>
-        <div class="d-none d-md-flex align-items-center">
+        <div class="d-flex align-items-center">
             <div class="social-links">
                 <a href="https://www.facebook.com/" class="facebook" target="_blank">
                     <i class="bi bi-facebook"></i>

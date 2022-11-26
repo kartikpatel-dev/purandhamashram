@@ -45,3 +45,13 @@
 .reference_person_list ul li:hover {
     background-color: var(--bs-gray-500);
 }
+
+.table thead th {
+    vertical-align: middle;
+}
+
+.gallery-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

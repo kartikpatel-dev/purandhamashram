@@ -23,8 +23,8 @@
                     <div class="photo-gallery">
                         @forelse($RS_Results as $RS_Row)
                             <div class="pg-item">
-                                <a href="{{ asset('images/' . $RS_Row->file_path) }}" class="glightbox">
-                                    <img src="{{ asset('images/' . $RS_Row->file_path) }}" class=""
+                                <a href="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->file_path) }}" class="glightbox">
+                                    <img src="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->file_path) }}" class=""
                                         alt="{{ $RS_Row->file_name }}">
                                 </a>
                             </div>

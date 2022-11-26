@@ -10,7 +10,9 @@ class AshramVisitorRepository
 {
     public function getAll($perPage = 20)
     {
-        return AshramVisitor::paginate($perPage);
+        return AshramVisitor::latest()
+            ->with(['visitedUser'])
+            ->paginate($perPage);
     }
 
     public function getById($id)

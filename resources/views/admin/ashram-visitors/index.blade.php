@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('Title', 'Users List')
+@section('Title', 'Visitor History')
 
 @section('content')
 
@@ -13,9 +13,6 @@
                     <div class="row">
                         <div class="col-md-6 align-self-center">
                             <h4 class="card-title">@yield('Title')</h4>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-info float-right">Add User</a>
                         </div>
                     </div>
                 </div>
@@ -55,14 +52,14 @@
                 // var urlUri = '&searchKeryword='+searchKeryword+'&role='+role+'&status='+status;
 
                 jQuery.ajax({
-                    url: "<?php echo route('admin.users.index'); ?>?page=" + page,
+                    url: "<?php echo route('admin.visitors.index'); ?>?page=" + page,
                     cache: false,
                     beforeSend: function() {
                         // Show image container
                         jQuery("#loader").show();
                     },
                     success: function(response) {
-                        jQuery('#data_list').html(response.users);
+                        jQuery('#data_list').html(response.RS_Results);
                         jQuery('html, body').animate({
                             scrollTop: 0
                         }, 'slow');
@@ -74,49 +71,6 @@
                 });
             }
             // pagination end
-
-            // search start
-            /* jQuery(document).on('keyup', '#search_keryword', function(e) {
-                    e.preventDefault();
-            
-                    search_data();
-                });
-            
-                jQuery("#role").change(function() {
-                    search_data();
-                });
-            
-                jQuery("input[name='status']:radio").change(function() {
-                    search_data();
-                }); */
-
-            /* function search_data()
-                {
-                    var searchKeryword = jQuery('#search_keryword').val();
-                    var role = jQuery('#role').val();
-                    var status = jQuery('input[name="status"]:radio:checked').val();
-                    // if( status==undefined) { status = ''; }
-            
-                    var urlUri = 'searchKeryword='+searchKeryword+'&role='+role+'&status='+status;
-                    jQuery.ajax({
-                        url: "<?php //echo route('admin.users.index');
-                        ?>?"+urlUri,
-                        cache: false,
-                        beforeSend: function(){
-                            // Show image container
-                            jQuery("#loader").show();
-                        },
-                        success: function(response){
-                            jQuery('#data_list').html(response.users);
-                            // jQuery('html, body').animate({ scrollTop: 0 }, 'slow');
-                        },
-                        complete:function(data){
-                            // Hide image container
-                            jQuery("#loader").hide();
-                        }
-                    });
-                } */
-            // search end
         });
     </script>
 @endsection

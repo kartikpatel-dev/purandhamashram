@@ -19,5 +19,6 @@ class Gallery extends Model
         'file_name',
         'file_path',
         'status',
+        'permission',
     ];
 }

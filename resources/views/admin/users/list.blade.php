@@ -18,9 +18,9 @@
                     <center>
                         @if (Auth::user()->id != $user->id)
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
+                                <input class="form-check-input status" type="checkbox" role="switch"
                                     id="user-{{ $user->id }}" {{ $user->status == 'Active' ? 'checked' : '' }}
-                                    onclick="changeStatus(event.target, {{ $user->id }});">
+                                    data-id="{{ $user->id }}" data-url="{{ route('admin.users.change.status') }}">
                                 <label class="form-check-label" for="user-{{ $user->id }}"></label>
                             </div>
                             <span class="status-msg-{{ $user->id }}"></span>

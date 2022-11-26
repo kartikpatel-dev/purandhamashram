@@ -381,10 +381,10 @@
             jQuery(document).on('keyup', '#reference_person', function(e) {
                 e.preventDefault();
 
-                search_data();
+                search_reference_person();
             });
 
-            function search_data() {
+            function search_reference_person() {
                 let searchKeryword = jQuery('#reference_person').val();
 
                 jQuery('.reference_person_list').html('');

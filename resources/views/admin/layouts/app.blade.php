@@ -156,6 +156,69 @@
 
                             <div class="post"></div>
 
+                            <!-- Visitor menu start -->
+                            @php
+                                $visitorLinkActive = '';
+                            @endphp
+
+                            @if (request()->routeIs('admin.visitors.index') || request()->is('admin.managers/*'))
+                                @php
+                                    $visitorLinkActive = 'active';
+                                @endphp
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{ route('admin.visitors.index') }}"
+                                    class="nav-link {{ $visitorLinkActive }}">
+                                    <i class="nav-icon fas fa-user-plus"></i>
+                                    <p>{{ __('Visitor History') }}</p>
+                                </a>
+                            </li>
+                            <!-- Visitor menu end -->
+
+                            <div class="post"></div>
+
+                            <!-- Announcement menu start -->
+                            @php
+                                $announcementLinkActive = '';
+                            @endphp
+
+                            @if (request()->routeIs('admin.announcements.index') || request()->is('admin.announcements/*'))
+                                @php
+                                    $announcementLinkActive = 'active';
+                                @endphp
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{ route('admin.announcements.index') }}"
+                                    class="nav-link {{ $announcementLinkActive }}">
+                                    <i class="nav-icon fas fa-newspaper"></i>
+                                    <p>{{ __('Announcement') }}</p>
+                                </a>
+                            </li>
+                            <!-- Announcement menu end -->
+
+                            <div class="post"></div>
+
+                            <!-- Gallery menu start -->
+                            @php
+                                $galleryLinkActive = '';
+                            @endphp
+
+                            @if (request()->routeIs('admin.galleries.index') || request()->is('admin.galleries/*'))
+                                @php
+                                    $galleryLinkActive = 'active';
+                                @endphp
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{ route('admin.galleries.index') }}"
+                                    class="nav-link {{ $galleryLinkActive }}">
+                                    <i class="nav-icon fas fa-images"></i>
+                                    <p>{{ __('Gallery') }}</p>
+                                </a>
+                            </li>
+                            <!-- Gallery menu end -->
+
+                            <div class="post"></div>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

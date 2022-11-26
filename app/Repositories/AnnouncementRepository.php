@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Announcement;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AnnouncementRepository
 {
@@ -24,63 +26,74 @@ class AnnouncementRepository
 
     public function store($data)
     {
-        /* $RS_Row = new Announcement();
+        $RS_Row = new Announcement();
 
         $RS_Row->user_id = auth()->user()->id;
-        $RS_Row->checkin_date = $data->check_in_date;
-        $RS_Row->checkin_time = Carbon::parse($data->check_in_time)->format('H:i:s');
-        $RS_Row->checkout_date = $data->check_out_date;
-        $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
-        $RS_Row->number_of_person = $data->number_of_person;
+        $RS_Row->title = $data->title;
+        $RS_Row->slug = Str::slug($data->title, '-');
+        $RS_Row->description = $data->description;
+        $RS_Row->created_at = Carbon::parse($data->created_at)->format('Y-m-d H:i:s');
 
         $RS_Row->save();
 
         if (!empty($RS_Row)) :
-            // user visitor status change
-            $user = User::findOrFail(auth()->user()->id);
-            $user->visitor_status = '1';
-            $user->save();
-
             return array(
                 'messageType' => 'success',
-                'message' => 'Check In successfully.',
+                'message' => 'Announcement creaded successfully.',
                 'id' => $RS_Row->id
             );
         else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t check in, try after sometime.',
+                'message' => 'Can\'t create announcement, try after sometime.',
                 'id' => 0
             );
-        endif; */
+        endif;
     }
 
     public function update($data, $id = 0)
     {
-        /* $RS_Row = $this->getById($data->ashram_visitor_id);
+        $RS_Row = $this->getById($id);
 
-        $RS_Row->checkout_date = $data->check_out_date;
-        $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
+        $RS_Row->title = $data->title;
+        $RS_Row->slug = Str::slug($data->title, '-');
+        $RS_Row->description = $data->description;
+        $RS_Row->created_at = Carbon::parse($data->created_at)->format('Y-m-d H:i:s');
 
         $RS_Row->save();
 
         if (!empty($RS_Row)) :
-            // user visitor status change
-            $user = User::findOrFail(auth()->user()->id);
-            $user->visitor_status = '0';
-            $user->save();
-
             return array(
                 'messageType' => 'success',
-                'message' => 'Check Out successfully.',
+                'message' => 'Announcement updated successfully.',
                 'id' => $RS_Row->id
             );
         else :
             return array(
                 'messageType' => 'error',
-                'message' => 'Can\'t check out, try after sometime.',
+                'message' => 'Can\'t update announcement, try after sometime.',
                 'id' => 0
             );
-        endif; */
+        endif;
+    }
+
+    public function delete($id)
+    {
+        $RS_Row = $this->getByID($id)
+            ->delete($id);
+
+        if (!empty($RS_Row)) {
+            return array(
+                'messageType' => 'success',
+                'message' => 'Record deleted successfully!',
+                'id' => $id
+            );
+        } else {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Record not delete, please try again later',
+                'id' => 0
+            );
+        }
     }
 }

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('Title', 'Manager List')
+@section('Title', 'Gallery List')
 
 @section('content')
 
@@ -15,8 +15,8 @@
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="{{ route('admin.managers.create') }}" class="btn btn-sm btn-info float-right">Add
-                                Manager</a>
+                            <a href="{{ route('admin.galleries.create') }}" class="btn btn-sm btn-info float-right">Add
+                                Gallery</a>
                         </div>
                     </div>
                 </div>
@@ -49,14 +49,8 @@
             });
 
             function fetch_data(page) {
-                // var searchKeryword = jQuery('#search_keryword').val();
-                // var role = jQuery('#role').val();
-                // var status = jQuery('input[name="status"]:radio:checked').val();
-
-                // var urlUri = '&searchKeryword='+searchKeryword+'&role='+role+'&status='+status;
-
                 jQuery.ajax({
-                    url: "<?php echo route('admin.managers.index'); ?>?page=" + page,
+                    url: "<?php echo route('admin.galleries.index'); ?>?page=" + page,
                     cache: false,
                     beforeSend: function() {
                         // Show image container

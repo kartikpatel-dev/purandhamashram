@@ -35,6 +35,14 @@ Route::get('/contact-us', function () {
     return view('contact-us');
 })->name('contact-us');
 
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+})->name('privacy-policy');
+
+Route::get('/terms-and-condition', function () {
+    return view('terms-and-condition');
+})->name('terms-and-condition');
+
 Route::get('/user-autocomplete-search', [UserController::class, 'autocompleteSearch'])->name('user.autocomplete.search');
 
 Auth::routes();
