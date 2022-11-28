@@ -18,7 +18,7 @@
                                 <div class="card-body box-profile">
                                     <div class="text-center">
                                         @if (!empty($RS_Row->avatar))
-                                            <img src="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->avatar) }}"
+                                            <img src="{{ config('app.url') . Storage::url('app/public/' . $RS_Row->avatar) }}"
                                                 alt="{{ $RS_Row->first_name }}"
                                                 class="profile-user-img img-fluid img-circle" />
                                         @endif

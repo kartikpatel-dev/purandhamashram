@@ -18,7 +18,7 @@
                                 <div class="card-body box-profile">
                                     <div class="text-center">
                                         @if (!empty($RS_Row->avatar))
-                                            <img src="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->avatar) }}"
+                                            <img src="{{ config('app.url') . Storage::url('app/public/' . $RS_Row->avatar) }}"
                                                 alt="{{ $RS_Row->first_name }}"
                                                 class="profile-user-img img-fluid img-circle" />
                                         @endif
@@ -48,38 +48,12 @@
                         <div class="col-md-9">
                             <div class="card">
                                 <div class="card-header p-2">
-                                    <a href="{{ route('admin.managers.edit', $RS_Row->id) }}" class="btn btn-sm btn-primary float-right"><i class="fas fa-edit"></i>&nbsp;&nbsp;Edit Manager</a>
+                                    <a href="{{ route('admin.managers.edit', $RS_Row->id) }}"
+                                        class="btn btn-sm btn-primary float-right"><i
+                                            class="fas fa-edit"></i>&nbsp;&nbsp;Edit Manager</a>
                                 </div>
 
                                 <div class="card-body">
-                                    {{-- <div class="form-group row align-items-center">
-                                        <label class="col-sm-2 form-label">First Name</label>
-                                        <div class="col-sm-10">
-                                            <div>{{ $RS_Row->first_name }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-sm-2 form-label">Last Name</label>
-                                        <div class="col-sm-10">
-                                            <div>{{ $RS_Row->last_name }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-sm-2 form-label">Email Address</label>
-                                        <div class="col-sm-10">
-                                            <div>{{ $RS_Row->email }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-sm-2 form-label">Mobile Number</label>
-                                        <div class="col-sm-10">
-                                            <div>({{ $RS_Row->dial_code ?? 91 }}) {{ $RS_Row->mobile_number }}</div>
-                                        </div>
-                                    </div> --}}
-
                                     <div class="form-group row align-items-center">
                                         <label class="col-sm-2 form-label">Gender</label>
                                         <div class="col-sm-10">
@@ -146,10 +120,16 @@
                                     </div>
 
                                     <div class="form-group row align-items-center">
-                                        <label class="col-sm-2 form-label">Role
-                                        </label>
+                                        <label class="col-sm-2 form-label">Role</label>
                                         <div class="col-sm-10">
-                                            <div>{{ implode(', ', $roles) }}</div>
+                                            <div>{{ $RS_Row->role->pluck('name')->join(', ') }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row align-items-center">
+                                        <label class="col-sm-2 form-label">Module Permission</label>
+                                        <div class="col-sm-10">
+                                            <div>{{ $RS_Row->modules->pluck('name')->join(', ') }}</div>
                                         </div>
                                     </div>
                                 </div><!-- /.card-body -->

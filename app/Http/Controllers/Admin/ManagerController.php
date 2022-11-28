@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use App\Mail\UserApproveMail;
 use Illuminate\Support\Facades\Mail;
+use App\Repositories\ModuleRepository;
 
 class ManagerController extends Controller
 {
-    private $managerRepository;
+    private $managerRepository, $moduleRepository;
     use DialCodeTrait, GuruListTrait;
 
     /**
@@ -28,6 +29,7 @@ class ManagerController extends Controller
     {
         $this->middleware('admin.auth');
         $this->managerRepository = new ManagerRepository;
+        $this->moduleRepository = new ModuleRepository;
     }
 
     /**
@@ -58,8 +60,9 @@ class ManagerController extends Controller
     {
         $dialCodes = $this->dialCodes();
         $guruLists = $this->guruList();
+        $modules = $this->moduleRepository->getAll();
 
-        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists'));
+        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists', 'modules'));
     }
 
     /**
@@ -92,9 +95,8 @@ class ManagerController extends Controller
     public function show($id)
     {
         $RS_Row = $this->managerRepository->getByID($id);
-        $roles = array_column($RS_Row->role->toArray(), 'name');
 
-        return view('admin.managers.show', compact('RS_Row', 'roles'));
+        return view('admin.managers.show', compact('RS_Row'));
     }
 
     /**
@@ -107,11 +109,11 @@ class ManagerController extends Controller
     {
         $dialCodes = $this->dialCodes();
         $guruLists = $this->guruList();
+        $modules = $this->moduleRepository->getAll();
 
         $RS_Row = $this->managerRepository->getByID($id);
-        $roles = array_column($RS_Row->role->toArray(), 'slug');
 
-        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists', 'RS_Row', 'roles'));
+        return view('admin.managers.create-edit', compact('dialCodes', 'guruLists', 'RS_Row', 'modules'));
     }
 
     /**

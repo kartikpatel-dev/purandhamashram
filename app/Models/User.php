@@ -68,6 +68,14 @@ class User extends Authenticatable
     }
 
     /**
+     * This fuction is used to module relationship with user.
+     */
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class)->withTimestamps();
+    }
+
+    /**
      * Get the last vistior status (Check In) associated with the user.
      */
     public function visitorCheckIn()

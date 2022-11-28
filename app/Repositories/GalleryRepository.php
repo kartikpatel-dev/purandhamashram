@@ -19,7 +19,7 @@ class GalleryRepository implements GalleryRepositoryInterface
     {
         $RS_Results = Gallery::latest();
 
-        if ($permission) {
+        if (!empty($permission)) {
             $RS_Results->where('permission', $permission);
         }
 

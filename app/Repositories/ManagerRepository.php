@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Module;
 
 class ManagerRepository
 {
@@ -35,7 +36,7 @@ class ManagerRepository
 
     public function getById($id)
     {
-        return User::with('role')->findOrFail($id);
+        return User::with(['role', 'modules'])->findOrFail($id);
     }
 
     public function store($data)
@@ -70,6 +71,11 @@ class ManagerRepository
             $RS_Row->role()
                 ->sync(
                     Role::whereIn('slug', $data->role)->get()
+                );
+
+            $RS_Row->modules()
+                ->sync(
+                    Module::whereIn('name', $data->modules)->get()
                 );
 
             return array(
@@ -117,6 +123,11 @@ class ManagerRepository
             $RS_Row->role()
                 ->sync(
                     Role::whereIn('slug', $data->role)->get()
+                );
+
+            $RS_Row->modules()
+                ->sync(
+                    Module::whereIn('name', $data->modules)->get()
                 );
 
             return array(

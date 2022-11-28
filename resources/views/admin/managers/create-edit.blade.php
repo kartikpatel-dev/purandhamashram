@@ -275,7 +275,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group clearfix">
                                     <label>{{ __('Status') }}</label>
                                     <div
@@ -301,20 +301,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group clearfix">
                                     <label>{{ __('Role') }}</label>
                                     <div class="form-group-radio clearfix{{ $errors->has('role') ? ' is-invalid' : '' }}">
                                         <div class="icheck-primary d-inline mr-3">
                                             <input type="checkbox" id="role_manager" name="role[]" value="manager"
-                                                {{ old('role', !empty($roles) && in_array('manager', $roles) ?? 'manager') == 'manager' ? 'checked' : '' }}>
+                                                {{ old('role', !empty($RS_Row->role) && in_array('manager', $RS_Row->role->pluck('slug')->toArray()) ?? 'manager') == 'manager' ? 'checked' : '' }}>
                                             <label for="role_manager">Manager</label>
                                         </div>
 
                                         @if (!empty($RS_Row))
                                             <div class="icheck-primary d-inline">
                                                 <input type="checkbox" id="role_user" name="role[]" value="user"
-                                                    {{ old('role', !empty($roles) && in_array('user', $roles) ?? '') == 'user' ? 'checked' : '' }}>
+                                                    {{ old('role', !empty($RS_Row->role) && in_array('user', $RS_Row->role->pluck('slug')->toArray()) ?? '') == 'user' ? 'checked' : '' }}>
                                                 <label for="role_user">User</label>
                                             </div>
                                         @endif
@@ -328,16 +328,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="avatar">{{ __('Photo') }}</label>
-                                    <div class="input-group{{ $errors->has('avatar') ? ' is-invalid' : '' }}">
+                                    <div
+                                        class="input-group avatar-img-group{{ $errors->has('avatar') ? ' is-invalid' : '' }}">
                                         <div class="custom-file">
                                             <input type="file" name="avatar" id="avatar"
                                                 value="{{ old('avatar') }}" class="custom-file-input"
                                                 placeholder="Post Name" accept="image/*">
                                             <label class="custom-file-label" for="avatar">Choose photo</label>
                                         </div>
+
+                                        @if (!empty($RS_Row->avatar))
+                                            <img src="{{ config('app.url') . Storage::url('app/public/' . $RS_Row->avatar) }}"
+                                                alt="{{ $RS_Row->first_name }}" class="avatar-img-2">
+                                        @endif
                                     </div>
 
                                     @if ($errors->has('avatar'))
@@ -345,13 +351,36 @@
                                             <strong>{{ $errors->first('avatar') }}</strong>
                                         </span>
                                     @endif
-
-                                    @if (!empty($RS_Row->avatar))
-                                        <img src="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->avatar) }}"
-                                            alt="{{ $RS_Row->first_name }}" class="avatar-img mt-3">
-                                    @endif
                                 </div>
                             </div>
+
+                            @if (!empty($modules))
+                                <div class="post"></div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group clearfix">
+                                        <label>{{ __('Module Permission') }}</label>
+                                        <div
+                                            class="form-group-radio clearfix{{ $errors->has('modules') ? ' is-invalid' : '' }}">
+                                            @forelse($modules as $module)
+                                                <div class="icheck-primary d-inline mr-3">
+                                                    <input type="checkbox" id="modules_{{ $module->slug }}" name="modules[]"
+                                                        value="{{ $module->name }}"
+                                                        {{ !empty($RS_Row->modules) && in_array($module->name, $RS_Row->modules->pluck('name')->toArray()) ? 'checked' : '' }}>
+                                                    <label for="modules_{{ $module->slug }}">{{ $module->name }}</label>
+                                                </div>
+                                            @empty
+                                            @endforelse
+                                        </div>
+
+                                        @if ($errors->has('modules'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('modules') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="post"></div>

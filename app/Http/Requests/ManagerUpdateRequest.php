@@ -40,6 +40,7 @@ class ManagerUpdateRequest extends FormRequest
             'avatar' => ['nullable', 'sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
             'role' => ['required'],
             'status' => ['required', 'string'],
+            'modules' => ['required'],
         ];
     }
 
@@ -51,7 +52,8 @@ class ManagerUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'avatar.max' => 'The :attribute must not be greater than 5MB'
+            'avatar.max' => 'The :attribute must not be greater than 5MB',
+            'modules.required' => 'The module permission field is required',
         ];
     }
 }

@@ -31,7 +31,7 @@
 
                                 <div class="col-md-12 text-center">
                                     @if (!empty(Auth::user()->avatar))
-                                        <img src="{{ env('APP_URL') . Storage::url('app/public/' . Auth::user()->avatar) }}"
+                                        <img src="{{ config('app.url') . Storage::url('app/public/' . Auth::user()->avatar) }}"
                                             alt="{{ Auth::user()->first_name }}" class="profile_img" />
                                     @else
                                         <div class="profile_person">

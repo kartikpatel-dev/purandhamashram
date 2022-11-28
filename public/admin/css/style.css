@@ -10,10 +10,19 @@
     position: absolute;
     right: 0;
 }
+.avatar-img-group {
+    align-items: center; 
+    grid-column-gap: 10px;
+}
 .avatar-img {
     height: 100px;
     width: 100px;
     border-radius: 100%;
+}
+.avatar-img-2 {
+    height: 50px;
+    width: 50px;
+    border-radius: 100% !important;
 }
 
 .reference_person_main {

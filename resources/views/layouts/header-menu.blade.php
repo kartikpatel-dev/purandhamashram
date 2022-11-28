@@ -29,7 +29,7 @@
                     <a id="navbarDropdown" class="nav-link dropdown-toggle1 person-circle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         @if (!empty(Auth::user()->avatar))
-                            <img src="{{ env('APP_URL') . Storage::url('app/public/' . Auth::user()->avatar) }}"
+                            <img src="{{ config('app.url') . Storage::url('app/public/' . Auth::user()->avatar) }}"
                                 alt="{{ Auth::user()->first_name }}" class="avatar-person-circle" />
                         @else
                             <i class="bi bi-person-circle"></i>

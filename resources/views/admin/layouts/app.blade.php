@@ -62,6 +62,18 @@
                 </a>
 
                 <!-- Sidebar -->
+                @php
+                    $roles = Auth::user()
+                        ->role->pluck('name')
+                        ->toArray();
+                    
+                    $modules = !empty(Auth::user()->modules)
+                        ? Auth::user()
+                            ->modules->pluck('name')
+                            ->toArray()
+                        : [];
+                @endphp
+
                 <div class="sidebar">
                     <!-- Sidebar Menu -->
                     <nav class="mt-3">
@@ -78,146 +90,162 @@
                             <div class="post"></div>
 
                             <!-- Manager menu start -->
-                            @php
-                                $managerLinkActive = '';
-                            @endphp
-
-                            @if (request()->routeIs('admin.managers.index') || request()->is('admin.managers/*'))
+                            @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Managers', $modules)))
                                 @php
-                                    $managerLinkActive = 'active';
+                                    $managerLinkActive = '';
                                 @endphp
+
+                                @if (request()->routeIs('admin.managers.index') || request()->is('admin.managers/*'))
+                                    @php
+                                        $managerLinkActive = 'active';
+                                    @endphp
+                                @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.managers.index') }}"
+                                        class="nav-link {{ $managerLinkActive }}">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>{{ __('Managers') }}</p>
+                                    </a>
+                                </li>
+
+                                <div class="post"></div>
                             @endif
-                            <li class="nav-item">
-                                <a href="{{ route('admin.managers.index') }}"
-                                    class="nav-link {{ $managerLinkActive }}">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>{{ __('Managers') }}</p>
-                                </a>
-                            </li>
                             <!-- Manager menu end -->
 
-                            <div class="post"></div>
-
                             <!-- User menu start -->
-                            @php
-                                $userMenuOpen = '';
-                                $userMenuActive = '';
-                                
-                                $userLinkActive = '';
-                                $approvUserActive = '';
-                            @endphp
-
-                            @if (request()->routeIs('admin.users.index') ||
-                                request()->is('admin.users/*') ||
-                                request()->routeIs('admin.users.waiting.approval'))
+                            @if (in_array('Admin', $roles) ||
+                                (in_array('Manager', $roles) && (in_array('Users', $modules) || in_array('Users Waiting Approval', $modules))))
                                 @php
-                                    $userMenuOpen = 'menu-open';
-                                    $userMenuActive = 'active';
+                                    $userMenuOpen = '';
+                                    $userMenuActive = '';
+                                    
+                                    $userLinkActive = '';
+                                    $approvUserActive = '';
                                 @endphp
-                            @endif
 
-                            @if (request()->routeIs('admin.users.index') || request()->is('admin.users/*'))
-                                @php
-                                    $userLinkActive = 'active';
-                                @endphp
-                            @endif
+                                @if (request()->routeIs('admin.users.index') ||
+                                    request()->is('admin.users/*') ||
+                                    request()->routeIs('admin.users.waiting.approval'))
+                                    @php
+                                        $userMenuOpen = 'menu-open';
+                                        $userMenuActive = 'active';
+                                    @endphp
+                                @endif
 
-                            @if (request()->routeIs('admin.users.waiting.approval') || request()->is('admin.users.waiting.approval/*'))
-                                @php
-                                    $approvUserActive = 'active';
-                                @endphp
+                                @if (request()->routeIs('admin.users.index') || request()->is('admin.users/*'))
+                                    @php
+                                        $userLinkActive = 'active';
+                                    @endphp
+                                @endif
+
+                                @if (request()->routeIs('admin.users.waiting.approval') || request()->is('admin.users.waiting.approval/*'))
+                                    @php
+                                        $approvUserActive = 'active';
+                                    @endphp
+                                @endif
+                                <li class="nav-item {{ $userMenuOpen }}">
+                                    <a href="javarscript:;" class="nav-link {{ $userMenuActive }}">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            {{ __('Users') }}
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Users', $modules)))
+                                            <li class="nav-item">
+                                                <a href="{{ route('admin.users.index') }}"
+                                                    class="nav-link {{ $userLinkActive }}">
+                                                    <i class="far fa-copy nav-icon"></i>
+                                                    <p>{{ __('Users') }}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+
+                                        @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Users Waiting Approval', $modules)))
+                                            <li class="nav-item">
+                                                <a href="{{ route('admin.users.waiting.approval') }}"
+                                                    class="nav-link {{ $approvUserActive }}">
+                                                    <i class="fas fa-th nav-icon"></i>
+                                                    <p>{{ __('Waiting Approval') }}</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+
+                                <div class="post"></div>
                             @endif
-                            <li class="nav-item {{ $userMenuOpen }}">
-                                <a href="javarscript:;" class="nav-link {{ $userMenuActive }}">
-                                    <i class="nav-icon fas fa-user"></i>
-                                    <p>
-                                        {{ __('Users') }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.users.index') }}"
-                                            class="nav-link {{ $userLinkActive }}">
-                                            <i class="far fa-copy nav-icon"></i>
-                                            <p>{{ __('Users') }}</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.users.waiting.approval') }}"
-                                            class="nav-link {{ $approvUserActive }}">
-                                            <i class="fas fa-th nav-icon"></i>
-                                            <p>{{ __('Waiting Approval') }}</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                             <!-- User menu end -->
 
-                            <div class="post"></div>
-
                             <!-- Visitor menu start -->
-                            @php
-                                $visitorLinkActive = '';
-                            @endphp
-
-                            @if (request()->routeIs('admin.visitors.index') || request()->is('admin.managers/*'))
+                            @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Visitor History', $modules)))
                                 @php
-                                    $visitorLinkActive = 'active';
+                                    $visitorLinkActive = '';
                                 @endphp
-                            @endif
-                            <li class="nav-item">
-                                <a href="{{ route('admin.visitors.index') }}"
-                                    class="nav-link {{ $visitorLinkActive }}">
-                                    <i class="nav-icon fas fa-user-plus"></i>
-                                    <p>{{ __('Visitor History') }}</p>
-                                </a>
-                            </li>
-                            <!-- Visitor menu end -->
 
-                            <div class="post"></div>
+                                @if (request()->routeIs('admin.visitors.index') || request()->is('admin.managers/*'))
+                                    @php
+                                        $visitorLinkActive = 'active';
+                                    @endphp
+                                @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.visitors.index') }}"
+                                        class="nav-link {{ $visitorLinkActive }}">
+                                        <i class="nav-icon fas fa-user-plus"></i>
+                                        <p>{{ __('Visitor History') }}</p>
+                                    </a>
+                                </li>
+
+                                <div class="post"></div>
+                                <!-- Visitor menu end -->
+                            @endif
 
                             <!-- Announcement menu start -->
-                            @php
-                                $announcementLinkActive = '';
-                            @endphp
-
-                            @if (request()->routeIs('admin.announcements.index') || request()->is('admin.announcements/*'))
+                            @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Announcement', $modules)))
                                 @php
-                                    $announcementLinkActive = 'active';
+                                    $announcementLinkActive = '';
                                 @endphp
-                            @endif
-                            <li class="nav-item">
-                                <a href="{{ route('admin.announcements.index') }}"
-                                    class="nav-link {{ $announcementLinkActive }}">
-                                    <i class="nav-icon fas fa-newspaper"></i>
-                                    <p>{{ __('Announcement') }}</p>
-                                </a>
-                            </li>
-                            <!-- Announcement menu end -->
 
-                            <div class="post"></div>
+                                @if (request()->routeIs('admin.announcements.index') || request()->is('admin.announcements/*'))
+                                    @php
+                                        $announcementLinkActive = 'active';
+                                    @endphp
+                                @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.announcements.index') }}"
+                                        class="nav-link {{ $announcementLinkActive }}">
+                                        <i class="nav-icon fas fa-newspaper"></i>
+                                        <p>{{ __('Announcement') }}</p>
+                                    </a>
+                                </li>
+
+                                <div class="post"></div>
+                                <!-- Announcement menu end -->
+                            @endif
 
                             <!-- Gallery menu start -->
-                            @php
-                                $galleryLinkActive = '';
-                            @endphp
-
-                            @if (request()->routeIs('admin.galleries.index') || request()->is('admin.galleries/*'))
+                            @if (in_array('Admin', $roles) || (in_array('Manager', $roles) && in_array('Gallery', $modules)))
                                 @php
-                                    $galleryLinkActive = 'active';
+                                    $galleryLinkActive = '';
                                 @endphp
-                            @endif
-                            <li class="nav-item">
-                                <a href="{{ route('admin.galleries.index') }}"
-                                    class="nav-link {{ $galleryLinkActive }}">
-                                    <i class="nav-icon fas fa-images"></i>
-                                    <p>{{ __('Gallery') }}</p>
-                                </a>
-                            </li>
-                            <!-- Gallery menu end -->
 
-                            <div class="post"></div>
+                                @if (request()->routeIs('admin.galleries.index') || request()->is('admin.galleries/*'))
+                                    @php
+                                        $galleryLinkActive = 'active';
+                                    @endphp
+                                @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.galleries.index') }}"
+                                        class="nav-link {{ $galleryLinkActive }}">
+                                        <i class="nav-icon fas fa-images"></i>
+                                        <p>{{ __('Gallery') }}</p>
+                                    </a>
+                                </li>
+
+                                <div class="post"></div>
+                                <!-- Gallery menu end -->
+                            @endif
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('logout') }}"

@@ -3,8 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Providers\RouteServiceProvider;
-use Closure, Auth;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AdminMiddleware
 {
@@ -18,10 +20,16 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!empty(Auth::user())) {
-            $userRole = Auth::user()->role[0]->name;
-            
-            switch ($userRole) {
-                case 'Admin':
+            $userRoles = Auth::user()->role->pluck('name')->toArray();
+            $modules = Auth::user()->modules->pluck('slug')->toArray();
+
+            switch ($userRoles) {
+                case in_array('Admin', $userRoles):
+                    return $next($request);
+                    break;
+
+                case in_array('Manager', $userRoles) &&
+                    (Route::currentRouteName() == 'admin.dashboard' || in_array(Route::currentRouteName(), $modules)):
                     return $next($request);
                     break;
 

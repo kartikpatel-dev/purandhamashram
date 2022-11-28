@@ -40,6 +40,7 @@ class ManagerStoreRequest extends FormRequest
             'role' => ['required'],
             'status' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
+            'modules' => ['required'],
         ];
     }
 
@@ -51,7 +52,8 @@ class ManagerStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'avatar.max' => 'The :attribute must not be greater than 5MB'
+            'avatar.max' => 'The :attribute must not be greater than 5MB',
+            'modules.required' => 'The module permission field is required',
         ];
     }
 }

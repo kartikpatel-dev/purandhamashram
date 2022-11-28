@@ -98,7 +98,8 @@ class LoginController extends Controller
             return redirect::route('login');
         }
 
-        if (Auth::user()->role[0]->name == 'Admin') {
+        $roles = Auth::user()->role->pluck('slug')->toArray();
+        if (!empty(Auth::user()->role) && (in_array('admin', $roles) || in_array('manager', $roles))) {
             return redirect()->route('admin.dashboard');
         } else {
             return redirect()->route('front.home');

@@ -12,7 +12,7 @@
             <tr class="delete-{{ $RS_Row->id }}">
                 <td>
                     @if (!empty($RS_Row->file_path))
-                        <img src="{{ env('APP_URL') . Storage::url('app/public/' . $RS_Row->file_path) }}"
+                        <img src="{{ config('app.url') . Storage::url('app/public/' . $RS_Row->file_path) }}"
                             alt="{{ $RS_Row->file_name }}" class="gallery-img" />
                     @endif
                 </td>
