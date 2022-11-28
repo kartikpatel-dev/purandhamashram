@@ -1201,6 +1201,19 @@ section {
   font-size: 60px;
   color: var(--color-secondary);
 }
+.auth-section .list-group-item {
+  border-width: 0;
+  border-top: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
+  border-radius: 0;
+}
+.auth-section .auth-card-body .form-label {
+  font-weight: bold;
+}
+.auth-section .profile-user-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+}
 
 .dropdown-topbar .dropdown-item {
   margin-left: 0;

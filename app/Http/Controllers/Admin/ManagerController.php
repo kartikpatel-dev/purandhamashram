@@ -11,8 +11,6 @@ use App\Http\Requests\ManagerStoreRequest;
 use App\Http\Requests\ManagerUpdateRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Mail\UserApproveMail;
-use Illuminate\Support\Facades\Mail;
 use App\Repositories\ModuleRepository;
 
 class ManagerController extends Controller
@@ -159,20 +157,11 @@ class ManagerController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        $status = $request->status == 1 ? 'Active' : 'Deactivate';
-        $RS_Row = $this->managerRepository->getById($request->id)
-            ->update(['status' => $status]);
+        $response = $this->managerRepository->changeStatus($request);
 
-        if (!empty($RS_Row)) {
-            $user = $this->managerRepository->getById($request->id);
-
-            if ($user->status == 'Active') {
-                Mail::to($user->email)->send(new UserApproveMail($user));
-            }
-
-            return response()->json(['messageType' => 'success', 'message' => 'Successfully']);
-        } else {
-            return response()->json(['messageType' => 'error', 'message' => 'Error']);
-        }
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 }

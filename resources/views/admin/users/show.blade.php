@@ -149,7 +149,7 @@
                                         <label class="col-sm-2 form-label">Role
                                         </label>
                                         <div class="col-sm-10">
-                                            <div>{{ implode(', ', $roles) }}</div>
+                                            <div>{{ $RS_Row->role->pluck('name')->join(', ') }}</div>
                                         </div>
                                     </div>
                                 </div><!-- /.card-body -->

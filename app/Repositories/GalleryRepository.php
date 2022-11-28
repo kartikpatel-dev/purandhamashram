@@ -15,12 +15,16 @@ class GalleryRepository implements GalleryRepositoryInterface
         return storage_path('app/public/');
     }
 
-    public function getAll($perPage = 20, $permission = '')
+    public function getAll($perPage = 20, $permission = '', $status = '')
     {
         $RS_Results = Gallery::latest();
 
         if (!empty($permission)) {
             $RS_Results->where('permission', $permission);
+        }
+
+        if (!empty($status)) {
+            $RS_Results->where('status', $status);
         }
 
         return $RS_Results->paginate($perPage);
@@ -31,8 +35,21 @@ class GalleryRepository implements GalleryRepositoryInterface
         return Gallery::findOrFail($id);
     }
 
+    public function count()
+    {
+        return Gallery::count();
+    }
+
     public function store($data)
     {
+        if ($this->count() >= 200) {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Maximum gallery image 200 limit',
+                'id' => 0
+            );
+        }
+
         if ($data->has('gallery_image')) {
 
             $allowedfileExtension = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
@@ -103,6 +120,43 @@ class GalleryRepository implements GalleryRepositoryInterface
                 'messageType' => 'error',
                 'message' => 'Record not delete, please try again later',
                 'id' => 0
+            );
+        }
+    }
+
+    public function changeStatus($data)
+    {
+        $status = $data->status == 1 ? 'Active' : 'Deactivate';
+        $RS_Row = $this->getById($data->id)
+            ->update(['status' => $status]);
+
+        if (!empty($RS_Row)) {
+            return array(
+                'messageType' => 'success',
+                'message' => 'Successfully'
+            );
+        } else {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Error'
+            );
+        }
+    }
+
+    public function changePermission($data)
+    {
+        $RS_Row = $this->getById($data->id)
+            ->update(['permission' => $data->permission]);
+
+        if (!empty($RS_Row)) {
+            return array(
+                'messageType' => 'success',
+                'message' => 'Successfully'
+            );
+        } else {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Error'
             );
         }
     }

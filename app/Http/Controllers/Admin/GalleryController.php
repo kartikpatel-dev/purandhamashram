@@ -127,15 +127,12 @@ class GalleryController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        $status = $request->status == 1 ? 'Active' : 'Deactivate';
-        $RS_Row = $this->galleryRepository->getById($request->id)
-            ->update(['status' => $status]);
+        $response = $this->galleryRepository->changeStatus($request);
 
-        if (!empty($RS_Row)) {
-            return response()->json(['messageType' => 'success', 'message' => 'Successfully']);
-        } else {
-            return response()->json(['messageType' => 'error', 'message' => 'Error']);
-        }
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 
     /**
@@ -143,13 +140,11 @@ class GalleryController extends Controller
      */
     public function changePermission(Request $request)
     {
-        $RS_Row = $this->galleryRepository->getById($request->id)
-            ->update(['permission' => $request->permission]);
+        $response = $this->galleryRepository->changePermission($request);
 
-        if (!empty($RS_Row)) {
-            return response()->json(['messageType' => 'success', 'message' => 'Successfully']);
-        } else {
-            return response()->json(['messageType' => 'error', 'message' => 'Error']);
-        }
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 }

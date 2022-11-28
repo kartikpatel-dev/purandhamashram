@@ -144,14 +144,11 @@ class AnnouncementController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        $status = $request->status == 1 ? 'Active' : 'Deactivate';
-        $RS_Row = $this->announcementRepository->getById($request->id)
-            ->update(['status' => $status]);
+        $response = $this->announcementRepository->changeStatus($request);
 
-        if (!empty($RS_Row)) {
-            return response()->json(['messageType' => 'success', 'message' => 'Successfully']);
-        } else {
-            return response()->json(['messageType' => 'error', 'message' => 'Error']);
-        }
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 }

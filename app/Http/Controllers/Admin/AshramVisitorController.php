@@ -30,7 +30,7 @@ class AshramVisitorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $RS_Results = $this->ashramVisitorRepository->getAll();
+            $RS_Results = $this->ashramVisitorRepository->getAll(2, $request->all());
 
             return response()
                 ->json([

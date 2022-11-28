@@ -96,4 +96,23 @@ class AnnouncementRepository
             );
         }
     }
+
+    public function changeStatus($data)
+    {
+        $status = $data->status == 1 ? 'Active' : 'Deactivate';
+        $RS_Row = $this->getById($data->id)
+            ->update(['status' => $status]);
+
+        if (!empty($RS_Row)) {
+            return array(
+                'messageType' => 'success',
+                'message' => 'Successfully'
+            );
+        } else {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Error'
+            );
+        }
+    }
 }

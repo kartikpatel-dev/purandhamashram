@@ -11,8 +11,6 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use App\Mail\UserApproveMail;
-use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -96,9 +94,8 @@ class UserController extends Controller
     public function show($id)
     {
         $RS_Row = $this->userRepository->getByID($id);
-        $roles = array_column($RS_Row->role->toArray(), 'name');
 
-        return view('admin.users.show', compact('RS_Row', 'roles'));
+        return view('admin.users.show', compact('RS_Row'));
     }
 
     /**
@@ -182,20 +179,11 @@ class UserController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        $status = $request->status == 1 ? 'Active' : 'Deactivate';
-        $RS_Row = $this->userRepository->getById($request->id)
-            ->update(['status' => $status]);
+        $response = $this->userRepository->changeStatus($request);
 
-        if (!empty($RS_Row)) {
-            $user = $this->userRepository->getById($request->id);
-
-            if ($user->status == 'Active') {
-                Mail::to($user->email)->send(new UserApproveMail($user));
-            }
-
-            return response()->json(['messageType' => 'success', 'message' => 'Successfully']);
-        } else {
-            return response()->json(['messageType' => 'error', 'message' => 'Error']);
-        }
+        return response()->json([
+            'messageType' => $response['messageType'],
+            'message' => $response['message']
+        ]);
     }
 }

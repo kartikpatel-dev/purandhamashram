@@ -1,9 +1,10 @@
 <table class="table table-hover table-striped table-bordered">
     <thead class="thead-dark">
-        <th width="20%">Name</th>
+        <th width="15%">Name</th>
         <th width="25%">Email Address</th>
-        <th width="20%">Check In</th>
-        <th width="20%">Check Out</th>
+        <th width="15%">Check In Date</th>
+        <th width="15%">Check Out Date</th>
+        <th width="15%">Check In/Out Status</th>
         <th width="15%">Number Of Person</th>
     </thead>
     <tbody>
@@ -13,6 +14,7 @@
                 <td>{{ $RS_Row->visitedUser->email }}</td>
                 <td>{{ $RS_Row->checkin_date }} {{ \Carbon\Carbon::parse($RS_Row->checkin_time)->format('h:i A') }}</td>
                 <td>{{ $RS_Row->checkout_date }} {{ \Carbon\Carbon::parse($RS_Row->checkout_time)->format('h:i A') }}</td>
+                <td>{{ $RS_Row->visitedUser->visitor_status == 1 ? 'Check In' : 'Check Out' }}</td>
                 <td>{{ $RS_Row->number_of_person }}</td>
             </tr>
         @empty

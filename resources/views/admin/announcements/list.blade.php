@@ -17,7 +17,8 @@
                         <div class="form-check form-switch">
                             <input class="form-check-input status" type="checkbox" role="switch"
                                 id="user-{{ $RS_Row->id }}" {{ $RS_Row->status == 'Active' ? 'checked' : '' }}
-                                data-id="{{ $RS_Row->id }}" data-url="{{ route('admin.announcements.change.status') }}">
+                                data-id="{{ $RS_Row->id }}"
+                                data-url="{{ route('admin.announcements.change.status') }}">
                             <label class="form-check-label" for="user-{{ $RS_Row->id }}"></label>
                         </div>
                         <span class="status-msg-{{ $RS_Row->id }}"></span>
@@ -32,11 +33,9 @@
                         <a href="{{ route('admin.announcements.edit', $RS_Row->id) }}" title="Edit"
                             class="btn btn-xs btn-primary mx-2"><i class="fas fa-edit"></i></a>
 
-                        @if (Auth::user()->id != $RS_Row->id)
-                            <a href="javascript:;" title="Delete" data-title="Announcement" data-id="{{ $RS_Row->id }}"
-                                data-url="{{ route('admin.announcements.destroy', $RS_Row->id) }}"
-                                class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
-                        @endif
+                        <a href="javascript:;" title="Delete" data-title="Announcement" data-id="{{ $RS_Row->id }}"
+                            data-url="{{ route('admin.announcements.destroy', $RS_Row->id) }}"
+                            class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
                     </center>
                 </td>
             </tr>

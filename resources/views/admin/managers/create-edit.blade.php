@@ -94,7 +94,7 @@
                                             <input type="text" name="mobile_number" id="mobile_number"
                                                 value="{{ old('mobile_number', $RS_Row->mobile_number ?? '') }}"
                                                 class="form-control{{ $errors->has('mobile_number') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Mobile Number') }}">
+                                                placeholder="{{ __('Mobile Number') }}" onkeypress="return isNumber(event)">
                                         </div>
 
                                         @if ($errors->has('mobile_number'))

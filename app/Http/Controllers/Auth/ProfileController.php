@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\DialCodeTrait;
 use Illuminate\Http\Request;
-use Session, Redirect, File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Repositories\UserRepository;
 
 class ProfileController extends Controller
 {
+    private $userRepository;
     use DialCodeTrait;
 
     /**
@@ -22,6 +26,7 @@ class ProfileController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->userRepository = new UserRepository;
     }
 
     /**
@@ -32,8 +37,9 @@ class ProfileController extends Controller
     public function index()
     {
         $dialCodes = $this->dialCodes();
+        $RS_Row = $this->userRepository->getByID(Auth::user()->id);
 
-        return view('auth.profile', compact('dialCodes'));
+        return view('auth.profile', compact('dialCodes', 'RS_Row'));
     }
 
     /**

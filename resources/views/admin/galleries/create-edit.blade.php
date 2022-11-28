@@ -33,8 +33,10 @@
                                         <div class="custom-file">
                                             <input type="file" name="gallery_image[]" multiple id="gallery_image"
                                                 value="{{ old('gallery_image') }}" class="custom-file-input"
-                                                placeholder="Post Name" accept="image/*">
-                                            <label class="custom-file-label" for="gallery_image">Choose gallery
+                                                placeholder="Gallery
+                                                Image"
+                                                accept="image/*">
+                                            <label class="custom-file-label" for="gallery_image1">Choose gallery
                                                 image</label>
                                         </div>
                                     </div>
@@ -44,10 +46,10 @@
                                             <strong>{{ $errors->first('gallery_image') }}</strong>
                                         </span>
                                     @endif
+                                    <span class="text-danger d-none max-5-img"
+                                        role="alert">{{ __('You can select maximum 5 images') }}</span>
                                 </div>
                             </div>
-
-
 
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
@@ -89,6 +91,17 @@
 
 @section('js')
     <script>
-        $(function() {});
+        $(function() {
+            $("#gallery_image").on("change", function() {
+                $('.max-5-img').addClass('d-none');
+
+                if ($("#gallery_image")[0].files.length > 5) {
+                    $("#gallery_image").val('');
+                    $('#gallery_image').next('label').html('Choose gallery image');
+                    $('.max-5-img').removeClass('d-none');
+                    return false;
+                }
+            });
+        });
     </script>
 @endsection

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Module;
+use App\Mail\UserApproveMail;
+use Illuminate\Support\Facades\Mail;
 
 class ManagerRepository
 {
@@ -165,6 +167,31 @@ class ManagerRepository
                 'messageType' => 'error',
                 'message' => 'Record not delete, please try again later',
                 'id' => 0
+            );
+        }
+    }
+
+    public function changeStatus($data)
+    {
+        $status = $data->status == 1 ? 'Active' : 'Deactivate';
+        $RS_Row = $this->getById($data->id)
+            ->update(['status' => $status]);
+
+        if (!empty($RS_Row)) {
+            $user = $this->getById($data->id);
+
+            if ($user->status == 'Active') {
+                Mail::to($user->email)->send(new UserApproveMail($user));
+            }
+
+            return array(
+                'messageType' => 'success',
+                'message' => 'Successfully'
+            );
+        } else {
+            return array(
+                'messageType' => 'error',
+                'message' => 'Error'
             );
         }
     }

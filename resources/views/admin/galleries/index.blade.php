@@ -14,10 +14,12 @@
                         <div class="col-md-6 align-self-center">
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
-                        <div class="col-md-6">
-                            <a href="{{ route('admin.galleries.create') }}" class="btn btn-sm btn-info float-right">Add
-                                Gallery</a>
-                        </div>
+                        @if (\App\Models\Gallery::count() < 200)
+                            <div class="col-md-6">
+                                <a href="{{ route('admin.galleries.create') }}" class="btn btn-sm btn-info float-right">Add
+                                    Gallery</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

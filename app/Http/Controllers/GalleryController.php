@@ -24,7 +24,7 @@ class GalleryController extends Controller
     public function index()
     {
         $permisson = !empty(auth()->user()) ? '' : '1';
-        $RS_Results = $this->galleryRepository->getAll(12, $permisson);
+        $RS_Results = $this->galleryRepository->getAll(12, $permisson, 'Active');
 
         return view('gallery', compact('RS_Results'));
     }

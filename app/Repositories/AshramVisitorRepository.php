@@ -8,11 +8,42 @@ use Illuminate\Support\Carbon;
 
 class AshramVisitorRepository
 {
-    public function getAll($perPage = 20)
+    public function getAll($perPage = 20, $search = array())
     {
-        return AshramVisitor::latest()
-            ->with(['visitedUser'])
-            ->paginate($perPage);
+        $RS_Results = AshramVisitor::latest()
+            ->with(['visitedUser']);
+
+        if (!empty($search['search_keryword'])) {
+            $searchKeyword = $search['search_keryword'];
+
+            $RS_Users = User::select('id')
+                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->get();
+
+            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
+        }
+
+        if (!empty($search['check_in_date']) && !empty($search['check_out_date'])) {
+            $check_in_date = $search['check_in_date'];
+            $check_out_date = $search['check_out_date'];
+
+            $RS_Results->where('checkin_date', '>=', $check_in_date)
+                ->where('checkout_date', '<=', $check_out_date);
+        } else {
+            if (!empty($search['check_in_date'])) {
+                $check_in_date = $search['check_in_date'];
+
+                $RS_Results->where('checkin_date', '>=', $check_in_date);
+            }
+
+            if (!empty($search['check_out_date'])) {
+                $check_out_date = $search['check_out_date'];
+
+                $RS_Results->where('checkout_date', '<=', $check_out_date);
+            }
+        }
+
+        return $RS_Results->paginate($perPage);
     }
 
     public function getById($id)
