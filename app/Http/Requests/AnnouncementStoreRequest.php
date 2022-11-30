@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class AnnouncementStoreRequest extends FormRequest
 {
@@ -27,5 +29,14 @@ class AnnouncementStoreRequest extends FormRequest
             'title' => ['required', 'string', 'max:255', 'unique:announcements'],
             'created_at' => ['required', 'string'],
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'Validation errors',
+            'data'      => $validator->errors()
+        ]));
     }
 }

@@ -4,24 +4,19 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Role;
 use App\Traits\DialCodeTrait;
 use App\Traits\GuruListTrait;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
-use Session, Redirect;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\UserRegisterMail;
-use App\Mail\UserRegisterAdminMail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use App\Repositories\RegisterRepository;
 
 class RegisterController extends Controller
 {
     use DialCodeTrait, GuruListTrait;
+    private $registerRepository;
 
     /*
     |--------------------------------------------------------------------------
@@ -51,6 +46,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->registerRepository = new RegisterRepository;
     }
 
     public function showRegistrationForm()
@@ -88,24 +84,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile_number' => ['required', 'numeric', 'unique:users'],
-            'gender' => ['required', 'string', 'max:10'],
-            'birth_date' => ['required', 'date'],
-            'address' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:25'],
-            'country' => ['required', 'string', 'max:25'],
-            'occupation' => ['required', 'string', 'max:100'],
-            'guru' => ['required', 'string', 'max:100'],
-            'reference_person' => ['required', 'string', 'max:150'],
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'avatar.max' => 'The :attribute must not be greater than 5MB'
-        ]);
+        return $this->registerRepository->validator($data);
     }
 
     /**
@@ -116,44 +95,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $filePath = null;
-        if (!empty($data['avatar'])) {
-
-            $image = $data['avatar'];
-            $fileName = Str::slug($data['first_name'] . '-' . $data['last_name']) . '-' . time();
-
-            $filePath = $fileName . '.' . $image->getClientOriginalExtension();
-
-            $image->storeAs('public', $filePath);
-        }
-
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'dial_code' => $data['dial_code'],
-            'mobile_number' => $data['mobile_number'],
-            'password' => Hash::make($data['password']),
-            'gender' => $data['gender'],
-            'birth_date' => $data['birth_date'],
-            'address' => $data['address'],
-            'city' => $data['city'],
-            'country' => $data['country'],
-            'occupation' => $data['occupation'],
-            'guru' => $data['guru'],
-            'reference_person' => $data['reference_person'],
-            'avatar' => $filePath,
-
-        ]);
-
-        $user->role()
-            ->attach(
-                Role::where('slug', 'user')->first()
-            );
-
-        Mail::to($data['email'])->send(new UserRegisterMail($user));
-        Mail::to(env('ADMIN_MAIL_ADDRESS'))->send(new UserRegisterAdminMail($user));
-
-        return $user;
+        return $this->registerRepository->store($data);
     }
 }

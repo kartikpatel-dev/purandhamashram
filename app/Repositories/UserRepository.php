@@ -7,8 +7,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\UserApproveMail;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\UserApproveMailJob;
 
 class UserRepository
 {
@@ -184,7 +183,7 @@ class UserRepository
             $user = $this->getById($data->id);
 
             if ($user->status == 'Active') {
-                Mail::to($user->email)->send(new UserApproveMail($user));
+                UserApproveMailJob::dispatch($user)->delay(now()->addSeconds(5));
             }
 
             return array(
