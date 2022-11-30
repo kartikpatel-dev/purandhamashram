@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('galleries', function (Blueprint $table) {
-            $table->enum('permission', [0, 1])->after('file_path')->default(1);
+            $table->string('file_size', 100)->after('file_path')->default(0)->comment('File store in KB');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('galleries', function (Blueprint $table) {
-            $table->dropColumn('permission');
+            $table->dropColumn('file_size');
         });
     }
 };

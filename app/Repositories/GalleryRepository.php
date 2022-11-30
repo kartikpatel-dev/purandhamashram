@@ -15,9 +15,13 @@ class GalleryRepository implements GalleryRepositoryInterface
         return storage_path('app/public/');
     }
 
-    public function getAll($perPage = 20, $permission = '', $status = '')
+    public function getAll($perPage = 20, $permission = '', $status = '', $sort = array())
     {
         $RS_Results = Gallery::latest();
+
+        if (!empty($sort['sort_field']) && !empty($sort['sort_value'])) {
+            $RS_Results = Gallery::orderBy($sort['sort_field'], $sort['sort_value']);
+        }
 
         if (!empty($permission)) {
             $RS_Results->where('permission', $permission);
@@ -65,6 +69,7 @@ class GalleryRepository implements GalleryRepositoryInterface
 
                     $file_name = $file->getClientOriginalName();
                     $fileName = Str::slug($file_name) . '-' . time();
+                    $fileSize = $file->getSize();
 
                     $fileFullName = $fileName . '.' . $extension;
 
@@ -76,6 +81,7 @@ class GalleryRepository implements GalleryRepositoryInterface
                     $RS_Row->user_id = auth()->user()->id;
                     $RS_Row->file_name = $file_name;
                     $RS_Row->file_path = $fileFullName;
+                    $RS_Row->file_size = $fileSize;
                     $RS_Row->permission = $data->permission;
 
                     $RS_Row->save();
@@ -96,7 +102,7 @@ class GalleryRepository implements GalleryRepositoryInterface
         );
     }
 
-    public function StoreUpdate($data, $id = 0)
+    public function update($data, $id = 0)
     {
         return null;
     }

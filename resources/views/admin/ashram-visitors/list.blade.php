@@ -12,8 +12,14 @@
             <tr class="delete-{{ $RS_Row->id }}">
                 <td>{{ $RS_Row->visitedUser->first_name }} {{ $RS_Row->visitedUser->last_name }}</td>
                 <td>{{ $RS_Row->visitedUser->email }}</td>
-                <td>{{ $RS_Row->checkin_date }} {{ \Carbon\Carbon::parse($RS_Row->checkin_time)->format('h:i A') }}</td>
-                <td>{{ $RS_Row->checkout_date }} {{ \Carbon\Carbon::parse($RS_Row->checkout_time)->format('h:i A') }}</td>
+                <td>
+                    {{ \Carbon\Carbon::parse($RS_Row->checkin_date)->format('d-m-Y') }}
+                    {{ \Carbon\Carbon::parse($RS_Row->checkin_time)->format('h:i A') }}
+                </td>
+                <td>
+                    {{ \Carbon\Carbon::parse($RS_Row->checkout_date)->format('d-m-Y') }}
+                    {{ \Carbon\Carbon::parse($RS_Row->checkout_time)->format('h:i A') }}
+                </td>
                 <td>{{ $RS_Row->visitedUser->visitor_status == 1 ? 'Check In' : 'Check Out' }}</td>
                 <td>{{ $RS_Row->number_of_person }}</td>
             </tr>

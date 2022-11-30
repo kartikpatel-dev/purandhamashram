@@ -18,6 +18,14 @@ class AshramVisitorRepository
 
             $RS_Users = User::select('id')
                 ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
                 ->get();
 
             $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());

@@ -12,6 +12,37 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6 align-self-center">
+                            <h4 class="card-title">Search By</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form method="GET" action="">
+
+                        <div class="row align-items-end">
+                            <div class="col-md-4 form-group">
+                                <label for="search_keryword">{{ __('Search by') }}</label>
+                                <input type="text" name="search_keryword" id="search_keryword"
+                                    value="{{ old('search_keryword', request()->get('search_keryword')) }}"
+                                    class="form-control{{ $errors->has('search_keryword') ? ' is-invalid' : '' }}"
+                                    placeholder="Search..." autocomplete="off">
+                            </div>
+
+                            <div class="col-md-4 form-group">
+                                <button type="submit" class="btn btn-success btn-fill">Search</button>
+
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-info">Reset Search</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6 align-self-center">
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
                         <div class="col-md-6">
@@ -48,14 +79,12 @@
             });
 
             function fetch_data(page) {
-                // var searchKeryword = jQuery('#search_keryword').val();
-                // var role = jQuery('#role').val();
-                // var status = jQuery('input[name="status"]:radio:checked').val();
+                const search_keryword = jQuery('#search_keryword').val();
 
-                // var urlUri = '&searchKeryword='+searchKeryword+'&role='+role+'&status='+status;
+                const urlUri = '&search_keryword=' + search_keryword;
 
                 jQuery.ajax({
-                    url: "<?php echo route('admin.users.index'); ?>?page=" + page,
+                    url: "<?php echo route('admin.users.index'); ?>?page=" + page + urlUri,
                     cache: false,
                     beforeSend: function() {
                         // Show image container

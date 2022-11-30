@@ -1,6 +1,8 @@
 <table class="table table-hover table-striped table-bordered">
     <thead class="thead-dark">
-        <th width="60%">Image</th>
+        <th width="35%">Image</th>
+        <th width="15%" class="custom-sorting" id="sort-created_at" data-sort-field="created_at" data-sort-value="ASC">Date</th>
+        <th width="10%" class="custom-sorting" id="sort-file_size" data-sort-field="file_size" data-sort-value="ASC">Size</th>
         <th width="25%">User Restrict</th>
         <th width="10%">Status</th>
         <th width="5%">
@@ -16,6 +18,8 @@
                             alt="{{ $RS_Row->file_name }}" class="gallery-img" />
                     @endif
                 </td>
+                <td>{{ \Carbon\Carbon::parse($RS_Row->created_at)->format('d-m-Y') }}</td>
+                <td>{{ $RS_Row->file_size }}</td>
                 <td>
                     <div class="form-group-radio">
                         <div class="icheck-primary d-inline mr-3">

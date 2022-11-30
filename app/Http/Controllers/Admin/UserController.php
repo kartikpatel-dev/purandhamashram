@@ -40,7 +40,7 @@ class UserController extends Controller
 
         if ($request->ajax()) {
 
-            $users = $this->userRepository->getAll(20, 'user', 'Active');
+            $users = $this->userRepository->getAll(20, 'user', 'Active', $request->all());
 
             return response()
                 ->json([

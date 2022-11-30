@@ -1030,6 +1030,24 @@ section {
   -webkit-transform: rotateY(180deg) scale(1);
 }
 
+@media (max-width: 1024px) {
+  .gallery .photo-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .gallery .photo-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 449px) {
+  .gallery .photo-gallery {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 /*--------------------------------------------------------------
 # pagination
 --------------------------------------------------------------*/

@@ -26,7 +26,7 @@
                                 <input type="text" name="search_keryword" id="search_keryword"
                                     value="{{ old('search_keryword', request()->get('search_keryword')) }}"
                                     class="form-control{{ $errors->has('search_keryword') ? ' is-invalid' : '' }}"
-                                    placeholder="Search...">
+                                    placeholder="Search..." autocomplete="off">
                             </div>
 
                             <div class="col-md-2 form-group">

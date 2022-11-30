@@ -6,6 +6,7 @@ interface GalleryRepositoryInterface
 {
     public function getAll($perPage, $permission);
     public function getById($Id);
-    public function StoreUpdate(array $data, $id);
-    public function delete($orderId);
+    public function store($data);
+    public function update($data, $id);
+    public function delete($id);
 }

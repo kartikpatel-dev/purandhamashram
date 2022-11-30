@@ -17,22 +17,36 @@ class UserRepository
         return storage_path('app/public/');
     }
 
-    public function getAll($perPage = 20, $roleSlug = '', $status = '')
+    public function getAll($perPage = 20, $roleSlug = '', $status = '', $search = array())
     {
-        $users = User::latest();
+        $RS_Results = User::latest();
 
         if ($roleSlug) {
             $RS_Results_Role = Role::with('users')->where('slug', $roleSlug)
                 ->firstOrFail();
 
-            $users = $RS_Results_Role->users()->latest();
+            $RS_Results = $RS_Results_Role->users()->latest();
         }
 
         if (!empty($status)) {
-            $users->where('status', $status);
+            $RS_Results->where('status', $status);
         }
 
-        return $users->paginate($perPage);
+        if (!empty($search['search_keryword'])) {
+            $searchKeyword = $search['search_keryword'];
+
+            $RS_Results->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%');
+        }
+
+        return $RS_Results->paginate($perPage);
     }
 
     public function getById($id)

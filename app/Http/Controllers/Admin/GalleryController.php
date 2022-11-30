@@ -32,7 +32,7 @@ class GalleryController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $RS_Results = $this->galleryRepository->getAll();
+            $RS_Results = $this->galleryRepository->getAll(20, '', '', $request->all());
 
             return response()
                 ->json([
