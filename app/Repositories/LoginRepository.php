@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginRepository
@@ -18,36 +17,64 @@ class LoginRepository
         ]);
     }
 
-    public function store($data)
+    public function login($data)
     {
-        $RS_Row = User::with(['role', 'modules'])->where('email', $data['email'])->first();
+        $login = $data['email'];
 
-        if (!empty($RS_Row)) {
-            if (Hash::check($data['password'], $RS_Row->password)) {
-                // $token = $RS_Row->createToken('Hariram Password Grant Client')->accessToken;
+        if (is_numeric($login)) {
+            $field = 'mobile_number';
+        } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        } else {
+            $field = 'email';
+        }
 
-                return [
-                    'success'   => true,
-                    "message" => 'Login Successfully',
-                    'data' => $RS_Row,
-                    // 'token' => $token,
-                ];
+        if (Auth::attempt([$field => $login, 'password' => $data['password']])) {
 
-                /* $response = ['token' => $token];
-                return response($response, 200); */
-            } else {
+            $RS_Row = Auth::user()->load(['role', 'modules']);
+            $RS_Row->accessTokens()->delete();
+
+            if ($RS_Row->status == 'Deactivate') {
+                Auth::logout();
+
                 return [
                     'success'   => false,
-                    "message" => 'These credentials do not match our records',
-                    'data' => [],
+                    "message" => 'You account is not approved yet, please contact admin.',
+                    'data' => null,
                 ];
             }
+
+            $token = $RS_Row->createToken('HariramGrantClient')->accessToken;
+
+            return [
+                'success'   => true,
+                "message" => 'Login Successfully',
+                'data' => $RS_Row,
+                'token' => $token,
+            ];
         } else {
             return [
                 'success'   => false,
                 "message" => 'These credentials do not match our records',
-                'data' => [],
+                'data' => null,
             ];
         }
+    }
+
+    public function logout()
+    {
+        $RS_Row = Auth::guard('api')->user();
+
+        if (!empty($RS_Row->accessTokens)) {
+            $RS_Row->accessTokens()->delete();
+        }
+
+        Auth::logout();
+
+        return [
+            'success'   => true,
+            "message" => 'You have been successfully logged out!',
+            'data' => null,
+        ];
     }
 }

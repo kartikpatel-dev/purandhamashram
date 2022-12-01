@@ -101,4 +101,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(AshramVisitor::class);
     }
+
+    /**
+     * Get the access all tokens associated with the user.
+     */
+    public function accessTokens()
+    {
+        return $this->hasMany(OauthAccessToken::class);
+    }
 }

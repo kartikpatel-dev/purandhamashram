@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\RegisterRepository;
 
@@ -28,7 +27,11 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        //
+        return response([
+            'success'   => false,
+            'message'   => 'Something went wrong, try after sometime',
+            'data' => null,
+        ]);
     }
 
     /**
@@ -37,7 +40,7 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function register(Request $request)
     {
         $data = $request->all();
 
@@ -51,66 +54,20 @@ class RegisterController extends Controller
             ]);
         }
 
-        $RS_Row = $this->registerRepository->store($data);
+        $RS_Row = $this->registerRepository->register($data);
 
         if (!empty($RS_Row)) {
             return response()->json([
                 'success'   => true,
                 'message'   => 'You have been successfully registered!. Please wait for the admin approval.',
-                'data' => [],
+                'data' => null,
             ]);
         } else {
             return response([
                 'success'   => false,
                 'message'   => 'Something went wrong, try after sometime',
-                'data' => [],
+                'data' => null,
             ]);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return response([
-            'success'   => false,
-            'message'   => 'Something went wrong, try after sometime',
-            'data' => [],
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        return response([
-            'success'   => false,
-            'message'   => 'Something went wrong, try after sometime',
-            'data' => [],
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        return response([
-            'success'   => false,
-            'message'   => 'Something went wrong, try after sometime',
-            'data' => [],
-        ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\LoginRepository;
 
@@ -28,7 +27,11 @@ class LoginController extends Controller
      */
     public function index()
     {
-        //
+        return response([
+            'success'   => false,
+            'message'   => 'Something went wrong, try after sometime',
+            'data' => null,
+        ]);
     }
 
     /**
@@ -37,56 +40,29 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
         $data = $request->all();
 
         $validator = $this->loginRepository->validator($data);
 
         if ($validator->fails()) {
-            return response([
+            return response()->json([
                 'success'   => false,
                 'message'   => 'Validation errors',
                 'data' => $validator->errors(),
             ]);
         }
 
-        $response = $this->loginRepository->store($data);
+        $response = $this->loginRepository->login($data);
 
         return response()->json($response);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function logout()
     {
-        //
-    }
+        $response = $this->loginRepository->logout();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
+        return response()->json($response);
     }
 }

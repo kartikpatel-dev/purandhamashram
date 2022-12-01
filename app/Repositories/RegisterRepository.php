@@ -33,7 +33,7 @@ class RegisterRepository
         ]);
     }
 
-    public function store($data)
+    public function register($data)
     {
         $filePath = null;
         if (!empty($data['avatar'])) {
