@@ -53,7 +53,7 @@
 
                 <td>
                     <center>
-                        <a href="javascript:;" title="Delete" data-title="Gallery Image" data-id="{{ $RS_Row->id }}"
+                        <a href="javascript:;" title="Delete" data-toggle="modal" data-target="#ajaxModelDelete" data-title="Gallery Image" data-id="{{ $RS_Row->id }}"
                             data-url="{{ route('admin.galleries.destroy', $RS_Row->id) }}"
                             class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
                     </center>

@@ -33,7 +33,7 @@
                         <a href="{{ route('admin.announcements.edit', $RS_Row->id) }}" title="Edit"
                             class="btn btn-xs btn-primary mx-2"><i class="fas fa-edit"></i></a>
 
-                        <a href="javascript:;" title="Delete" data-title="Announcement" data-id="{{ $RS_Row->id }}"
+                        <a href="javascript:;" title="Delete" data-toggle="modal" data-target="#ajaxModelDelete" data-title="Announcement" data-id="{{ $RS_Row->id }}"
                             data-url="{{ route('admin.announcements.destroy', $RS_Row->id) }}"
                             class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
                     </center>

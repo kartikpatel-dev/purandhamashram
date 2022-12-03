@@ -3,9 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class AshramVisitorCreateRequest extends FormRequest
 {
+    public $validator = null;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,5 +33,17 @@ class AshramVisitorCreateRequest extends FormRequest
             'check_out_time' => ['required', 'string'],
             'number_of_person' => ['required', 'integer', 'min:1', 'max:50'],
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  Validator  $validator
+     *
+     * @return void
+     */
+    protected function failedValidation($validator)
+    {
+        $this->validator = $validator;
     }
 }

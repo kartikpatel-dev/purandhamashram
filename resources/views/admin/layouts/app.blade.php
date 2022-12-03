@@ -80,6 +80,16 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
+                                <a href="{{ route('front.home') }}"
+                                    class="nav-link" target="_blank">
+                                    <i class="nav-icon fas fa-globe"></i>
+                                    <p>{{ __('Visit site') }}</p>
+                                </a>
+                            </li>
+
+                            <div class="post"></div>
+
+                            <li class="nav-item">
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="nav-link @if (request()->routeIs('admin.dashboard')) active @endif">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -359,6 +369,11 @@
     <script>
         $(function() {
             bsCustomFileInput.init();
+        });
+
+        $(document).on('hidden.bs.modal', function() {
+            $('.modal-backdrop').remove();
+            $('body').css('overflow','');
         });
 
         // number validation

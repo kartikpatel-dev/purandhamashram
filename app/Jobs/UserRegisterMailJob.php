@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserRegisterMail;
 use App\Mail\UserRegisterAdminMail;
+use App\Models\User;
 
 class UserRegisterMailJob implements ShouldQueue
 {
@@ -23,7 +24,7 @@ class UserRegisterMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

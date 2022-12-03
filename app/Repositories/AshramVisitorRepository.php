@@ -61,6 +61,17 @@ class AshramVisitorRepository
 
     public function store($data)
     {
+        if (!empty(auth()->user()->visitor_status)) {
+            $RS_Row = $this->checkIn()->visitorCheckIn;
+            $RS_Row->visitor_status = '1';
+
+            return array(
+                'messageType' => 'success',
+                'message' => 'Already Check In',
+                'data' => $RS_Row
+            );
+        }
+
         $RS_Row = new AshramVisitor();
 
         $RS_Row->user_id = auth()->user()->id;
@@ -78,16 +89,18 @@ class AshramVisitorRepository
             $user->visitor_status = '1';
             $user->save();
 
+            $RS_Row->visitor_status = '1';
+
             return array(
                 'messageType' => 'success',
                 'message' => 'Check In successfully.',
-                'id' => $RS_Row->id
+                'data' => $RS_Row
             );
         else :
             return array(
                 'messageType' => 'error',
                 'message' => 'Can\'t check in, try after sometime.',
-                'id' => 0
+                'data' => null
             );
         endif;
     }
@@ -110,13 +123,13 @@ class AshramVisitorRepository
             return array(
                 'messageType' => 'success',
                 'message' => 'Check Out successfully.',
-                'id' => $RS_Row->id
+                'data' => null
             );
         else :
             return array(
                 'messageType' => 'error',
                 'message' => 'Can\'t check out, try after sometime.',
-                'id' => 0
+                'data' => null
             );
         endif;
     }

@@ -95,6 +95,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return $this->registerRepository->store($data);
+        return $this->registerRepository->register($data);
     }
 }

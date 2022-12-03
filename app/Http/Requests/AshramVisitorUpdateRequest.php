@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AshramVisitorUpdateRequest extends FormRequest
 {
+    public $validator = null;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,8 +26,21 @@ class AshramVisitorUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'ashram_visitor_id' => ['required'],
             'check_out_date' => ['required', 'date'],
             'check_out_time' => ['required', 'string'],
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  Validator  $validator
+     *
+     * @return void
+     */
+    protected function failedValidation($validator)
+    {
+        $this->validator = $validator;
     }
 }

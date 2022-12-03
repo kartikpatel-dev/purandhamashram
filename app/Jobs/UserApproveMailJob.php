@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\UserApproveMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class UserApproveMailJob implements ShouldQueue
 {
@@ -22,7 +23,7 @@ class UserApproveMailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

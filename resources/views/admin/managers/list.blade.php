@@ -39,7 +39,7 @@
                             class="btn btn-xs btn-primary mx-2"><i class="fas fa-edit"></i></a>
 
                         @if (Auth::user()->id != $RS_Row->id)
-                            <a href="javascript:;" title="Delete" data-title="Manager" data-id="{{ $RS_Row->id }}"
+                            <a href="javascript:;" title="Delete" data-toggle="modal" data-target="#ajaxModelDelete" data-title="Manager" data-id="{{ $RS_Row->id }}"
                                 data-url="{{ route('admin.managers.destroy', $RS_Row->id) }}"
                                 class="btn btn-xs btn-danger delete"><i class="fas fa-trash"></i></a>
                         @endif

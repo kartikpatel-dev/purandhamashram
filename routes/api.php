@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\AshramVisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('profile', [ProfileController::class, 'profile']);
+    Route::get('/profile', [ProfileController::class, 'profile']);
+
+    Route::post('/visitor-check-in', [AshramVisitorController::class, 'store']);
+    Route::post('/visitor-check-out', [AshramVisitorController::class, 'update']);
 });
