@@ -15,9 +15,9 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(LoginRepository $loginRepository)
     {
-        $this->loginRepository = new LoginRepository;
+        $this->loginRepository = $loginRepository;
     }
 
     /**

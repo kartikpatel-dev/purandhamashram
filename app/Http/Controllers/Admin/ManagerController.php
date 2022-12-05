@@ -23,11 +23,11 @@ class ManagerController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ManagerRepository $managerRepository, ModuleRepository $moduleRepository)
     {
         $this->middleware('admin.auth');
-        $this->managerRepository = new ManagerRepository;
-        $this->moduleRepository = new ModuleRepository;
+        $this->managerRepository = $managerRepository;
+        $this->moduleRepository = $moduleRepository;
     }
 
     /**

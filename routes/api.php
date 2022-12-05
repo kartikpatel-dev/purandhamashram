@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::get('/announcement', [AnnouncementController::class, 'index']);
 
+    Route::post('/account-delete', [ProfileController::class, 'destroy']);
     Route::post('/visitor-check-in', [AshramVisitorController::class, 'store']);
     Route::post('/visitor-check-out', [AshramVisitorController::class, 'update']);
 });

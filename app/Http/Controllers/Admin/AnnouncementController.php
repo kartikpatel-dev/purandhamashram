@@ -19,10 +19,10 @@ class AnnouncementController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AnnouncementRepository $announcementRepository)
     {
         $this->middleware('admin.auth');
-        $this->announcementRepository = new AnnouncementRepository;
+        $this->announcementRepository = $announcementRepository;
     }
 
     /**

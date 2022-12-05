@@ -15,9 +15,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RegisterRepository $registerRepository)
     {
-        $this->registerRepository = new RegisterRepository;
+        $this->registerRepository = $registerRepository;
     }
 
     /**

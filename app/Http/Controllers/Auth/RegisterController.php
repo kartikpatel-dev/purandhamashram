@@ -43,10 +43,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RegisterRepository $registerRepository)
     {
         $this->middleware('guest');
-        $this->registerRepository = new RegisterRepository;
+        $this->registerRepository = $registerRepository;
     }
 
     public function showRegistrationForm()

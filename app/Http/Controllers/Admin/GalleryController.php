@@ -18,10 +18,10 @@ class GalleryController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(GalleryRepository $galleryRepository)
     {
         $this->middleware('admin.auth');
-        $this->galleryRepository = new GalleryRepository;
+        $this->galleryRepository = $galleryRepository;
     }
 
     /**

@@ -16,10 +16,10 @@ class AshramVisitorController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AshramVisitorRepository $ashramVisitorRepository)
     {
         $this->middleware('admin.auth');
-        $this->ashramVisitorRepository = new AshramVisitorRepository;
+        $this->ashramVisitorRepository = $ashramVisitorRepository;
     }
 
     /**

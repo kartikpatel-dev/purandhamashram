@@ -23,10 +23,10 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->middleware('auth');
-        $this->userRepository = new UserRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**

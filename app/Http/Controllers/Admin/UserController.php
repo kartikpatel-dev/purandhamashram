@@ -22,10 +22,10 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->middleware('admin.auth');
-        $this->userRepository = new UserRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**

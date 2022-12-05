@@ -45,4 +45,27 @@ class ProfileController extends Controller
             'data' => $RS_Row,
         ]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
+        $RS_Row = Auth::guard('api')->user();
+
+        if (!empty($RS_Row->accessTokens)) {
+            $RS_Row->accessTokens()->delete();
+        }
+
+        Auth::user()->delete($RS_Row->id);
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Account delete successfully',
+            'data' => null,
+        ]);
+    }
 }
