@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\ReferencePersonRepository;
 
-class UserController extends Controller
+class ReferencePersonController extends Controller
 {
     private $referencePersonRepository;
 
@@ -24,20 +25,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    }
+        $RS_Results = $this->referencePersonRepository->getAll($request->get('searchKeryword'));
 
-    /*
-    * user autocomplete search
-    */
-    public function autocompleteSearch(Request $request)
-    {
-        $users = $this->referencePersonRepository->getAll($request->get('searchKeryword'));
-
-        return response()
-            ->json([
-                'users' => view('reference-person-list', compact('users'))->render()
-            ]);
+        return response()->json([
+            'success'   => true,
+            'message'   => !empty($RS_Results) ? 'Reference person Fetch successfully' : 'Reference person not found',
+            'data'    => $RS_Results,
+        ]);
     }
 }

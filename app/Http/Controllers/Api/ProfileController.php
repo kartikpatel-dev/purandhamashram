@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
+    protected function destinationPath()
+    {
+        return storage_path('app/public/');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +37,7 @@ class ProfileController extends Controller
     public function profile()
     {
         $RS_Row = Auth::guard('api')->user()->load(['role', 'modules']);
+        $RS_Row->avatar = !empty($RS_Row->avatar) && File::exists($this->destinationPath() . $RS_Row->avatar) ? config('app.url') . Storage::url('app/public/' . $RS_Row->avatar) : null;
 
         return response()->json([
             'success'   => true,

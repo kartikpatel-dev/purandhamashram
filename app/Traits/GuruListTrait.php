@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use App\Models\Guru;
 
 trait GuruListTrait
 {
@@ -9,14 +10,8 @@ trait GuruListTrait
      */
     public function guruList()
     {
-        $guruLists = [
-            'Guru 1',
-            'Guru 2',
-            'Guru 3',
-            'Guru 4',
-            'Guru 5',
-        ];
+        $RS_Results = Guru::where('status', 'Active')->get();
 
-        return $guruLists;
+        return $RS_Results->pluck('name');
     }
 }

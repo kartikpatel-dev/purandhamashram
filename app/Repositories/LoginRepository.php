@@ -4,9 +4,16 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class LoginRepository
 {
+    protected function destinationPath()
+    {
+        return storage_path('app/public/');
+    }
+
     public function validator($data)
     {
         return Validator::make($data, [
@@ -32,6 +39,9 @@ class LoginRepository
         if (Auth::attempt([$field => $login, 'password' => $data['password']])) {
 
             $RS_Row = Auth::user()->load(['role', 'modules']);
+            
+            $RS_Row->avatar = !empty($RS_Row->avatar) && File::exists($this->destinationPath() . $RS_Row->avatar) ? config('app.url') . Storage::url('app/public/' . $RS_Row->avatar) : null;
+
             $RS_Row->accessTokens()->delete();
 
             if ($RS_Row->status == 'Deactivate') {

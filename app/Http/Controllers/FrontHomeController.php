@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\AnnouncementRepository;
 
-class AnnouncementController extends Controller
+class FrontHomeController extends Controller
 {
     private $announcementRepository;
 
@@ -16,7 +16,6 @@ class AnnouncementController extends Controller
      */
     public function __construct(AnnouncementRepository $announcementRepository)
     {
-        $this->middleware('auth');
         $this->announcementRepository = $announcementRepository;
     }
 
@@ -29,6 +28,6 @@ class AnnouncementController extends Controller
     {
         $RS_Results = $this->announcementRepository->getAll(10, 'Active');
 
-        return view('announcement', compact('RS_Results'));
+        return view('welcome', compact('RS_Results'));
     }
 }

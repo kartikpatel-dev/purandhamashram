@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AshramVisitorController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\FrontHomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,8 @@ use Illuminate\Support\Facades\Artisan;
 }); */
 // clear cache end
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('front.home');
+Route::get('/', [FrontHomeController::class, 'index'])
+    ->name('front.home');
 
 Route::get('/about-us', function () {
     return view('about-us');

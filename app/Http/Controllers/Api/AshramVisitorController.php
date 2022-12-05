@@ -42,12 +42,14 @@ class AshramVisitorController extends Controller
     public function store(AshramVisitorCreateRequest $request)
     {
         // Retrieve the validated input data...
-        if (!empty($request->validator) && $request->validator->fails()) {
-            return response()->json([
-                'success'   => false,
-                'message'   => 'Validation errors',
-                'data'    => $request->validator->errors(),
-            ]);
+        if (empty(auth()->user()->visitor_status)) {
+            if (!empty($request->validator) && $request->validator->fails()) {
+                return response()->json([
+                    'success'   => false,
+                    'message'   => 'Validation errors',
+                    'data'    => $request->validator->errors(),
+                ]);
+            }
         }
 
         $response = $this->ashramVisitorRepository->store($request);

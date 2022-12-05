@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\AnnouncementRepository;
 
 class AnnouncementController extends Controller
 {
     private $announcementRepository;
-
+    
     /**
      * Create a new controller instance.
      *
@@ -16,7 +17,6 @@ class AnnouncementController extends Controller
      */
     public function __construct(AnnouncementRepository $announcementRepository)
     {
-        $this->middleware('auth');
         $this->announcementRepository = $announcementRepository;
     }
 
@@ -29,6 +29,10 @@ class AnnouncementController extends Controller
     {
         $RS_Results = $this->announcementRepository->getAll(10, 'Active');
 
-        return view('announcement', compact('RS_Results'));
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Announcement Fetch successfully',
+            'data'    => $RS_Results,
+        ]);
     }
 }

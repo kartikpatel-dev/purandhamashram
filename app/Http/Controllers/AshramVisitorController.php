@@ -32,7 +32,7 @@ class AshramVisitorController extends Controller
     public function index()
     {
         $RS_Result = $this->ashramVisitorRepository->checkIn();
-        
+
         return view('ashram-visitor', compact('RS_Result'));
     }
 
@@ -44,7 +44,9 @@ class AshramVisitorController extends Controller
     public function create(AshramVisitorCreateRequest $request)
     {
         // Retrieve the validated input data...
-        $request->validated();
+        if (empty(auth()->user()->visitor_status)) {
+            $request->validated();
+        }
 
         $response = $this->ashramVisitorRepository->store($request);
 
