@@ -55,6 +55,11 @@ h3 {
   font-size: 32px;
   color: var(--color-darkgray);
 }
+h4 {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-darkgray);
+}
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -882,6 +887,7 @@ section {
   text-align: center;
   background: #fff;
   box-shadow: 0 19px 38px rgb(0 0 0 / 10%), 0 15px 12px rgb(0 0 0 / 2%);
+  height: 100%;
 }
 .home-box-section .home-box-main:before, 
 .home-box-section .home-box-main:after {
@@ -1332,6 +1338,7 @@ section {
   }
   .home-box-section .home-box-main {
     margin-bottom: 50px;
+    height: auto;
   }
 }
 

@@ -223,16 +223,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Guru') }}</label>
 
                                 <div class="col-md-6">
-                                    <select id="guru" name="guru"
-                                        class="form-select @error('guru') is-invalid @enderror" required>
-                                        <option value="">{{ __('-- Guru --') }}</option>
-                                        @forelse($guruLists as $guru)
-                                            <option value="{{ $guru }}"
-                                                {{ $guru == old('guru') ? 'selected' : '' }}>
-                                                {{ $guru }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
+                                    <input id="guru" type="text"
+                                        class="form-control @error('guru') is-invalid @enderror" name="guru"
+                                        value="{{ old('guru') }}" autocomplete="guru">
 
                                     @error('guru')
                                         <span class="invalid-feedback" role="alert">

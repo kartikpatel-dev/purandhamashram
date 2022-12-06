@@ -16,88 +16,24 @@
     <section id="contact" class="contact">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 d-flex align-items-stretch">
+                <div class="col-md-6 d-flex align-items-stretch">
                     <div class="info">
                         <a>
                             <div class="address info-item d-flex align-items-center justify-content-center">
                                 <i class="bi bi-geo-alt"></i>
-                                <p>Puran Dham Ashram, Ghunda, Jam Jodhpur, Jamnagar</p>
+                                <p><b>Purandhaam Ashram</b> <br>At village Ghunda, Post - Jinawari, Taluka - Jamjodhpur, District -
+                                    Jamnagar, Gujarat - 360515</p>
                             </div>
                         </a>
                     </div>
                 </div>
 
-                <div class="col-md-4 d-flex align-items-stretch">
+                <div class="col-md-6 d-flex align-items-stretch">
                     <div class="info">
-                        <a href="tel:9876543210">
-                            <div class="phone info-item d-flex align-items-center justify-content-center">
-                                <i class="bi bi-phone"></i>
-                                <p>+91 98765 43210</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 d-flex align-items-stretch">
-                    <div class="info">
-                        <a href="mailto:info@purandhamashram.com">
+                        <a href="mailto:purandhaam@gmail.com">
                             <div class="email info-item d-flex align-items-center justify-content-center">
                                 <i class="bi bi-envelope"></i>
-                                <p>info@purandhamashram.com</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="other-contact" class="contact other-contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 d-flex align-items-stretch">
-                    <div class="info">
-                        <a href="tel:9876543210">
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Name here</h4>
-                                <p>+91 98765 43210</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 d-flex align-items-stretch">
-                    <div class="info">
-                        <a href="tel:9876543210">
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Name here</h4>
-                                <p>+91 98765 43210</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 d-flex align-items-stretch">
-                    <div class="info">
-                        <a href="tel:9876543210">
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Name here</h4>
-                                <p>+91 98765 43210</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6 d-flex align-items-stretch">
-                    <div class="info">
-                        <a href="tel:9876543210">
-                            <div class="phone">
-                                <i class="bi bi-phone"></i>
-                                <h4>Name here</h4>
-                                <p>+91 98765 43210</p>
+                                <p><b>Email Address</b> <br>purandhaam@gmail.com</p>
                             </div>
                         </a>
                     </div>

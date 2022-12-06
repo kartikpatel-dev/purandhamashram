@@ -1,13 +1,9 @@
 <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-sm-between">
         <div class="contact-info d-flex align-items-center">
-            <a href="mailto:info@purandhamashram.com" class="text-white d-flex group-link-underline">
+            <a href="mailto:purandhaam@gmail.com" class="text-white d-flex group-link-underline">
                 <i class="bi bi-envelope d-flex align-items-center"></i>
-                <span class="link-underline ms-2">{{ __('info@purandhamashram.com') }}</span>
-            </a>
-            <a href="tel:9876543210" class="text-white d-flex group-link-underline">
-                <i class="bi bi-phone d-flex align-items-center ms-4"></i>
-                <span class="link-underline ms-2">{{ __('+91 98765 43210') }}</span>
+                <span class="link-underline ms-2">{{ __('purandhaam@gmail.com') }}</span>
             </a>
         </div>
         <div class="d-flex align-items-center">
@@ -66,7 +62,7 @@
 <header id="header" class="header d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="logo">
-            <h1 class="text-light"><a href="{{ route('front.home') }}">{{ config('app.name', 'Laravel') }}</a></h1>
+            <h1 class="text-light"><a href="{{ route('front.home') }}">{{ config('app.name', 'Laravel') }}</a><span class="d-none">Designed & Developed by <a href="http://inboxtechnology.com/" target="_blank">Inbox Technology</a></span></h1>
         </div>
 
         <nav id="navbar" class="navbar">

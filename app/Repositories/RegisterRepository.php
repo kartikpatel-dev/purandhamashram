@@ -24,7 +24,7 @@ class RegisterRepository
             'city' => ['required', 'string', 'max:25'],
             'country' => ['required', 'string', 'max:25'],
             'occupation' => ['required', 'string', 'max:100'],
-            'guru' => ['required', 'string', 'max:100'],
+            // 'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
             'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
             'password' => ['required', 'string', 'min:8', 'confirmed'],

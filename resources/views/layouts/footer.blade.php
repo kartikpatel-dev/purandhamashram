@@ -21,7 +21,8 @@
                         Rights Reserved
                     </div>
                     <div class="credits">
-                        <span>Designed & Developed by</span> <a href="https://codersfarm.com/" target="_blank">Coders Farm</a>
+                        <span>Designed & Developed by</span> <a href="https://codersfarm.com/"
+                            target="_blank">CodersFarm</a>
                     </div>
                 </div>
             </div>

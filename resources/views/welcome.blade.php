@@ -8,7 +8,7 @@
                 <div class="swiper-slide">
                     <div class="home-slider-wrap">
                         <div class="home-slider-item">
-                            <img src="{{ asset('images/home-slide-1.jpg') }}" class="d-block w-100" alt="Slide 1">
+                            <img src="{{ asset('images/home-slide-1.png') }}" class="d-block w-100" alt="Slide 1">
                         </div>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
                 <div class="swiper-slide">
                     <div class="home-slider-wrap">
                         <div class="home-slider-item">
-                            <img src="{{ asset('images/home-slide-2.jpg') }}" class="d-block w-100" alt="Slide 2">
+                            <img src="{{ asset('images/home-slide-2.png') }}" class="d-block w-100" alt="Slide 2">
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="swiper-slide">
                     <div class="home-slider-wrap">
                         <div class="home-slider-item">
-                            <img src="{{ asset('images/home-slide-3.jpg') }}" class="d-block w-100" alt="Slide 3">
+                            <img src="{{ asset('images/home-slide-3.png') }}" class="d-block w-100" alt="Slide 3">
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="swiper-slide">
                     <div class="home-slider-wrap">
                         <div class="home-slider-item">
-                            <img src="{{ asset('images/home-slide-4.jpg') }}" class="d-block w-100" alt="Slide 4">
+                            <img src="{{ asset('images/home-slide-4.png') }}" class="d-block w-100" alt="Slide 4">
                         </div>
                     </div>
                 </div>
@@ -53,14 +53,9 @@
                         <h2>About Us</h2>
                     </div>
                     <div class="section-content">
-                        <p><b>Lorem Ipsum is simply dummy</b> text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It
-                            was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum.</p>
-                        <p><b>- Lorem Ipsum</b></p>
+                        <p>Puran Dham is the ashram of <b>Alaksh Avtari Pujya Sat Hariram Bapa</b> in the village of Ghuneshwar, previously known as Ghunda. </p>
+                        <p>A rural village, Pujya Sat Hariram Bapa would visit the ancestral family home from time to time. He would be accompanied by family members and sometimes by disciples. The magnetism of Pujya Sat Hariram Bapa's words was such, that progressively, spontaneous discourses to a small group outside in the front yard of the humble farmhouse of his uncle became larger and larger as more and more got attracted to His Santvani. Villagers from the nearby villages looked forward to Pujya Bapa's visits and would gather in large numbers to hear His Satsang whenever Pujya Bapa paid a visit.</p>
+                        <p><b>- Sat Hariram Bapa</b></p>
                     </div>
                 </div>
 
@@ -98,7 +93,7 @@
                             <a class="box-title-link" href="{{ route('about-us') }}">About Us</a>
                         </div>
                         <div class="box-content">
-                            <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                            <p>Puran Dham is the ashram of Alaksh Avtari Pujya Sat Hariram Bapa in the village of Ghuneshwar</p>
                         </div>
                         <div class="box-btn">
                             <a class="box-btn-link" href="{{ route('about-us') }}">Read More</a>
@@ -113,7 +108,7 @@
                             <a class="box-title-link" href="{{ route('gallery') }}">Gallery</a>
                         </div>
                         <div class="box-content">
-                            <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                            <p>View our Satsang photos</p>
                         </div>
                         <div class="box-btn">
                             <a class="box-btn-link" href="{{ route('gallery') }}">Read More</a>
@@ -128,7 +123,7 @@
                             <a class="box-title-link" href="{{ route('contact-us') }}">Contact Us</a>
                         </div>
                         <div class="box-content">
-                            <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                            <p>Get in touch with the Puran Dham Ashram</p>
                         </div>
                         <div class="box-btn">
                             <a class="box-btn-link" href="{{ route('contact-us') }}">Read More</a>
