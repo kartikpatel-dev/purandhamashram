@@ -26,7 +26,7 @@
                         @endif
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="first_name">{{ __('First Name') }}</label>
                                     <input type="text" name="first_name" id="first_name"
@@ -42,13 +42,29 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="middle_name">{{ __('Middle Name') }}</label>
+                                    <input type="text" name="middle_name" id="middle_name"
+                                        value="{{ old('middle_name', $RS_Row->middle_name ?? '') }}"
+                                        class="form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Middle Name') }}" autofocus>
+
+                                    @if ($errors->has('middle_name'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('middle_name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="last_name">{{ __('Last Name') }}</label>
                                     <input type="text" name="last_name" id="last_name"
                                         value="{{ old('last_name', $RS_Row->last_name ?? '') }}"
                                         class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Last Name') }}" autofocus>
+                                        placeholder="{{ __('Last Name') }}">
 
                                     @if ($errors->has('last_name'))
                                         <span class="invalid-feedback" role="alert">
@@ -94,7 +110,8 @@
                                             <input type="text" name="mobile_number" id="mobile_number"
                                                 value="{{ old('mobile_number', $RS_Row->mobile_number ?? '') }}"
                                                 class="form-control{{ $errors->has('mobile_number') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Mobile Number') }}" onkeypress="return isNumber(event)">
+                                                placeholder="{{ __('Mobile Number') }}"
+                                                onkeypress="return isNumber(event)">
                                         </div>
 
                                         @if ($errors->has('mobile_number'))
@@ -129,12 +146,12 @@
                                     <label>{{ __('Gender') }}</label>
                                     <div
                                         class="form-group-radio clearfix{{ $errors->has('gender') ? ' is-invalid' : '' }}">
-                                        <div class="icheck-primary d-inline mr-3">
+                                        <div class="icheck-success d-inline mr-3">
                                             <input type="radio" id="gender_male" name="gender" value="Male"
                                                 {{ old('gender', $RS_Row->gender ?? '') == 'Male' ? 'checked' : '' }}>
                                             <label for="gender_male">Male</label>
                                         </div>
-                                        <div class="icheck-primary d-inline">
+                                        <div class="icheck-success d-inline">
                                             <input type="radio" id="gender_female" name="gender" value="Female"
                                                 {{ old('gender', $RS_Row->gender ?? '') == 'Female' ? 'checked' : '' }}>
                                             <label for="gender_female">Female</label>
@@ -174,16 +191,10 @@
                             <div class="col-md-{{ !empty($RS_Row) ? 4 : 3 }}">
                                 <div class="form-group">
                                     <label for="guru">{{ __('Guru') }}</label>
-                                    <select id="guru" name="guru"
-                                        class="form-select @error('guru') is-invalid @enderror">
-                                        <option value="">{{ __('-- Guru --') }}</option>
-                                        @forelse($guruLists as $guru)
-                                            <option value="{{ $guru }}"
-                                                {{ $guru == old('guru', $RS_Row->guru ?? '') ? 'selected' : '' }}>
-                                                {{ $guru }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
+                                    <input type="text" name="guru" id="guru"
+                                        value="{{ old('guru', $RS_Row->guru ?? '') }}"
+                                        class="form-control{{ $errors->has('guru') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Guru') }}">
 
                                     @if ($errors->has('guru'))
                                         <span class="invalid-feedback" role="alert">
@@ -280,7 +291,7 @@
                                     <label>{{ __('Status') }}</label>
                                     <div
                                         class="form-group-radio clearfix{{ $errors->has('status') ? ' is-invalid' : '' }}">
-                                        <div class="icheck-primary d-inline mr-3">
+                                        <div class="icheck-success d-inline mr-3">
                                             <input type="radio" id="status_active" name="status" value="Active"
                                                 {{ old('status', $RS_Row->status ?? '') == 'Active' ? 'checked' : '' }}>
                                             <label for="status_active">Active</label>
@@ -306,13 +317,13 @@
                                     <label>{{ __('Role') }}</label>
                                     <div class="form-group-radio clearfix{{ $errors->has('role') ? ' is-invalid' : '' }}">
                                         @if (!empty($RS_Row))
-                                            <div class="icheck-primary d-inline mr-3">
+                                            <div class="icheck-success d-inline mr-3">
                                                 <input type="checkbox" id="role_manager" name="role[]" value="manager"
                                                     {{ old('role', !empty($roles) && in_array('manager', $roles) ?? '') == 'manager' ? 'checked' : '' }}>
                                                 <label for="role_manager">Manager</label>
                                             </div>
                                         @endif
-                                        <div class="icheck-primary d-inline">
+                                        <div class="icheck-success d-inline">
                                             <input type="checkbox" id="role_user" name="role[]" value="user"
                                                 {{ old('role', !empty($roles) && in_array('user', $roles) ?? 'user') == 'user' ? 'checked' : '' }}>
                                             <label for="role_user">User</label>
@@ -373,7 +384,7 @@
                 icons: {
                     time: 'far fa-clock'
                 },
-                format: 'yyyy-MM-DD',
+                format: 'DD-MM-YYYY',
                 // maxDate: maxDate,
             });
 

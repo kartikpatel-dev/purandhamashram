@@ -98,7 +98,7 @@
                 icons: {
                     time: 'far fa-clock'
                 },
-                format: 'yyyy-MM-DD',
+                format: 'DD-MM-YYYY',
                 defaultDate: defaultDateVal,
             });
             // $('#created_at').attr('readonly', 'readonly');

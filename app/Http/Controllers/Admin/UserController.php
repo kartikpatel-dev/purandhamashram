@@ -36,7 +36,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         /* $users = $this->userRepository->getAll(20, 'user');
-        dd($users); */
+        dd($users->total()); */
 
         if ($request->ajax()) {
 
@@ -44,7 +44,8 @@ class UserController extends Controller
 
             return response()
                 ->json([
-                    'users' => view('admin.users.list', compact('users'))->render()
+                    'users' => view('admin.users.list', compact('users'))->render(),
+                    'total_count' => $users->total()
                 ]);
         } else {
             return view('admin.users.index');

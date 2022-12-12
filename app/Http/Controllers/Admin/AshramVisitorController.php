@@ -29,6 +29,11 @@ class AshramVisitorController extends Controller
      */
     public function index(Request $request)
     {
+        $RS_Visitor_Count = $this->ashramVisitorRepository->expectedNextDayVisitorCount($request->all());
+        // dd($RS_Visitor_Count);
+        // $RS_Results = $this->ashramVisitorRepository->getAll(20, $request->all());
+        // dd($RS_Results[0]);
+
         if ($request->ajax()) {
             $RS_Results = $this->ashramVisitorRepository->getAll(20, $request->all());
 
@@ -37,7 +42,7 @@ class AshramVisitorController extends Controller
                     'RS_Results' => view('admin.ashram-visitors.list', compact('RS_Results'))->render()
                 ]);
         } else {
-            return view('admin.ashram-visitors.index');
+            return view('admin.ashram-visitors.index', compact('RS_Visitor_Count'));
         }
     }
 

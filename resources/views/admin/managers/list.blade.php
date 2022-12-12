@@ -11,7 +11,7 @@
     <tbody>
         @forelse($RS_Results as $RS_Row)
             <tr class="delete-{{ $RS_Row->id }}">
-                <td>{{ $RS_Row->first_name }} {{ $RS_Row->last_name }}</td>
+                <td>{{ $RS_Row->full_name }}</td>
                 <td>{{ $RS_Row->email }}</td>
                 <td>({{ $RS_Row->dial_code ?? 91 }}) {{ $RS_Row->mobile_number }}</td>
                 <td>

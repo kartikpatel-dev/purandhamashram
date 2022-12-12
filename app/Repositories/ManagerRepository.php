@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Module;
 use App\Mail\UserApproveMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Carbon;
 
 class ManagerRepository
 {
@@ -46,13 +47,14 @@ class ManagerRepository
         $RS_Row = new User();
 
         $RS_Row->first_name = $data->first_name;
+        $RS_Row->middle_name = $data->middle_name;
         $RS_Row->last_name = $data->last_name;
         $RS_Row->email = $data->email;
         $RS_Row->password = Hash::make($data->password);
         $RS_Row->mobile_number = $data->mobile_number;
         $RS_Row->dial_code = $data->dial_code;
         $RS_Row->gender = $data->gender;
-        $RS_Row->birth_date = $data->birth_date;
+        $RS_Row->birth_date = Carbon::parse($data->birth_date)->format('Y-m-d');
         $RS_Row->address = $data->address;
         $RS_Row->city = $data->city;
         $RS_Row->country = $data->country;
@@ -99,12 +101,13 @@ class ManagerRepository
         $RS_Row = $this->getById($id);
 
         $RS_Row->first_name = $data->first_name;
+        $RS_Row->middle_name = $data->middle_name;
         $RS_Row->last_name = $data->last_name;
         $RS_Row->email = $data->email;
         $RS_Row->mobile_number = $data->mobile_number;
         $RS_Row->dial_code = $data->dial_code;
         $RS_Row->gender = $data->gender;
-        $RS_Row->birth_date = $data->birth_date;
+        $RS_Row->birth_date = Carbon::parse($data->birth_date)->format('Y-m-d');
         $RS_Row->address = $data->address;
         $RS_Row->city = $data->city;
         $RS_Row->country = $data->country;

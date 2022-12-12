@@ -41,6 +41,23 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label for="middle_name"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Middle Name') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="middle_name" type="text"
+                                        class="form-control @error('middle_name') is-invalid @enderror" name="middle_name"
+                                        value="{{ old('middle_name') }}" required autocomplete="middle_name">
+
+                                    @error('middle_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label for="last_name"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Last Name') }}</label>
 
@@ -141,7 +158,7 @@
                                     <input id="birth_date" type="text"
                                         class="form-control @error('birth_date') is-invalid @enderror" name="birth_date"
                                         value="{{ old('birth_date') }}" autocomplete="birth_date" required
-                                        placeholder="yyyy-mm-dd" readonly>
+                                        placeholder="dd-mm-yyyy" readonly>
 
                                     @error('birth_date')
                                         <span class="invalid-feedback" role="alert">
@@ -367,7 +384,7 @@
             });
 
             $("#birth_date").datepicker({
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd-mm-yy",
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 changeMonth: true,

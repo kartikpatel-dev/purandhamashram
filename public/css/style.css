@@ -1332,6 +1332,11 @@ section {
   border-width: 1px;
 }
 
+.form-check-input:checked {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
 @media (max-width: 767px) {
   .container-sm, .container {
     max-width: 98%;

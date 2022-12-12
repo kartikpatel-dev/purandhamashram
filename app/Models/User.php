@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'password',
@@ -58,6 +59,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->middle_name) . ' ' . ucfirst($this->last_name);
+    }
+
+    public function getBirthDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
 
     /**
      * This fuction is used to role relationship with user.

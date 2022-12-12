@@ -13,43 +13,9 @@ class AshramVisitorRepository
         $RS_Results = AshramVisitor::latest()
             ->with(['visitedUser']);
 
-        if (!empty($search['search_keryword'])) {
-            $searchKeyword = $search['search_keryword'];
+        $this->search($RS_Results, $search);
 
-            $RS_Users = User::select('id')
-                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
-                ->get();
-
-            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
-        }
-
-        if (!empty($search['check_in_date']) && !empty($search['check_out_date'])) {
-            $check_in_date = $search['check_in_date'];
-            $check_out_date = $search['check_out_date'];
-
-            $RS_Results->where('checkin_date', '>=', $check_in_date)
-                ->where('checkout_date', '<=', $check_out_date);
-        } else {
-            if (!empty($search['check_in_date'])) {
-                $check_in_date = $search['check_in_date'];
-
-                $RS_Results->where('checkin_date', '>=', $check_in_date);
-            }
-
-            if (!empty($search['check_out_date'])) {
-                $check_out_date = $search['check_out_date'];
-
-                $RS_Results->where('checkout_date', '<=', $check_out_date);
-            }
-        }
+        // $RS_Count = $this->expectedNextDayVisitorCount($RS_Results);
 
         return $RS_Results->paginate($perPage);
     }
@@ -75,9 +41,9 @@ class AshramVisitorRepository
         $RS_Row = new AshramVisitor();
 
         $RS_Row->user_id = auth()->user()->id;
-        $RS_Row->checkin_date = $data->check_in_date;
+        $RS_Row->checkin_date = Carbon::parse($data->check_in_date)->format('Y-m-d');
         $RS_Row->checkin_time = Carbon::parse($data->check_in_time)->format('H:i:s');
-        $RS_Row->checkout_date = $data->check_out_date;
+        $RS_Row->checkout_date = Carbon::parse($data->check_out_date)->format('Y-m-d');
         $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
         $RS_Row->number_of_person = $data->number_of_person;
 
@@ -109,7 +75,7 @@ class AshramVisitorRepository
     {
         $RS_Row = $this->getById($data->ashram_visitor_id);
 
-        $RS_Row->checkout_date = $data->check_out_date;
+        $RS_Row->checkout_date = Carbon::parse($data->check_out_date)->format('Y-m-d');
         $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
 
         $RS_Row->save();
@@ -167,5 +133,63 @@ class AshramVisitorRepository
                 }
             }
         }
+    }
+
+    public function search($RS_Results, $search)
+    {
+        if (!empty($search['search_keryword'])) {
+            $searchKeyword = $search['search_keryword'];
+
+            $RS_Users = User::select('id')
+                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
+                ->get();
+
+            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
+        }
+
+        if (!empty($search['check_in_date']) && !empty($search['check_out_date'])) {
+            $check_in_date = Carbon::parse($search['check_in_date'])->format('Y-m-d');
+            $check_out_date = Carbon::parse($search['check_out_date'])->format('Y-m-d');
+
+            $RS_Results->where('checkin_date', '>=', $check_in_date)
+                ->where('checkout_date', '<=', $check_out_date);
+        } else {
+            if (!empty($search['check_in_date'])) {
+                $check_in_date = Carbon::parse($search['check_in_date'])->format('Y-m-d');
+
+                $RS_Results->where('checkin_date', '>=', $check_in_date);
+            }
+
+            if (!empty($search['check_out_date'])) {
+                $check_out_date = Carbon::parse($search['check_out_date'])->format('Y-m-d');
+
+                $RS_Results->where('checkout_date', '<=', $check_out_date);
+            }
+        }
+
+        return $RS_Results;
+    }
+
+    public function expectedNextDayVisitorCount($search = array())
+    {
+        $checkInDate = !empty($search['check_in_date']) ?
+            Carbon::parse($search['check_in_date']) :
+            Carbon::now();
+
+        $RS_Results = AshramVisitor::where('checkin_date', '=', $checkInDate->addDay()->format('Y-m-d'));
+
+        $this->search($RS_Results, $search);
+
+        $RS_Count = $RS_Results->count();
+
+        return $RS_Count;
     }
 }

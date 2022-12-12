@@ -22,7 +22,7 @@
                 <td>{{ $RS_Row->file_size }}</td>
                 <td>
                     <div class="form-group-radio">
-                        <div class="icheck-primary d-inline mr-3">
+                        <div class="icheck-success d-inline mr-3">
                             <input type="radio" id="permission_active_{{ $RS_Row->id }}"
                                 name="permission_{{ $RS_Row->id }}" value="1"
                                 {{ $RS_Row->permission == '1' ? 'checked' : '' }} class="permission"

@@ -12,9 +12,9 @@ class ReferencePersonRepository
         $RS_Results = array();
 
         if ($searchKeyword != '') {
-            $RS_Results = User::select(DB::raw("CONCAT(first_name, ' ', last_name) as full_name"))
-                ->orderBy('first_name', 'ASC')
+            $RS_Results = User::orderBy('first_name', 'ASC')
                 ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $searchKeyword . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
                 ->get();
         }

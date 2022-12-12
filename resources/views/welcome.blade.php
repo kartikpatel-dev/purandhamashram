@@ -55,7 +55,6 @@
                     <div class="section-content">
                         <p>Puran Dham is the ashram of <b>Alaksh Avtari Pujya Sat Hariram Bapa</b> in the village of Ghuneshwar, previously known as Ghunda. </p>
                         <p>A rural village, Pujya Sat Hariram Bapa would visit the ancestral family home from time to time. He would be accompanied by family members and sometimes by disciples. The magnetism of Pujya Sat Hariram Bapa's words was such, that progressively, spontaneous discourses to a small group outside in the front yard of the humble farmhouse of his uncle became larger and larger as more and more got attracted to His Santvani. Villagers from the nearby villages looked forward to Pujya Bapa's visits and would gather in large numbers to hear His Satsang whenever Pujya Bapa paid a visit.</p>
-                        <p><b>- Sat Hariram Bapa</b></p>
                     </div>
                 </div>
 

@@ -36,7 +36,7 @@
                                     <input type="text" class="form-control datetimepicker-input"
                                         data-target="#check_in_date_target" name="check_in_date" id="check_in_date"
                                         value="{{ old('check_in_date', request()->get('check_in_date')) }}"
-                                        placeholder="YYYY-MM-DD" />
+                                        placeholder="DD-MM-YYYY" />
                                     <div class="input-group-append" data-target="#check_in_date_target"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -51,7 +51,7 @@
                                     <input type="text" class="form-control datetimepicker-input"
                                         data-target="#check_out_date_target" name="check_out_date" id="check_out_date"
                                         value="{{ old('check_out_date', request()->get('check_out_date')) }}"
-                                        placeholder="YYYY-MM-DD" />
+                                        placeholder="DD-MM-YYYY" />
                                     <div class="input-group-append" data-target="#check_out_date_target"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -74,6 +74,9 @@
                     <div class="row">
                         <div class="col-md-6 align-self-center">
                             <h4 class="card-title">@yield('Title')</h4>
+                        </div>
+                        <div class="col-md-6 align-self-center">
+                            <h4 class="card-title float-right text-info">{{ __('Expected Next 24 hours '.$RS_Visitor_Count.' visitor')}}</h4>
                         </div>
                     </div>
                 </div>
@@ -138,14 +141,14 @@
                 icons: {
                     time: 'far fa-clock'
                 },
-                format: 'yyyy-MM-DD',
+                format: 'DD-MM-YYYY',
             });
 
             $('#check_out_date_target').datetimepicker({
                 icons: {
                     time: 'far fa-clock'
                 },
-                format: 'yyyy-MM-DD',
+                format: 'DD-MM-YYYY',
             });
         });
     </script>

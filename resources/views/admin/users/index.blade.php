@@ -42,10 +42,13 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6 align-self-center">
+                        <div class="col-md-4 align-self-center">
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4 align-self-center d-flex justify-content-center">
+                            <h4 class="card-title text-info">{!! __('Total <span id="total_count"></span> User') !!}</h4>
+                        </div>
+                        <div class="col-md-4">
                             <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-info float-right">Add User</a>
                         </div>
                     </div>
@@ -92,6 +95,7 @@
                     },
                     success: function(response) {
                         jQuery('#data_list').html(response.users);
+                        jQuery('#total_count').html(response.total_count);
                         jQuery('html, body').animate({
                             scrollTop: 0
                         }, 'slow');

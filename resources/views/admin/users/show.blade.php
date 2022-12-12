@@ -24,8 +24,7 @@
                                         @endif
                                     </div>
 
-                                    <h3 class="profile-username text-center">{{ $RS_Row->first_name }}
-                                        {{ $RS_Row->last_name }}</h3>
+                                    <h3 class="profile-username text-center">{{ $RS_Row->full_name }}</h3>
 
                                     <p class="text-muted text-center">{{ $RS_Row->occupation }}</p>
 

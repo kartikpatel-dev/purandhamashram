@@ -40,7 +40,7 @@
                                     <input id="check_in_date" type="text"
                                         class="form-control check_in_out_date @error('check_in_date') is-invalid @enderror"
                                         name="check_in_date"
-                                        value="{{ old('check_in_date', !empty($RS_Result->visitorCheckIn->checkin_date) ? $RS_Result->visitorCheckIn->checkin_date : date('Y-m-d')) }}"
+                                        value="{{ old('check_in_date', !empty($RS_Result->visitorCheckIn->checkin_date) ? $RS_Result->visitorCheckIn->checkin_date : date('d-m-Y')) }}"
                                         autocomplete="check_in_date"
                                         {{ !empty(Auth::user()->visitor_status) ? 'disabled' : '' }}>
 
@@ -100,7 +100,7 @@
                                     <input id="check_out_date" type="text"
                                         class="form-control check_in_out_date @error('check_out_date') is-invalid @enderror"
                                         name="check_out_date"
-                                        value="{{ old('check_out_date', !empty($RS_Result->visitorCheckIn->checkout_date) ? $RS_Result->visitorCheckIn->checkout_date : date('Y-m-d')) }}"
+                                        value="{{ old('check_out_date', !empty($RS_Result->visitorCheckIn->checkout_date) ? $RS_Result->visitorCheckIn->checkout_date : date('d-m-Y')) }}"
                                         autocomplete="check_out_date">
 
                                     @error('check_out_date')
@@ -146,7 +146,7 @@
     <script>
         jQuery(document).ready(function() {
             jQuery('#check_in_date').datepicker({
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd-mm-yy",
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 changeMonth: true,
@@ -155,7 +155,7 @@
             });
 
             jQuery('#check_out_date').datepicker({
-                dateFormat: "yy-mm-dd",
+                dateFormat: "dd-mm-yy",
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 changeMonth: true,

@@ -1,8 +1,9 @@
 <table class="table table-hover table-striped table-bordered">
     <thead class="thead-dark">
         <th width="25%">Name</th>
-        <th width="30%">Email ID</th>
-        <th width="20%">Mobile Number</th>
+        <th width="25%">Email ID</th>
+        <th width="15%">Mobile Number</th>
+        <th width="10%">City</th>
         <th width="10%">Status</th>
         <th width="10%">
             <center>Action</center>
@@ -11,9 +12,10 @@
     <tbody>
         @forelse($users as $user)
             <tr class="delete-{{ $user->id }}">
-                <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                <td>{{ $user->full_name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>({{ $user->dial_code ?? 91 }}) {{ $user->mobile_number }}</td>
+                <td>{{ $user->city }}</td>
                 <td>
                     <center>
                         @if (Auth::user()->id != $user->id)

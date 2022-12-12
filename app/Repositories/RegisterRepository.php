@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Jobs\UserRegisterMailJob;
+use Illuminate\Support\Carbon;
 
 class RegisterRepository
 {
@@ -15,6 +16,7 @@ class RegisterRepository
     {
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'mobile_number' => ['required', 'numeric', 'unique:users'],
@@ -27,7 +29,7 @@ class RegisterRepository
             // 'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
             'avatar' => 'required|image|mimes:jpeg,png,jpg,svg|max:5120',
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
         ], [
             'avatar.max' => 'The :attribute must not be greater than 5MB'
         ]);
@@ -48,13 +50,14 @@ class RegisterRepository
 
         $user = User::create([
             'first_name' => $data['first_name'],
+            'middle_name' => $data['middle_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'dial_code' => $data['dial_code'],
             'mobile_number' => $data['mobile_number'],
             'password' => Hash::make($data['password']),
             'gender' => $data['gender'],
-            'birth_date' => $data['birth_date'],
+            'birth_date' => Carbon::parse($data['birth_date'])->format('Y-m-d'),
             'address' => $data['address'],
             'city' => $data['city'],
             'country' => $data['country'],

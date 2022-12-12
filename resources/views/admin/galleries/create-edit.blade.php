@@ -56,7 +56,7 @@
                                     <label>{{ __('Permission') }}</label>
                                     <div
                                         class="form-group-radio clearfix{{ $errors->has('permission') ? ' is-invalid' : '' }}">
-                                        <div class="icheck-primary d-inline mr-3">
+                                        <div class="icheck-success d-inline mr-3">
                                             <input type="radio" id="permission_active" name="permission" value="1"
                                                 {{ old('permission', $RS_Row->permission ?? '1') == '1' ? 'checked' : '' }}>
                                             <label for="permission_active">General</label>

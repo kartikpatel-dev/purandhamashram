@@ -25,6 +25,7 @@ class ManagerStoreRequest extends FormRequest
     {
         return [
             'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'mobile_number' => ['required', 'numeric', 'unique:users'],
@@ -39,7 +40,7 @@ class ManagerStoreRequest extends FormRequest
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
             'role' => ['required'],
             'status' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:1'],
             'modules' => ['required'],
         ];
     }
