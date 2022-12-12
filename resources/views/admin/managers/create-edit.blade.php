@@ -97,10 +97,10 @@
                                         <select id="dial_code" name="dial_code"
                                             class="form-select mr-2 @error('dial_code') is-invalid @enderror" required
                                             style="width: 90px;">
-                                            @forelse($dialCodes as $dialCode)
-                                                <option value="{{ $dialCode }}"
-                                                    {{ !empty($RS_Row->dial_code) && $RS_Row->dial_code == $dialCode ? 'selected' : '' }}>
-                                                    {{ '+' . $dialCode }}</option>
+                                            @forelse($dialCodes as $Key=>$Val)
+                                                <option data-name="{{ $Val }}" value="{{ $Key }}"
+                                                    {{ (!empty($RS_Row->dial_code) && $RS_Row->dial_code == $Key) || $Key == old('dial_code', !empty($RS_Row->dial_code) ? $RS_Row->dial_code : 91) ? 'selected' : '' }}>
+                                                    {{ __('+' . $Key . ' (' . $Val . ')') }}</option>
                                             @empty
                                                 <option value="">Code</option>
                                             @endforelse
@@ -110,7 +110,8 @@
                                             <input type="text" name="mobile_number" id="mobile_number"
                                                 value="{{ old('mobile_number', $RS_Row->mobile_number ?? '') }}"
                                                 class="form-control{{ $errors->has('mobile_number') ? ' is-invalid' : '' }}"
-                                                placeholder="{{ __('Mobile Number') }}" onkeypress="return isNumber(event)">
+                                                placeholder="{{ __('Mobile Number') }}"
+                                                onkeypress="return isNumber(event)">
                                         </div>
 
                                         @if ($errors->has('mobile_number'))
@@ -241,7 +242,7 @@
                                     <input type="text" name="country" id="country"
                                         value="{{ old('country', $RS_Row->country ?? '') }}"
                                         class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Country') }}">
+                                        placeholder="{{ __('Country') }}" readonly>
 
                                     @if ($errors->has('country'))
                                         <span class="invalid-feedback" role="alert">
@@ -374,8 +375,8 @@
                                             class="form-group-radio clearfix{{ $errors->has('modules') ? ' is-invalid' : '' }}">
                                             @forelse($modules as $module)
                                                 <div class="icheck-success d-inline mr-3">
-                                                    <input type="checkbox" id="modules_{{ $module->slug }}" name="modules[]"
-                                                        value="{{ $module->name }}"
+                                                    <input type="checkbox" id="modules_{{ $module->slug }}"
+                                                        name="modules[]" value="{{ $module->name }}"
                                                         {{ !empty($RS_Row->modules) && in_array($module->name, $RS_Row->modules->pluck('name')->toArray()) ? 'checked' : '' }}>
                                                     <label for="modules_{{ $module->slug }}">{{ $module->name }}</label>
                                                 </div>
@@ -459,6 +460,11 @@
                 jQuery('.reference_person_list').html('');
             });
             // reference person auto suggest end
+
+            jQuery('#dial_code').on('change', function(e) {
+                const name = jQuery(this).find(':selected').data('name');
+                jQuery('#country').val(name);
+            });
         });
     </script>
 @endsection

@@ -86,6 +86,12 @@ Route::get('/terms-and-condition', function () {
 
 Route::get('/user-autocomplete-search', [UserController::class, 'autocompleteSearch'])->name('user.autocomplete.search');
 
+//Clear View cache:
+Route::get('/queue-work', function () {
+    Artisan::call('queue:work --stop-when-empty');
+    return '<h1>Queue Work</h1>';
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

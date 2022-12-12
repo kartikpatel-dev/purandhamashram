@@ -100,9 +100,11 @@
                                         <select id="dial_code" name="dial_code"
                                             class="form-select select-dial-code @error('dial_code') is-invalid @enderror"
                                             required>
-                                            @forelse($dialCodes as $dialCode)
-                                                <option value="{{ $dialCode }}">
-                                                    {{ '+' . $dialCode }}</option>
+                                            @forelse($dialCodes as $Key=>$Val)
+                                                <option data-name="{{ $Val }}" value="{{ $Key }}"
+                                                    {{ $Key == 91 ? 'selected' : '' }}>
+                                                    {{ __('+' . $Key . ' (' . $Val . ')') }}
+                                                </option>
                                             @empty
                                                 <option value="">Code</option>
                                             @endforelse
@@ -208,7 +210,7 @@
                                 <div class="col-md-6">
                                     <input id="country" type="text"
                                         class="form-control @error('country') is-invalid @enderror" name="country"
-                                        value="{{ old('country') }}" autocomplete="country" required>
+                                        value="{{ old('country', 'India') }}" autocomplete="country" required readonly>
 
                                     @error('country')
                                         <span class="invalid-feedback" role="alert">
@@ -390,6 +392,11 @@
                 changeMonth: true,
                 changeYear: true,
                 maxDate: "-1D"
+            });
+
+            jQuery('#dial_code').on('change', function(e) {
+                const name = jQuery(this).find(':selected').data('name');
+                jQuery('#country').val(name);
             });
         });
     </script>

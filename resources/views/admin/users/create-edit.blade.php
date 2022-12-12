@@ -97,10 +97,10 @@
                                         <select id="dial_code" name="dial_code"
                                             class="form-select mr-2 @error('dial_code') is-invalid @enderror" required
                                             style="width: 90px;">
-                                            @forelse($dialCodes as $dialCode)
-                                                <option value="{{ $dialCode }}"
-                                                    {{ !empty($RS_Row->dial_code) && $RS_Row->dial_code == $dialCode ? 'selected' : '' }}>
-                                                    {{ '+' . $dialCode }}</option>
+                                            @forelse($dialCodes as $Key=>$Val)
+                                                <option data-name="{{ $Val }}" value="{{ $Key }}"
+                                                    {{ (!empty($RS_Row->dial_code) && $RS_Row->dial_code == $Key) || $Key == old('dial_code', !empty($RS_Row->dial_code) ? $RS_Row->dial_code : 91) ? 'selected' : '' }}>
+                                                    {{ __('+' . $Key . ' (' . $Val . ')') }}</option>
                                             @empty
                                                 <option value="">Code</option>
                                             @endforelse
@@ -240,9 +240,9 @@
                                 <div class="form-group">
                                     <label for="country">{{ __('Country') }}</label>
                                     <input type="text" name="country" id="country"
-                                        value="{{ old('country', $RS_Row->country ?? '') }}"
+                                        value="{{ old('country', $RS_Row->country ?? 'India') }}"
                                         class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Country') }}">
+                                        placeholder="{{ __('Country') }}" readonly>
 
                                     @if ($errors->has('country'))
                                         <span class="invalid-feedback" role="alert">
@@ -325,7 +325,7 @@
                                         @endif
                                         <div class="icheck-success d-inline">
                                             <input type="checkbox" id="role_user" name="role[]" value="user"
-                                                {{ old('role', !empty($roles) && in_array('user', $roles) ?? 'user') == 'user' ? 'checked' : '' }}>
+                                                {{ (old('role') || !empty($roles) && in_array('user', $roles) ?? 'user') == 'user' ? 'checked' : '' }}>
                                             <label for="role_user">User</label>
                                         </div>
                                     </div>
@@ -430,6 +430,11 @@
                 jQuery('.reference_person_list').html('');
             });
             // reference person auto suggest end
+
+            jQuery('#dial_code').on('change', function(e) {
+                const name = jQuery(this).find(':selected').data('name');
+                jQuery('#country').val(name);
+            });
         });
     </script>
 @endsection
