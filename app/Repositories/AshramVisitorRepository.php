@@ -29,7 +29,9 @@ class AshramVisitorRepository
     {
         if (!empty(auth()->user()->visitor_status)) {
             $RS_Row = $this->checkIn()->visitorCheckIn;
-            $RS_Row->visitor_status = '1';
+            if (!empty($RS_Row)) {
+                $RS_Row->visitor_status = '1';
+            }
 
             return array(
                 'messageType' => 'success',
@@ -47,15 +49,25 @@ class AshramVisitorRepository
         $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
         $RS_Row->number_of_person = $data->number_of_person;
 
+        if (Carbon::parse($data->check_out_date)->format('Y-m-d') < Carbon::now()->subDays(1)) {
+            $RS_Row->checkin_status = '0';
+        } else {
+            $RS_Row->checkin_status = '1';
+        }
+
         $RS_Row->save();
 
         if (!empty($RS_Row)) :
             // user visitor status change
-            $user = User::findOrFail(auth()->user()->id);
-            $user->visitor_status = '1';
-            $user->save();
+            if (Carbon::parse($data->check_out_date)->format('Y-m-d') < Carbon::now()->subDays(1)) {
+                $RS_Row->visitor_status = '0';
+            } else {
+                $user = User::findOrFail(auth()->user()->id);
+                $user->visitor_status = '1';
+                $user->save();
 
-            $RS_Row->visitor_status = '1';
+                $RS_Row->visitor_status = '1';
+            }
 
             return array(
                 'messageType' => 'success',
@@ -77,6 +89,7 @@ class AshramVisitorRepository
 
         $RS_Row->checkout_date = Carbon::parse($data->check_out_date)->format('Y-m-d');
         $RS_Row->checkout_time = Carbon::parse($data->check_out_time)->format('H:i:s');
+        $RS_Row->checkin_status = '0';
 
         $RS_Row->save();
 
@@ -142,6 +155,7 @@ class AshramVisitorRepository
 
             $RS_Users = User::select('id')
                 ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $searchKeyword . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
                 ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
                 ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')

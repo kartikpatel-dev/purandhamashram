@@ -11,18 +11,32 @@
     <tbody>
         @forelse($RS_Results as $RS_Row)
             <tr class="delete-{{ $RS_Row->id }}">
-                <td>{{ $RS_Row->visitedUser->first_name }} {{ $RS_Row->visitedUser->last_name }}</td>
+                <td>{{ $RS_Row->visitedUser->full_name }}</td>
                 <td>{{ $RS_Row->visitedUser->city }}</td>
                 <td>{{ $RS_Row->visitedUser->country }}</td>
                 <td>
-                    {{ \Carbon\Carbon::parse($RS_Row->checkin_date)->format('d-m-Y') }}
+                    {{ $RS_Row->checkin_date }}
                     {{ \Carbon\Carbon::parse($RS_Row->checkin_time)->format('h:i A') }}
                 </td>
                 <td>
-                    {{ \Carbon\Carbon::parse($RS_Row->checkout_date)->format('d-m-Y') }}
+                    {{ $RS_Row->checkout_date }}
                     {{ \Carbon\Carbon::parse($RS_Row->checkout_time)->format('h:i A') }}
                 </td>
-                <td>{{ $RS_Row->visitedUser->visitor_status == 1 ? 'Check In' : 'Check Out' }}</td>
+                <td>
+                    {{-- {{ $RS_Row->visitedUser->visitor_status == 1 ? 'Check In' : 'Check Out' }} --}}
+                    @if ($RS_Row->checkin_status == 1)
+                        @if (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') > \Carbon\Carbon::now()->format('Y-m-d'))
+                            {{ __('-') }}
+                        @elseif (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d') ||
+                            \Carbon\Carbon::parse($RS_Row->checkout_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d'))
+                            <i class="fas fa-check text-success"></i>
+                        @else
+                            <i class="fas fa-times text-danger"></i>
+                        @endif
+                    @else
+                        <i class="fas fa-times text-danger"></i>
+                    @endif
+                </td>
                 <td>{{ $RS_Row->number_of_person }}</td>
             </tr>
         @empty

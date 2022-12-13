@@ -35,8 +35,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        /* $users = $this->userRepository->getAll(20, 'user');
-        dd($users->total()); */
+        /* $users = $this->userRepository->getAll(20, 'user', 'Active', $request->all());
+        dd($users); */
 
         if ($request->ajax()) {
 

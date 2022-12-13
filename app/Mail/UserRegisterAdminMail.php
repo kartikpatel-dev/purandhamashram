@@ -32,7 +32,7 @@ class UserRegisterAdminMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'New Register Mail:~ '.$this->user->first_name,
+            subject: 'New uer register email',
         );
     }
 

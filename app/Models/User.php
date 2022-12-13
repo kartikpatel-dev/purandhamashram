@@ -38,7 +38,8 @@ class User extends Authenticatable
         'avatar',
         'status',
         'profile_update',
-        'visitor_status'
+        'visitor_status',
+        'country_permission'
     ];
 
     /**

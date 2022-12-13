@@ -21,7 +21,7 @@
                         <a>
                             <div class="address info-item d-flex align-items-center justify-content-center">
                                 <i class="bi bi-geo-alt"></i>
-                                <p><b>Purandhaam Ashram</b> <br>At village Ghunda, Post - Jinawari, Taluka - Jamjodhpur, District -
+                                <p><b>Puran Dham Ashram</b> <br>At village Ghunda, Post - Jinawari, Taluka - Jamjodhpur, District -
                                     Jamnagar, Gujarat - 360515</p>
                             </div>
                         </a>

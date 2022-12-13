@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class AshramVisitorUpdateRequest extends FormRequest
 {
@@ -39,7 +40,7 @@ class AshramVisitorUpdateRequest extends FormRequest
      *
      * @return void
      */
-    protected function failedValidation($validator)
+    protected function failedValidation(Validator $validator)
     {
         $this->validator = $validator;
     }

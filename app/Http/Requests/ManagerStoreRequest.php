@@ -35,7 +35,7 @@ class ManagerStoreRequest extends FormRequest
             'city' => ['required', 'string', 'max:50'],
             'country' => ['required', 'string', 'max:50'],
             'occupation' => ['required', 'string', 'max:100'],
-            'guru' => ['required', 'string', 'max:100'],
+            // 'guru' => ['required', 'string', 'max:100'],
             'reference_person' => ['required', 'string', 'max:150'],
             'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
             'role' => ['required'],

@@ -66,3 +66,8 @@
 .custom-sorting {
     cursor: pointer;
 }
+
+.users_waiting_approval_inner {
+    max-height: 300px;
+    overflow-y: scroll;
+}

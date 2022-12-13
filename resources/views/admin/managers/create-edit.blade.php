@@ -240,7 +240,7 @@
                                 <div class="form-group">
                                     <label for="country">{{ __('Country') }}</label>
                                     <input type="text" name="country" id="country"
-                                        value="{{ old('country', $RS_Row->country ?? '') }}"
+                                        value="{{ old('country', $RS_Row->country ?? 'India') }}"
                                         class="form-control{{ $errors->has('country') ? ' is-invalid' : '' }}"
                                         placeholder="{{ __('Country') }}" readonly>
 
@@ -376,12 +376,39 @@
                                             @forelse($modules as $module)
                                                 <div class="icheck-success d-inline mr-3">
                                                     <input type="checkbox" id="modules_{{ $module->slug }}"
-                                                        name="modules[]" value="{{ $module->name }}"
+                                                        class="module_permission" name="modules[]"
+                                                        value="{{ $module->name }}"
                                                         {{ !empty($RS_Row->modules) && in_array($module->name, $RS_Row->modules->pluck('name')->toArray()) ? 'checked' : '' }}>
                                                     <label for="modules_{{ $module->slug }}">{{ $module->name }}</label>
                                                 </div>
                                             @empty
                                             @endforelse
+
+                                            <div class="users_waiting_approval">
+                                                <h5 class="mt-3">{{ __('Users Waiting Approval (Country Wise)') }}</h5>
+                                                <div class="users_waiting_approval_inner">
+                                                    <div class="icheck-info mb-2">
+                                                        <input type="checkbox" id="select_all_countries">
+                                                        <label for="select_all_countries">{{ __('Select All') }}</label>
+                                                    </div>
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            @forelse($dialCodes as $Key=>$Val)
+                                                                <div class="icheck-info mb-2 col-md-4">
+                                                                    <input type="checkbox"
+                                                                        id="country_{{ $Key }}"
+                                                                        class="countries_module" name="countries_module[]"
+                                                                        value="{{ $Key }}"
+                                                                        {{ !empty($RS_Row->country_permission) && in_array($Key, explode(', ', $RS_Row->country_permission)) ? 'checked' : '' }}>
+                                                                    <label
+                                                                        for="country_{{ $Key }}">{{ $Val }}</label>
+                                                                </div>
+                                                            @empty
+                                                            @endforelse
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         @if ($errors->has('modules'))
@@ -465,6 +492,47 @@
                 const name = jQuery(this).find(':selected').data('name');
                 jQuery('#country').val(name);
             });
+
+            /* jQuery(".module_permission").change(function() {
+                var ischecked = $(this).is(':checked');
+                if (!ischecked) {
+                    if (jQuery(this).val() == 'Users Waiting Approval') {
+                        jQuery('.users_waiting_approval').addClass('d-none');
+                    }
+                } else {
+                    if (jQuery(this).val() == 'Users Waiting Approval') {
+                        jQuery('.users_waiting_approval').removeClass('d-none');
+                    }
+                }
+            }); */
+
+            jQuery('#select_all_countries').on('click', function() {
+                if (this.checked) {
+                    jQuery('.countries_module').each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    jQuery('.countries_module').each(function() {
+                        this.checked = false;
+                    });
+                }
+            });
+
+            jQuery('.countries_module').on('click', function() {
+                selectAllCountry();
+            });
         });
+
+        jQuery(document).ready(function() {
+            selectAllCountry();
+        });
+
+        function selectAllCountry() {
+            if (jQuery('.countries_module:checked').length == jQuery('.countries_module').length) {
+                jQuery('#select_all_countries').prop('checked', true);
+            } else {
+                jQuery('#select_all_countries').prop('checked', false);
+            }
+        }
     </script>
 @endsection

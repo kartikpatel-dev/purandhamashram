@@ -69,6 +69,10 @@ class ManagerRepository
             $RS_Row->avatar = $fileName;
         }
 
+        if (!empty($data->modules) && in_array('Users Waiting Approval', $data->modules)) {
+            $RS_Row->country_permission = !empty($data->countries_module) ? implode(', ', $data->countries_module) : NULL;
+        }
+
         $RS_Row->save();
 
         if (!empty($RS_Row)) :
@@ -120,6 +124,12 @@ class ManagerRepository
             $fileName = $this->fileUpload($data->file(), $data->first_name . '-' . $data->last_name, $RS_Row->avatar);
 
             $RS_Row->avatar = $fileName;
+        }
+
+        if (!empty($data->modules) && in_array('Users Waiting Approval', $data->modules)) {
+            $RS_Row->country_permission = !empty($data->countries_module) ? implode(', ', $data->countries_module) : NULL;
+        } else {
+            $RS_Row->country_permission = NULL;
         }
 
         $RS_Row->save();

@@ -42,7 +42,7 @@ class AshramVisitorCreateRequest extends FormRequest
      *
      * @return void
      */
-    protected function failedValidation($validator)
+    protected function failedValidation(Validator $validator)
     {
         $this->validator = $validator;
     }

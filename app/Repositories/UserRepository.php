@@ -9,12 +9,31 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\UserApproveMailJob;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository
 {
     protected function destinationPath()
     {
         return storage_path('app/public/');
+    }
+
+    protected function roles()
+    {
+        $roles = Auth::user()
+            ->role->pluck('name')
+            ->toArray();
+
+        return $roles;
+    }
+
+    protected function modules()
+    {
+        $modules = !empty(Auth::user()->modules)
+            ? Auth::user()->modules->pluck('name')->toArray()
+            : [];
+
+        return $modules;
     }
 
     public function getAll($perPage = 20, $roleSlug = '', $status = '', $search = array())
@@ -28,23 +47,15 @@ class UserRepository
             $RS_Results = $RS_Results_Role->users()->latest();
         }
 
+        if (!in_array('Admin', $this->roles()) || (in_array('Manager', $this->roles()) && in_array('Users Waiting Approval', $this->modules()))) {
+            $RS_Results->whereIn('dial_code', explode(', ', Auth::user()->country_permission));
+        }
+
         if (!empty($status)) {
             $RS_Results->where('status', $status);
         }
 
-        if (!empty($search['search_keryword'])) {
-            $searchKeyword = $search['search_keryword'];
-
-            $RS_Results->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%');
-        }
+        $this->search($RS_Results, $search);
 
         return $RS_Results->paginate($perPage);
     }
@@ -220,5 +231,29 @@ class UserRepository
         }
 
         return null;
+    }
+
+    public function search($RS_Results, $search)
+    {
+        if (!empty($search['search_keryword'])) {
+            $searchKeyword = $search['search_keryword'];
+
+            $RS_Users = User::select('id')
+                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
+                ->get();
+
+            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
+        }
+
+        return $RS_Results;
     }
 }
