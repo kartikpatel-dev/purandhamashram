@@ -56,6 +56,10 @@ class LoginRepository
 
             $token = $RS_Row->createToken('HariramGrantClient')->accessToken;
 
+            $RS_Row->device_type = $data['device_type'];
+            $RS_Row->device_token = $data['device_token'];
+            $RS_Row->save();
+
             return [
                 'success'   => true,
                 "message" => 'Login Successfully',

@@ -39,7 +39,9 @@ class User extends Authenticatable
         'status',
         'profile_update',
         'visitor_status',
-        'country_permission'
+        'country_permission',
+        'device_type',
+        'device_token',
     ];
 
     /**

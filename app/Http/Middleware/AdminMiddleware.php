@@ -28,8 +28,8 @@ class AdminMiddleware
                     return $next($request);
                     break;
 
-                case in_array('Manager', $userRoles) &&
-                    (Route::currentRouteName() == 'admin.dashboard' || in_array(Route::currentRouteName(), $modules)):
+                case in_array('Manager', $userRoles):
+                    //  && (Route::currentRouteName() == 'admin.dashboard' || in_array(Route::currentRouteName(), $modules))
                     return $next($request);
                     break;
 
