@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
 // migrate
-Route::get('/migrate', function () {
+/* Route::get('/migrate', function () {
     Artisan::call('migrate --force');
     return '<h1>Migrate Successully</h1>';
-});
+}); */
 
 //Clear Cache facade value:
 /* Route::get('/clear-cache', function () {

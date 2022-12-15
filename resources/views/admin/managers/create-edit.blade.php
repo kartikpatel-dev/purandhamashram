@@ -318,14 +318,14 @@
                                     <div class="form-group-radio clearfix{{ $errors->has('role') ? ' is-invalid' : '' }}">
                                         <div class="icheck-success d-inline mr-3">
                                             <input type="checkbox" id="role_manager" name="role[]" value="manager"
-                                                {{ old('role', !empty($RS_Row->role) && in_array('manager', $RS_Row->role->pluck('slug')->toArray()) ?? 'manager') == 'manager' ? 'checked' : '' }}>
+                                                {{ (is_array(old('role')) && in_array('manager', old('role'))) || (!old() && (!empty($RS_Row->role) && in_array('manager', $RS_Row->role->pluck('slug')->toArray()))) ? ' checked' : '' }}>
                                             <label for="role_manager">Manager</label>
                                         </div>
 
                                         @if (!empty($RS_Row))
                                             <div class="icheck-success d-inline">
                                                 <input type="checkbox" id="role_user" name="role[]" value="user"
-                                                    {{ old('role', !empty($RS_Row->role) && in_array('user', $RS_Row->role->pluck('slug')->toArray()) ?? '') == 'user' ? 'checked' : '' }}>
+                                                    {{ (is_array(old('role')) && in_array('user', old('role'))) || (!old() && (!empty($RS_Row->role) && in_array('user', $RS_Row->role->pluck('slug')->toArray()))) ? ' checked' : '' }}>
                                                 <label for="role_user">User</label>
                                             </div>
                                         @endif
@@ -378,37 +378,11 @@
                                                     <input type="checkbox" id="modules_{{ $module->slug }}"
                                                         class="module_permission" name="modules[]"
                                                         value="{{ $module->name }}"
-                                                        {{ !empty($RS_Row->modules) && in_array($module->name, $RS_Row->modules->pluck('name')->toArray()) ? 'checked' : '' }}>
+                                                        {{ (is_array(old('modules')) && in_array($module->name, old('modules'))) || (!old() && (!empty($RS_Row->modules) && in_array($module->name, $RS_Row->modules->pluck('name')->toArray()))) ? ' checked' : '' }}>
                                                     <label for="modules_{{ $module->slug }}">{{ $module->name }}</label>
                                                 </div>
                                             @empty
                                             @endforelse
-
-                                            <div class="users_waiting_approval">
-                                                <h5 class="mt-3">{{ __('Users Waiting Approval (Country Wise)') }}</h5>
-                                                <div class="users_waiting_approval_inner">
-                                                    <div class="icheck-info mb-2">
-                                                        <input type="checkbox" id="select_all_countries">
-                                                        <label for="select_all_countries">{{ __('Select All') }}</label>
-                                                    </div>
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            @forelse($dialCodes as $Key=>$Val)
-                                                                <div class="icheck-info mb-2 col-md-4">
-                                                                    <input type="checkbox"
-                                                                        id="country_{{ $Key }}"
-                                                                        class="countries_module" name="countries_module[]"
-                                                                        value="{{ $Key }}"
-                                                                        {{ !empty($RS_Row->country_permission) && in_array($Key, explode(', ', $RS_Row->country_permission)) ? 'checked' : '' }}>
-                                                                    <label
-                                                                        for="country_{{ $Key }}">{{ $Val }}</label>
-                                                                </div>
-                                                            @empty
-                                                            @endforelse
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
                                         @if ($errors->has('modules'))
@@ -416,6 +390,31 @@
                                                 <strong>{{ $errors->first('modules') }}</strong>
                                             </span>
                                         @endif
+
+                                        <div class="users_waiting_approval">
+                                            <h5 class="mt-3">{{ __('Users Waiting Approval (Country Wise)') }}</h5>
+                                            <div class="users_waiting_approval_inner">
+                                                <div class="icheck-info mb-2">
+                                                    <input type="checkbox" id="select_all_countries">
+                                                    <label for="select_all_countries">{{ __('Select All') }}</label>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="row">
+                                                        @forelse($dialCodes as $Key=>$Val)
+                                                            <div class="icheck-info mb-2 col-md-4">
+                                                                <input type="checkbox" id="country_{{ $Key }}"
+                                                                    class="countries_module" name="countries_module[]"
+                                                                    value="{{ $Key }}"
+                                                                    {{ (is_array(old('countries_module')) && in_array($Key, old('countries_module'))) || (!old() && (!empty($RS_Row->country_permission) && in_array($Key, explode(', ', $RS_Row->country_permission)))) ? ' checked' : '' }}>
+                                                                <label
+                                                                    for="country_{{ $Key }}">{{ $Val }}</label>
+                                                            </div>
+                                                        @empty
+                                                        @endforelse
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endif

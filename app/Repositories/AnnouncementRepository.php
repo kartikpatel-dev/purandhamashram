@@ -26,21 +26,13 @@ class AnnouncementRepository
 
     public function store($data)
     {
-        $RS_Row = new Announcement();
-
-        $RS_Row->user_id = auth()->user()->id;
-        $RS_Row->title = $data->title;
-        $RS_Row->slug = Str::slug($data->title, '-');
-        $RS_Row->description = $data->description;
-        $RS_Row->created_at = Carbon::parse($data->created_at)->format('Y-m-d H:i:s');
-
-        $RS_Row->save();
+        $RS_Row = $this->StoreUpdate($data);
 
         if (!empty($RS_Row)) :
             return array(
                 'messageType' => 'success',
                 'message' => 'Announcement creaded successfully.',
-                'id' => $RS_Row->id
+                'id' => $RS_Row
             );
         else :
             return array(
@@ -53,20 +45,13 @@ class AnnouncementRepository
 
     public function update($data, $id = 0)
     {
-        $RS_Row = $this->getById($id);
-
-        $RS_Row->title = $data->title;
-        $RS_Row->slug = Str::slug($data->title, '-');
-        $RS_Row->description = $data->description;
-        $RS_Row->created_at = Carbon::parse($data->created_at)->format('Y-m-d H:i:s');
-
-        $RS_Row->save();
+        $RS_Row = $this->StoreUpdate($data, $id);
 
         if (!empty($RS_Row)) :
             return array(
                 'messageType' => 'success',
                 'message' => 'Announcement updated successfully.',
-                'id' => $RS_Row->id
+                'id' => $RS_Row
             );
         else :
             return array(
@@ -75,6 +60,21 @@ class AnnouncementRepository
                 'id' => 0
             );
         endif;
+    }
+
+    private function StoreUpdate($data, $id = 0)
+    {
+        $RS_Row = empty($id) ? new Announcement() : $this->getById($id);
+
+        $RS_Row->user_id = auth()->user()->id;
+        $RS_Row->title = $data->title;
+        $RS_Row->slug = Str::slug($data->title, '-');
+        $RS_Row->description = $data->description;
+        $RS_Row->created_at = Carbon::parse($data->created_at)->format('Y-m-d H:i:s');
+
+        $RS_Row->save();
+
+        return $RS_Row->id;
     }
 
     public function delete($id)

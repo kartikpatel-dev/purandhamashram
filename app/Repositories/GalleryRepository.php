@@ -67,7 +67,7 @@ class GalleryRepository implements GalleryRepositoryInterface
 
                 if (!empty($check)) {
 
-                    $file_name = $file->getClientOriginalName();
+                    $file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                     $fileName = Str::slug($file_name) . '-' . time();
                     $fileSize = $file->getSize();
 

@@ -319,13 +319,13 @@
                                         @if (!empty($RS_Row))
                                             <div class="icheck-success d-inline mr-3">
                                                 <input type="checkbox" id="role_manager" name="role[]" value="manager"
-                                                    {{ old('role', !empty($roles) && in_array('manager', $roles) ?? '') == 'manager' ? 'checked' : '' }}>
+                                                    {{ (is_array(old('role')) && in_array('manager', old('role'))) || (!old() && (!empty($roles) && in_array('manager', $roles))) ? ' checked' : '' }}>
                                                 <label for="role_manager">Manager</label>
                                             </div>
                                         @endif
                                         <div class="icheck-success d-inline">
                                             <input type="checkbox" id="role_user" name="role[]" value="user"
-                                                {{ (old('role') || !empty($roles) && in_array('user', $roles) ?? 'user') == 'user' ? 'checked' : '' }}>
+                                                {{ (is_array(old('role')) && in_array('user', old('role'))) || (!old() && (!empty($roles) && in_array('user', $roles))) ? ' checked' : '' }}>
                                             <label for="role_user">User</label>
                                         </div>
                                     </div>

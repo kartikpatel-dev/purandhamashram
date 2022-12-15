@@ -27,4 +27,16 @@ class GalleryStoreRequest extends FormRequest
             'gallery_image' => ['required', 'max:5120'],
         ];
     }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function messages()
+    {
+        return [
+            'gallery_image.max' => 'The :attribute must not be greater than 5MB'
+        ];
+    }
 }

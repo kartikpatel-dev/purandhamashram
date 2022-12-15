@@ -44,52 +44,13 @@ class ManagerRepository
 
     public function store($data)
     {
-        $RS_Row = new User();
-
-        $RS_Row->first_name = $data->first_name;
-        $RS_Row->middle_name = $data->middle_name;
-        $RS_Row->last_name = $data->last_name;
-        $RS_Row->email = $data->email;
-        $RS_Row->password = Hash::make($data->password);
-        $RS_Row->mobile_number = $data->mobile_number;
-        $RS_Row->dial_code = $data->dial_code;
-        $RS_Row->gender = $data->gender;
-        $RS_Row->birth_date = Carbon::parse($data->birth_date)->format('Y-m-d');
-        $RS_Row->address = $data->address;
-        $RS_Row->city = $data->city;
-        $RS_Row->country = $data->country;
-        $RS_Row->occupation = $data->occupation;
-        $RS_Row->guru = $data->guru;
-        $RS_Row->reference_person = $data->reference_person;
-        $RS_Row->status = $data->status;
-
-        if ($data->has('avatar')) {
-            $fileName = $this->fileUpload($data->file(), $data->first_name . '-' . $data->last_name, $RS_Row->avatar);
-
-            $RS_Row->avatar = $fileName;
-        }
-
-        if (!empty($data->modules) && in_array('Users Waiting Approval', $data->modules)) {
-            $RS_Row->country_permission = !empty($data->countries_module) ? implode(', ', $data->countries_module) : NULL;
-        }
-
-        $RS_Row->save();
+        $RS_Row = $this->StoreUpdate($data);
 
         if (!empty($RS_Row)) :
-            $RS_Row->role()
-                ->sync(
-                    Role::whereIn('slug', $data->role)->get()
-                );
-
-            $RS_Row->modules()
-                ->sync(
-                    Module::whereIn('name', $data->modules)->get()
-                );
-
             return array(
                 'messageType' => 'success',
                 'message' => 'Manager created successfully.',
-                'id' => $RS_Row->id
+                'id' => $RS_Row
             );
         else :
             return array(
@@ -102,12 +63,34 @@ class ManagerRepository
 
     public function update($data, $id = 0)
     {
-        $RS_Row = $this->getById($id);
+        $RS_Row = $this->StoreUpdate($data, $id);
+
+        if (!empty($RS_Row)) :
+            return array(
+                'messageType' => 'success',
+                'message' => 'Manager updated successfully.',
+                'id' => $RS_Row
+            );
+        else :
+            return array(
+                'messageType' => 'error',
+                'message' => 'Can\'t udpate manager, try after sometime.',
+                'id' => 0
+            );
+        endif;
+    }
+
+    private function StoreUpdate($data, $id = 0)
+    {
+        $RS_Row = empty($id) ? new User() : $this->getById($id);
 
         $RS_Row->first_name = $data->first_name;
         $RS_Row->middle_name = $data->middle_name;
         $RS_Row->last_name = $data->last_name;
         $RS_Row->email = $data->email;
+        if (empty($id)) {
+            $RS_Row->password = Hash::make($data->password);
+        }
         $RS_Row->mobile_number = $data->mobile_number;
         $RS_Row->dial_code = $data->dial_code;
         $RS_Row->gender = $data->gender;
@@ -134,7 +117,7 @@ class ManagerRepository
 
         $RS_Row->save();
 
-        if (!empty($RS_Row)) :
+        if (!empty($RS_Row)) {
             $RS_Row->role()
                 ->sync(
                     Role::whereIn('slug', $data->role)->get()
@@ -144,19 +127,9 @@ class ManagerRepository
                 ->sync(
                     Module::whereIn('name', $data->modules)->get()
                 );
+        }
 
-            return array(
-                'messageType' => 'success',
-                'message' => 'Manager updated successfully.',
-                'id' => $RS_Row->id
-            );
-        else :
-            return array(
-                'messageType' => 'error',
-                'message' => 'Can\'t udpate manager, try after sometime.',
-                'id' => 0
-            );
-        endif;
+        return $RS_Row->id;
     }
 
     public function delete($id)
