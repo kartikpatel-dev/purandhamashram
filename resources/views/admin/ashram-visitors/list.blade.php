@@ -23,21 +23,24 @@
                     {{ \Carbon\Carbon::parse($RS_Row->checkout_time)->format('h:i A') }}
                 </td>
                 <td>
-                    {{-- {{ $RS_Row->visitedUser->visitor_status == 1 ? 'Check In' : 'Check Out' }} --}}
-                    @if ($RS_Row->checkin_status == 1)
-                        @if (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') > \Carbon\Carbon::now()->format('Y-m-d'))
-                            {{ __('-') }}
-                        @elseif (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d') ||
-                            \Carbon\Carbon::parse($RS_Row->checkout_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d'))
-                            <i class="fas fa-check text-success"></i>
+                    <center>
+                        @if ($RS_Row->checkin_status == 1)
+                            @if (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') > \Carbon\Carbon::now()->format('Y-m-d'))
+                                {{ __('-') }}
+                            @elseif (\Carbon\Carbon::parse($RS_Row->checkin_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d') ||
+                                \Carbon\Carbon::parse($RS_Row->checkout_date)->format('Y-m-d') >= \Carbon\Carbon::now()->format('Y-m-d'))
+                                <i class="fas fa-check text-success"></i>
+                            @else
+                                <i class="fas fa-times text-danger"></i>
+                            @endif
                         @else
                             <i class="fas fa-times text-danger"></i>
                         @endif
-                    @else
-                        <i class="fas fa-times text-danger"></i>
-                    @endif
+                    </center>
                 </td>
-                <td>{{ $RS_Row->number_of_person }}</td>
+                <td>
+                    <center>{{ $RS_Row->number_of_person }}</center>
+                </td>
             </tr>
         @empty
             <tr>

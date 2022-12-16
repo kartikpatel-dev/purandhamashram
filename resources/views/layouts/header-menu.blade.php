@@ -1,3 +1,10 @@
+@php
+    $roles = !empty(Auth::user()->role)
+        ? Auth::user()
+            ->role->pluck('name')
+            ->toArray()
+        : [];
+@endphp
 <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-sm-between">
         <div class="contact-info d-flex align-items-center">
@@ -62,7 +69,9 @@
 <header id="header" class="header d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
         <div class="logo">
-            <h1 class="text-light"><a href="{{ route('front.home') }}">{{ config('app.name', 'Laravel') }}</a><span class="d-none">Designed & Developed by <a href="http://inboxtechnology.com/" target="_blank">Inbox Technology</a></span></h1>
+            <h1 class="text-light"><a href="{{ route('front.home') }}">{{ config('app.name', 'Laravel') }}</a><span
+                    class="d-none">Designed & Developed by <a href="http://inboxtechnology.com/" target="_blank">Inbox
+                        Technology</a></span></h1>
         </div>
 
         <nav id="navbar" class="navbar">
@@ -85,15 +94,30 @@
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'gallery' ? 'active' : '' }}"
                         href="{{ route('gallery') }}">{{ __('Gallery') }}</a>
                 </li>
-                <li><a class="nav-link scrollto" href="https://www.youtube.com/" target="_blank">{{ __('Video') }}</a></li>
+                <li><a class="nav-link scrollto" href="https://www.youtube.com/"
+                        target="_blank">{{ __('Video') }}</a></li>
                 <li>
                     <a class="nav-link scrollto {{ Route::currentRouteName() == 'contact-us' ? 'active' : '' }}"
                         href="{{ route('contact-us') }}">{{ __('Contact Us') }}</a>
                 </li>
+
                 @auth
                     <li class="ashram-visitor">
                         <a class="nav-link scrollto {{ Route::currentRouteName() == 'Ashram.Visitor' ? 'active' : '' }}"
                             href="{{ route('Ashram.Visitor') }}">{{ !empty(Auth::user()->visitor_status) ? __('Check Out') : __('Check In') }}</a>
+                    </li>
+                @endauth
+
+                @auth
+                    @if (in_array('Admin', $roles) || in_array('Manager', $roles))
+                        <li>
+                            <a class="nav-link scrollto" href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a>
+                        </li>
+                    @endif
+                @else
+                    <li>
+                        <a class="nav-link scrollto {{ Route::currentRouteName() == 'login' ? 'active' : '' }}"
+                            href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @endauth
             </ul>

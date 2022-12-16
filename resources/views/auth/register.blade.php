@@ -391,6 +391,7 @@
                 selectOtherMonths: true,
                 changeMonth: true,
                 changeYear: true,
+                yearRange: '-200:+0',
                 maxDate: "-1D"
             });
 

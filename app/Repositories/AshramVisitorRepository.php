@@ -118,6 +118,10 @@ class AshramVisitorRepository
         $RS_Row = array();
         if (!empty(auth()->user()->visitor_status)) {
             $RS_Row = auth()->user()->load(['visitorCheckIn']);
+
+            if (empty($RS_Row->visitorCheckIn)) {
+                auth()->user()->update(['visitor_status' => '0']);
+            }
         }
 
         return $RS_Row;

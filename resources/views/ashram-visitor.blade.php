@@ -151,6 +151,7 @@
                 selectOtherMonths: true,
                 changeMonth: true,
                 changeYear: true,
+                yearRange: '-200:+50',
                 // maxDate: "today"
             });
 
@@ -160,6 +161,7 @@
                 selectOtherMonths: true,
                 changeMonth: true,
                 changeYear: true,
+                yearRange: '-200:+50',
                 // minDate: "today"
             });
 

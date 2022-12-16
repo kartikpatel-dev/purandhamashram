@@ -50,3 +50,9 @@ use Illuminate\Support\Facades\Artisan;
     Artisan::call('queue:work --stop-when-empty');
     return '<h1>Queue Work</h1>';
 }); */
+
+//queuw retry:
+/* Route::get('/queue-retry', function () {
+    Artisan::call('queue:retry all');
+    return '<h1>Queue Work</h1>';
+}); */

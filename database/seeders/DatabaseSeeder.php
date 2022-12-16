@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('Ashram@456#'),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
+            'status' => 'Active',
         ]);
         $adminUser->role()->sync(1);
 

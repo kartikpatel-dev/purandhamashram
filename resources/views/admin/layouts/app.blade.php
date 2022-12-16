@@ -80,8 +80,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{ route('front.home') }}"
-                                    class="nav-link" target="_blank">
+                                <a href="{{ route('front.home') }}" class="nav-link">
                                     <i class="nav-icon fas fa-globe"></i>
                                     <p>{{ __('Visit site') }}</p>
                                 </a>
@@ -265,7 +264,8 @@
                                     <p>{{ __('Logout') }}</p>
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
                             </li>
@@ -373,7 +373,7 @@
 
         $(document).on('hidden.bs.modal', function() {
             $('.modal-backdrop').remove();
-            $('body').css('overflow','');
+            $('body').css('overflow', '');
         });
 
         // number validation
