@@ -38,6 +38,8 @@ class UserController extends Controller
         /* $users = $this->userRepository->getAll(20, 'user', 'Active', $request->all());
         dd($users); */
 
+        $RS_Print = $this->userRepository->createPdf($request->all());
+
         if ($request->ajax()) {
 
             $users = $this->userRepository->getAll(20, 'user', 'Active', $request->all());
@@ -48,7 +50,7 @@ class UserController extends Controller
                     'total_count' => $users->total()
                 ]);
         } else {
-            return view('admin.users.index');
+            return view('admin.users.index', compact('RS_Print'));
         }
     }
 
@@ -187,4 +189,20 @@ class UserController extends Controller
             'message' => $response['message']
         ]);
     }
+
+    /**
+     * create PDF.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    /* public function createPdf(Request $request)
+    {
+        $response = $this->userRepository->createPdf($request->all());
+
+        Session::flash('messageType', $response['messageType']);
+        Session::flash('message', $response['message']." <a href='".$response['data']."' target='_blank'>Print</a>");
+
+        return Redirect::back();
+    } */
 }

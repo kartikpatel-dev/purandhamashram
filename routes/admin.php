@@ -23,8 +23,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resources(['users' => UserController::class]);
         Route::get('users-waiting-approval', [UserController::class, 'waitingApproval'])->name('users.waiting.approval');
         Route::post('user-change-status', [UserController::class, 'changeStatus'])->name('users.change.status');
+        // Route::get('users-pdf', [UserController::class, 'createPdf'])->name('users.pdf');
 
         Route::resources(['visitors' => AshramVisitorController::class]);
+        // Route::get('visitors-pdf', [AshramVisitorController::class, 'createPdf'])->name('visitors.pdf');
 
         Route::resources(['announcements' => AnnouncementController::class]);
         Route::post('announcement-change-status', [AnnouncementController::class, 'changeStatus'])->name('announcements.change.status');

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Jobs\UserApproveMailJob;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class UserRepository
 {
@@ -36,7 +38,31 @@ class UserRepository
         return $modules;
     }
 
-    public function getAll($perPage = 20, $roleSlug = '', $status = '', $search = array())
+    private function _search($RS_Results, $search)
+    {
+        if (!empty($search['search_keryword'])) {
+            $searchKeyword = $search['search_keryword'];
+
+            $RS_Users = User::select('id')
+                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
+                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
+                ->get();
+
+            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
+        }
+
+        return $RS_Results;
+    }
+
+    private function _getAllInstance($roleSlug = '', $status = '', $search = array())
     {
         $RS_Results = User::latest();
 
@@ -55,7 +81,14 @@ class UserRepository
             $RS_Results->where('status', $status);
         }
 
-        $this->search($RS_Results, $search);
+        $this->_search($RS_Results, $search);
+
+        return $RS_Results;
+    }
+
+    public function getAll($perPage = 20, $roleSlug = '', $status = '', $search = array())
+    {
+        $RS_Results = $this->_getAllInstance($roleSlug, $status, $search);
 
         return $RS_Results->paginate($perPage);
     }
@@ -215,27 +248,21 @@ class UserRepository
         return null;
     }
 
-    public function search($RS_Results, $search)
+    public function createPdf($search = array())
     {
-        if (!empty($search['search_keryword'])) {
-            $searchKeyword = $search['search_keryword'];
+        $RS_Results = $this->_getAllInstance('user', 'Active', $search);
 
-            $RS_Users = User::select('id')
-                ->where('first_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('middle_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('email', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('mobile_number', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('city', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('country', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('occupation', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('guru', 'LIKE', '%' . $searchKeyword . '%')
-                ->orWhere('reference_person', 'LIKE', '%' . $searchKeyword . '%')
-                ->get();
+        $RS_Results = $RS_Results->get();
 
-            $RS_Results->whereIn('user_id', $RS_Users->pluck('id')->toArray());
-        }
+        // $fileName = 'User_List' . Carbon::now()->format('Y-m-d_H.i.s') . '.pdf';
+        $fileName = 'User_List.pdf';
 
-        return $RS_Results;
+        $pdf = Pdf::loadView('admin.users.pdf', compact('RS_Results'))
+            ->setPaper('a4', 'landscape')
+            ->save($this->destinationPath() . $fileName);
+
+        $pdf->download(config('app.url') . Storage::url('app/public/' . $fileName));
+
+        return config('app.url') . Storage::url('app/public/' . $fileName);
     }
 }

@@ -33,6 +33,9 @@
                                 <button type="submit" class="btn btn-success btn-fill">Search</button>
 
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-info">Reset Search</a>
+
+                                <a href="{{ $RS_Print }}" target="_blank"
+                                class="btn btn-dark">{{ __('Print') }}</a>
                             </div>
                         </div>
                     </form>

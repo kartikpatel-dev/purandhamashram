@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\AshramVisitorRepository;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AshramVisitorController extends Controller
 {
@@ -31,6 +32,9 @@ class AshramVisitorController extends Controller
     {
         $RS_Visitor_Count = $this->ashramVisitorRepository->expectedNextDayVisitorCount($request->all());
         // dd($RS_Visitor_Count);
+
+        $RS_Print = $this->ashramVisitorRepository->createPdf($request->all());
+
         // $RS_Results = $this->ashramVisitorRepository->getAll(20, $request->all());
         // dd($RS_Results[0]);
 
@@ -42,7 +46,7 @@ class AshramVisitorController extends Controller
                     'RS_Results' => view('admin.ashram-visitors.list', compact('RS_Results'))->render()
                 ]);
         } else {
-            return view('admin.ashram-visitors.index', compact('RS_Visitor_Count'));
+            return view('admin.ashram-visitors.index', compact('RS_Visitor_Count', 'RS_Print'));
         }
     }
 
@@ -111,4 +115,20 @@ class AshramVisitorController extends Controller
     {
         return Redirect::route('admin.visitors.index');
     }
+
+    /**
+     * create PDF.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    /* public function createPdf(Request $request)
+    {
+        $response = $this->ashramVisitorRepository->createPdf($request->all());
+
+        Session::flash('messageType', $response['messageType']);
+        Session::flash('message', $response['message']." <a href='".$response['data']."' target='_blank'>Print</a>");
+
+        return Redirect::back();
+    } */
 }

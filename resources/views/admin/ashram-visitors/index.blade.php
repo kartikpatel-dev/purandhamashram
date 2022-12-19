@@ -63,11 +63,29 @@
                                 <button type="submit" class="btn btn-success btn-fill">Search</button>
 
                                 <a href="{{ route('admin.visitors.index') }}" class="btn btn-info">Reset Search</a>
+
+                                <a href="{{ $RS_Print }}" target="_blank"
+                                class="btn btn-dark">{{ __('Print') }}</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+
+            {{-- <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12 align-self-center">
+                            @php
+                                $qryString = explode('?', Request::fullUrl());
+                                $qryString = !empty($qryString[1]) ? '?' . $qryString[1] : null;
+                            @endphp
+                            <a href="{{ route('admin.visitors.pdf') . $qryString }}"
+                                class="btn btn-sm btn-info float-md-right">{{ __('Print') }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
 
             <div class="card">
                 <div class="card-header">
@@ -76,7 +94,8 @@
                             <h4 class="card-title">@yield('Title')</h4>
                         </div>
                         <div class="col-md-6 align-self-center">
-                            <h4 class="card-title float-right text-info">{{ __('Expected Next 24 hours '.$RS_Visitor_Count.' visitor')}}</h4>
+                            <h4 class="card-title float-right text-info">
+                                {{ __('Expected Next 24 hours ' . $RS_Visitor_Count . ' visitor') }}</h4>
                         </div>
                     </div>
                 </div>
