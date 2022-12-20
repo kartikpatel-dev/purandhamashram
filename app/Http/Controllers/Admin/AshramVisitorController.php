@@ -33,7 +33,10 @@ class AshramVisitorController extends Controller
         $RS_Visitor_Count = $this->ashramVisitorRepository->expectedNextDayVisitorCount($request->all());
         // dd($RS_Visitor_Count);
 
-        $RS_Print = $this->ashramVisitorRepository->createPdf($request->all());
+        $RS_Print = '';
+        if (empty($request->input('page'))) {
+            $RS_Print = $this->ashramVisitorRepository->createPdf($request->all());
+        }
 
         // $RS_Results = $this->ashramVisitorRepository->getAll(20, $request->all());
         // dd($RS_Results[0]);

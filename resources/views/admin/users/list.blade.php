@@ -56,4 +56,4 @@
     </tbody>
 </table>
 
-{!! $users->links('pagination::bootstrap-5') !!}
+{!! $users->onEachSide(1)->links('pagination::bootstrap-5') !!}

@@ -38,7 +38,10 @@ class UserController extends Controller
         /* $users = $this->userRepository->getAll(20, 'user', 'Active', $request->all());
         dd($users); */
 
-        $RS_Print = $this->userRepository->createPdf($request->all());
+        $RS_Print = '';
+        if (empty($request->input('page'))) {
+            $RS_Print = $this->userRepository->createPdf($request->all());
+        }
 
         if ($request->ajax()) {
 

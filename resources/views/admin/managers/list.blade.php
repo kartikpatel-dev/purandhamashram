@@ -54,4 +54,4 @@
     </tbody>
 </table>
 
-{!! $RS_Results->links('pagination::bootstrap-5') !!}
+{!! $RS_Results->onEachSide(1)->links('pagination::bootstrap-5') !!}
