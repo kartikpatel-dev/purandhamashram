@@ -19,7 +19,7 @@
                     @else
                         @php $action = route('admin.announcements.store'); @endphp
                     @endif
-                    <form method="POST" action="{{ $action }}" enctype="multipart/form-data">
+                    <form id="createEditFrom" method="POST" action="{{ $action }}" enctype="multipart/form-data">
                         @csrf
                         @if (!empty($RS_Row))
                             {{ method_field('PUT') }}
@@ -102,6 +102,28 @@
                 defaultDate: defaultDateVal,
             });
             // $('#created_at').attr('readonly', 'readonly');
+
+            $('#createEditFrom').validate({
+                rules: {
+                    title: {
+                        required: true,
+                    },
+                    created_at: {
+                        required: true,
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
         });
     </script>
 @endsection

@@ -6,14 +6,14 @@ use App\Models\AshramVisitor;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class AshramVisitorRepository
 {
-    private function _destinationPath()
+    /* private function _destinationPath()
     {
         return storage_path('app/public/');
-    }
+    } */
 
     private function _search($RS_Results, $search)
     {
@@ -224,13 +224,11 @@ class AshramVisitorRepository
         // $fileName = 'Visitor_History_' . Carbon::now()->format('Y-m-d_H.i.s') . '.pdf';
         $fileName = 'Visitor_History.pdf';
 
-        // PDF::loadView('admin.ashram-visitors.pdf', compact('RS_Results'))->save(public_path($fileName));
         $pdf = Pdf::loadView('admin.ashram-visitors.pdf', compact('RS_Results'))
-            ->setPaper('a4', 'landscape')
-            ->save($this->_destinationPath() . $fileName);
+            ->setPaper('a4', 'landscape');
+            // ->save($this->_destinationPath() . $fileName);
 
-        $pdf->download(config('app.url') . Storage::url('app/public/' . $fileName));
-
-        return config('app.url') . Storage::url('app/public/' . $fileName);
+        return $pdf->stream($fileName);
+        // return config('app.url') . Storage::url('app/public/' . $fileName);
     }
 }

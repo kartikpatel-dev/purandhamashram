@@ -11,7 +11,7 @@ use App\Jobs\UserApproveMailJob;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 class UserRepository
 {
@@ -258,11 +258,10 @@ class UserRepository
         $fileName = 'User_List.pdf';
 
         $pdf = Pdf::loadView('admin.users.pdf', compact('RS_Results'))
-            ->setPaper('a4', 'landscape')
-            ->save($this->destinationPath() . $fileName);
+            ->setPaper('a4', 'landscape');
+            // ->save($this->destinationPath() . $fileName);
 
-        $pdf->download(config('app.url') . Storage::url('app/public/' . $fileName));
-
-        return config('app.url') . Storage::url('app/public/' . $fileName);
+        return $pdf->stream($fileName);
+        // return config('app.url') . Storage::url('app/public/' . $fileName);
     }
 }

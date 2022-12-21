@@ -2,6 +2,11 @@
 
 @section('Title', 'Users List')
 
+@php
+    $qryString = explode('?', Request::fullUrl());
+    $qryString = !empty($qryString[1]) ? '?' . $qryString[1] : null;
+@endphp
+
 @section('content')
 
     <div class="row">
@@ -34,8 +39,7 @@
 
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-info">Reset Search</a>
 
-                                <a href="{{ $RS_Print }}" target="_blank"
-                                class="btn btn-dark">{{ __('Print') }}</a>
+                                <a href="{{ route('admin.users.pdf') . $qryString }}" target="_blank" class="btn btn-dark">{{ __('Print') }}</a>
                             </div>
                         </div>
                     </form>

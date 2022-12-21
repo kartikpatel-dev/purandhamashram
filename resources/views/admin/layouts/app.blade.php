@@ -360,6 +360,9 @@
     <script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- jquery-validation -->
+    <script src="{{ asset('admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/jquery-validation/additional-methods.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('admin/js/adminlte.js') }}"></script>
 

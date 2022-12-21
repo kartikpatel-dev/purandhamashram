@@ -19,7 +19,7 @@
                     @else
                         @php $action = route('admin.galleries.store'); @endphp
                     @endif
-                    <form method="POST" action="{{ $action }}" enctype="multipart/form-data">
+                    <form id="createEditFrom" method="POST" action="{{ $action }}" enctype="multipart/form-data">
                         @csrf
                         @if (!empty($RS_Row))
                             {{ method_field('PUT') }}
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="post"></div>
-                        <button type="submit" class="btn btn-info btn-fill">Submit</button>
+                        <button type="submit" id="createEditBtn" class="btn btn-info btn-fill">Submit</button>
                         <div class="clearfix"></div>
                     </form>
                 </div>
@@ -96,10 +96,34 @@
                 $('.max-5-img').addClass('d-none');
 
                 if ($("#gallery_image")[0].files.length > 5) {
+                    $('#gallery_image-error').css('display', 'none');
                     $("#gallery_image").val('');
                     $('#gallery_image').next('label').html('Choose gallery image');
                     $('.max-5-img').removeClass('d-none');
                     return false;
+                }
+            });
+
+            $("#createEditBtn").on("click", function() {
+                $('.max-5-img').addClass('d-none');
+            });
+
+            $('#createEditFrom').validate({
+                rules: {
+                    'gallery_image[]': {
+                        required: true,
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
                 }
             });
         });
