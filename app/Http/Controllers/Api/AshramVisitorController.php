@@ -46,8 +46,8 @@ class AshramVisitorController extends Controller
             if (!empty($request->validator) && $request->validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation errors',
-                    'data' => $request->validator->errors(),
+                    'message' => $request->validator->errors()->first(),
+                    'data' => NULL,
                 ]);
             }
         }
@@ -81,8 +81,8 @@ class AshramVisitorController extends Controller
         if (!empty($request->validator) && $request->validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation errors',
-                'data' => $request->validator->errors(),
+                'message' => $request->validator->errors()->first(),
+                'data' => NULL,
             ]);
         }
 

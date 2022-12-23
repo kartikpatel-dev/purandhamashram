@@ -40,8 +40,8 @@ class ForgotPasswordController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success'   => false,
-                'message'   => 'Validation errors',
-                'data' => $validator->errors(),
+                'message'   => $validator->errors()->first(),
+                'data' => NULL,
             ]);
         }
 

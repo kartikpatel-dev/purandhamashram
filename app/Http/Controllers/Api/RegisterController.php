@@ -49,8 +49,8 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response([
                 'success'   => false,
-                'message'   => 'Validation errors',
-                'data' => $validator->errors(),
+                'message'   => $validator->errors()->first(),
+                'data' => NULL,
             ]);
         }
 
