@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 // use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Carbon;
 use Laravel\Passport\HasApiTokens;
+use App\Jobs\QueuedPasswordResetJob;
 
 class User extends Authenticatable
 {
@@ -71,6 +72,12 @@ class User extends Authenticatable
     public function getBirthDateAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        //dispactches the job to the queue passing it this User object
+        QueuedPasswordResetJob::dispatch($this, $token)->delay(now()->addSeconds(5));
     }
 
     /**
